@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Card_1002
   m_EditorClassIdentifier: 
   cardId: 1002
-  name: "\u30A2\u30EA\u30A8\u30EB"
-  cost: 3
-  power: 3
   icon: {fileID: 21300000, guid: f907ca60157de024caf2a56f9a487e37, type: 3}
+  name: "\u30A2\u30EA\u30A8\u30EB"
+  color: umber
+  cost: 3
+  endurePoint: 2
+  power: 3

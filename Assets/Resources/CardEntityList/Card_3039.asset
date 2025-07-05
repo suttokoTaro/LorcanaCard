@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41df4d9a9809974b92be282b335880c, type: 3}
+  m_Name: Card_3039
+  m_EditorClassIdentifier: 
+  cardId: 3039
+  icon: {fileID: 21300000, guid: 3bad89d47cca2d04e9f8ce58ce0662df, type: 3}
+  name: "\u30CF\u30A4\u30C9\u30ED\u30B9"
+  color: amethyst
+  cost: 3
+  endurePoint: 2
+  power: 2

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeckListUI : MonoBehaviour
 {
@@ -29,14 +30,16 @@ public class DeckListUI : MonoBehaviour
             item.transform.Find("DeckNameText").GetComponent<Text>().text = deck.deckName;
 
             // 編集ボタン
-            item.transform.Find("EditButton").GetComponent<Button>().onClick.AddListener(() => {
+            item.transform.Find("EditButton").GetComponent<Button>().onClick.AddListener(() =>
+            {
                 Debug.Log("編集: " + deck.deckName);
                 SelectedDeckData.selectedDeck = deck;
                 UnityEngine.SceneManagement.SceneManager.LoadScene("DeckBuilderScene");
             });
 
             // 削除ボタン
-            item.transform.Find("DeleteButton").GetComponent<Button>().onClick.AddListener(() => {
+            item.transform.Find("DeleteButton").GetComponent<Button>().onClick.AddListener(() =>
+            {
                 currentDeckList.decks.Remove(deck);
                 DeckStorage.SaveDecks(currentDeckList);
                 LoadAndDisplayDecks(); // 再読み込み
@@ -44,22 +47,22 @@ public class DeckListUI : MonoBehaviour
         }
     }
     public void OnClickCreateNewDeck()
-    {  
-        // 1. 新しい空のデッキを作成
+    {
         DeckData newDeck = new DeckData();
+        newDeck.deckId = System.Guid.NewGuid().ToString(); // 🔥 一意なID生成
         newDeck.deckName = "新しいデッキ";
-        newDeck.cardIDs = new List<int>(); // 空のカードリスト
+        newDeck.cardIDs = new List<int>();
 
-        // 2. 既存のデッキを読み込み
         DeckDataList deckList = DeckStorage.LoadDecks();
-
-        // 3. 新しいデッキを追加
         deckList.decks.Add(newDeck);
-
-        // 4. 保存
         DeckStorage.SaveDecks(deckList);
 
-        // 5. リストを再表示（再描画）
-        LoadAndDisplayDecks();
+        SelectedDeckData.selectedDeck = newDeck;
+        SceneManager.LoadScene("DeckBuilderScene");
     }
+    public void OnClickBackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenuScene"); // 実際のシーン名に置き換えてください
+    }
+
 }

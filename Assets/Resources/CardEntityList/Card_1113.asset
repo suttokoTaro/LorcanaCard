@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Card_1113
   m_EditorClassIdentifier: 
   cardId: 1113
-  name: "\u30DE\u30EC\u30D5\u30A3\u30BB\u30F3\u30C8"
-  cost: 9
-  power: 7
   icon: {fileID: 21300000, guid: 4bdca1c0129d99b4d9240d88fe596f1f, type: 3}
+  name: "\u30DE\u30EC\u30D5\u30A3\u30BB\u30F3\u30C8"
+  color: ruby
+  cost: 9
+  endurePoint: 0
+  power: 7

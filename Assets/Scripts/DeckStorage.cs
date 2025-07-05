@@ -8,15 +8,21 @@ public class DeckStorage : MonoBehaviour
 
     public static DeckDataList LoadDecks()
     {
-        if (File.Exists(savePath))
+        string path = Path.Combine(Application.persistentDataPath, "decks.json");
+        if (!File.Exists(path))
+            return new DeckDataList { decks = new List<DeckData>() };
+
+        string json = File.ReadAllText(path);
+        DeckDataList data = JsonUtility.FromJson<DeckDataList>(json);
+
+        // 🔁 古いデッキに deckId を補完（任意）
+        foreach (var deck in data.decks)
         {
-            string json = File.ReadAllText(savePath);
-            return JsonUtility.FromJson<DeckDataList>(json);
+            if (string.IsNullOrEmpty(deck.deckId))
+                deck.deckId = System.Guid.NewGuid().ToString();
         }
-        else
-        {
-            return new DeckDataList(); // 空のリストを返す
-        }
+
+        return data;
     }
 
     public static void SaveDecks(DeckDataList deckList)

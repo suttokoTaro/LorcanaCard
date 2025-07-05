@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
 
 public class DeckManager : MonoBehaviour
 {
@@ -20,5 +21,19 @@ public class DeckManager : MonoBehaviour
         {
             Destroy(gameObject); // 複製を防ぐ
         }
+    }
+    public static string GetDeckPath(string deckName)
+    {
+        return Path.Combine(Application.persistentDataPath, $"deck_{deckName}.json");
+    }
+
+    public static void SaveDeck(DeckData deck)
+    {
+        if (deck == null) return;
+
+        string path = GetDeckPath(deck.deckName);
+        string json = JsonUtility.ToJson(deck, true);
+        File.WriteAllText(path, json);
+        Debug.Log($"デッキ保存: {path}");
     }
 }

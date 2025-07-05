@@ -5,14 +5,28 @@ using UnityEngine.UI;
 
 public class CardView : MonoBehaviour
 {
-    [SerializeField] Text nameText, powerText, costText;
+    [SerializeField] Text nameText;
+    [SerializeField] Text countText;
     [SerializeField] Image iconImage;
 
-    public void Show(CardModel cardModel) // cardModelのデータ取得と反映
+    public void Show(CardModel cardModel)
     {
-        //nameText.text = cardModel.name;
-        //powerText.text = cardModel.power.ToString();
-        //costText.text = cardModel.cost.ToString();
-        iconImage.sprite = cardModel.icon;
+        if (iconImage != null)
+            iconImage.sprite = cardModel.icon;
+
+        if (nameText != null)
+            nameText.text = $"Card ID: {cardModel.cardId}";
+    }
+
+    public void SetCount(int count)
+    {
+        if (countText != null)
+            countText.text = $"×{count}";
+    }
+
+    public void HideCount()
+    {
+        if (countText != null)
+            countText.text = "";
     }
 }

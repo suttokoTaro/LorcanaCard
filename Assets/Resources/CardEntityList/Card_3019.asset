@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41df4d9a9809974b92be282b335880c, type: 3}
+  m_Name: Card_3019
+  m_EditorClassIdentifier: 
+  cardId: 3019
+  icon: {fileID: 21300000, guid: 68621a3322c56f848a2e20c52ee77c11, type: 3}
+  name: "\u30DD\u30F3\u30B4"
+  color: umber
+  cost: 3
+  endurePoint: 2
+  power: 3
