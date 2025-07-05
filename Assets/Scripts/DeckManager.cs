@@ -7,8 +7,10 @@ public class DeckManager : MonoBehaviour
 {
     public static DeckManager Instance;
 
-    public List<int> selectedPlayerDeck;
+    public List<int> selectedPlayerDeck; // デッキ全体（マリガン後の山札）
     public List<int> selectedEnemyDeck;
+    public List<int> playerInitialHand; // マリガン完了後の7枚
+    public List<int> enemyInitialHand;
 
     void Awake()
     {

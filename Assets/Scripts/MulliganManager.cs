@@ -1,34 +1,67 @@
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.EventSystems;
+
 class MulliganManager : MonoBehaviour
 {
-    // Player
-    List<int> playerDeck;
-    List<int> playerHand = new List<int>();
-    List<int> playerRedraw = new List<int>();
-    bool playerDone = false;
+    [SerializeField] private GameObject zoomCanvas;
+    [SerializeField] private Image zoomImage;
 
-    // Enemy
-    List<int> enemyDeck;
-    List<int> enemyHand = new List<int>();
-    List<int> enemyRedraw = new List<int>();
-    bool enemyDone = false;
+    private Coroutine zoomCoroutine;
 
+    private IEnumerator ShowZoom(Sprite sprite)
+    {
+        yield return new WaitForSeconds(0.4f);
+        if (zoomCanvas != null && zoomImage != null)
+        {
+            zoomImage.sprite = sprite;
+            zoomCanvas.SetActive(true);
+        }
+    }
+    private void HideZoom()
+    {
+        if (zoomCanvas != null)
+            zoomCanvas.SetActive(false);
+    }
+
+    [Header("Player")]
+    public Transform playerHandArea;
+    public Button playerRedrawButton;
+    [Header("Enemy")]
+    public Transform enemyHandArea;
+    public Button enemyRedrawButton;
+
+    [Header("共通")]
+    public GameObject cardViewPrefab; // ← カード表示用プレハブ
     public Button battleStartButton;
 
+    private List<int> playerDeck;
+    private List<int> enemyDeck;
+    private List<int> playerHand = new();
+    private List<int> enemyHand = new();
+    private List<int> playerRedraw = new();
+    private List<int> enemyRedraw = new();
+
+    private bool playerDone = false;
+    private bool enemyDone = false;
     void Start()
     {
-        // デッキ複製とシャッフル
+        // デッキ取得・シャッフル
         playerDeck = new List<int>(DeckManager.Instance.selectedPlayerDeck);
         enemyDeck = new List<int>(DeckManager.Instance.selectedEnemyDeck);
         Shuffle(playerDeck);
         Shuffle(enemyDeck);
 
-        // それぞれ7枚引く
+        // 初手7枚ドロー
         DrawInitialHand(playerDeck, playerHand);
         DrawInitialHand(enemyDeck, enemyHand);
 
-        // UIに表示
-        DisplayHand("Player", playerHand);
-        DisplayHand("Enemy", enemyHand);
+        // 表示
+        DisplayHand(playerHandArea, playerHand, "Player");
+        DisplayHand(enemyHandArea, enemyHand, "Enemy");
 
         battleStartButton.interactable = false;
     }
@@ -41,30 +74,118 @@ class MulliganManager : MonoBehaviour
             deck.RemoveAt(0);
         }
     }
-
-    public void OnClickRedraw(string side) // "Player" or "Enemy"
+    void DisplayHand(Transform parent, List<int> hand, string side)
     {
-        if (side == "Player")
+        // 現在の選択リスト
+        List<int> redrawList = side == "Player" ? playerRedraw : enemyRedraw;
+
+        // 表示を一度全削除
+        foreach (Transform child in parent)
+            Destroy(child.gameObject);
+
+        for (int i = 0; i < hand.Count; i++)
         {
-            Redraw(playerRedraw, playerHand, playerDeck);
-            playerDone = true;
-        }
-        else
-        {
-            Redraw(enemyRedraw, enemyHand, enemyDeck);
-            enemyDone = true;
+            int cardId = hand[i];
+            GameObject card = Instantiate(cardViewPrefab, parent);
+
+            // カード画像表示
+            CardEntity entity = LoadCardEntity(cardId);
+            if (entity != null)
+            {
+                var image = card.GetComponent<Image>();
+                if (image != null && entity.icon != null)
+                {
+                    image.sprite = entity.icon;
+                    image.color = Color.white;
+                }
+            }
+            // 🔽 長押しズーム用 EventTrigger を追加
+            if (entity != null && entity.icon != null)
+            {
+                EventTrigger trigger = card.AddComponent<EventTrigger>();
+
+                var down = new EventTrigger.Entry();
+                down.eventID = EventTriggerType.PointerDown;
+                down.callback.AddListener((eventData) =>
+                {
+                    zoomCoroutine = StartCoroutine(ShowZoom(entity.icon));
+                });
+                trigger.triggers.Add(down);
+
+                var up = new EventTrigger.Entry();
+                up.eventID = EventTriggerType.PointerUp;
+                up.callback.AddListener((eventData) =>
+                {
+                    if (zoomCoroutine != null)
+                        StopCoroutine(zoomCoroutine);
+                    HideZoom();
+                });
+                trigger.triggers.Add(up);
+            }
+
+
+            // 🔑 index で管理
+            int cardIndex = i;
+            Button button = card.GetComponent<Button>();
+            if (button != null)
+            {
+                button.onClick.AddListener(() =>
+                {
+                    ToggleRedraw(side, cardIndex);
+                    UpdateCardVisuals(parent, hand, side);
+                });
+            }
         }
 
-        CheckBattleReady();
+        UpdateCardVisuals(parent, hand, side);
     }
 
-    void Redraw(List<int> redrawList, List<int> hand, List<int> deck)
+    void ToggleRedraw(string side, int index)
     {
-        // 戻す
-        foreach (var cardId in redrawList)
+        List<int> list = side == "Player" ? playerRedraw : enemyRedraw;
+        if (list.Contains(index))
+            list.Remove(index);
+        else
+            list.Add(index);
+    }
+
+    void UpdateCardVisuals(Transform parent, List<int> hand, string side)
+    {
+        List<int> redrawList = side == "Player" ? playerRedraw : enemyRedraw;
+
+        int index = 0;
+        foreach (Transform card in parent)
         {
-            hand.Remove(cardId);
-            deck.Add(cardId);
+            if (index >= hand.Count) break;
+
+            var image = card.GetComponent<Image>();
+            if (image != null)
+            {
+                bool isSelected = redrawList.Contains(index);
+                image.color = isSelected ? Color.gray : Color.white;
+            }
+
+            index++;
+        }
+    }
+
+    public void OnClickRedraw(string side)
+    {
+        List<int> deck = side == "Player" ? playerDeck : enemyDeck;
+        List<int> hand = side == "Player" ? playerHand : enemyHand;
+        List<int> redraw = side == "Player" ? playerRedraw : enemyRedraw;
+
+        // 🔁 降順で index を処理
+        List<int> sorted = new List<int>(redraw);
+        sorted.Sort((a, b) => b.CompareTo(a)); // 降順ソート
+
+        foreach (int i in sorted)
+        {
+            if (i >= 0 && i < hand.Count)
+            {
+                deck.Add(hand[i]);       // 手札からデッキへ戻す
+                hand.RemoveAt(i);        // 手札から削除
+            }
         }
 
         // 引き直し
@@ -74,34 +195,23 @@ class MulliganManager : MonoBehaviour
             hand.Add(deck[0]);
             deck.RemoveAt(0);
         }
-
         Shuffle(deck);
-        redrawList.Clear();
-    }
 
-    void CheckBattleReady()
-    {
+        // 状態更新
+        redraw.Clear();
+
+        if (side == "Player")
+        {
+            playerDone = true;
+            DisplayHand(playerHandArea, playerHand, "Player");
+        }
+        else
+        {
+            enemyDone = true;
+            DisplayHand(enemyHandArea, enemyHand, "Enemy");
+        }
+
         battleStartButton.interactable = playerDone && enemyDone;
-    }
-
-    public void OnClickCard(string side, int cardId)
-    {
-        // カード選択・解除
-        var list = (side == "Player") ? playerRedraw : enemyRedraw;
-        if (list.Contains(cardId)) list.Remove(cardId);
-        else list.Add(cardId);
-
-        UpdateCardSelectionVisuals(side);
-    }
-
-    void DisplayHand(string side, List<int> hand)
-    {
-        // カード表示をUIに反映（上下どちらか）
-    }
-
-    void UpdateCardSelectionVisuals(string side)
-    {
-        // 選択状態の表示更新
     }
 
     void Shuffle(List<int> deck)
@@ -113,11 +223,29 @@ class MulliganManager : MonoBehaviour
         }
     }
 
+    private CardEntity LoadCardEntity(int cardId)
+    {
+        return Resources.Load<CardEntity>($"CardEntityList/Card_{cardId}");
+    }
+    public void OnClickPlayerRedraw()
+    {
+        OnClickRedraw("Player");
+    }
+
+    public void OnClickEnemyRedraw()
+    {
+        OnClickRedraw("Enemy");
+    }
+
     public void OnClickBattleStart()
     {
-        // 最終手札を DeckManager.Instance に格納して BattleScene へ
-        DeckManager.Instance.selectedPlayerDeck = new List<int>(playerHand);
-        DeckManager.Instance.selectedEnemyDeck = new List<int>(enemyHand);
+        // 手札とデッキを DeckManager に渡す
+        DeckManager.Instance.playerInitialHand = new List<int>(playerHand);
+        DeckManager.Instance.enemyInitialHand = new List<int>(enemyHand);
+        DeckManager.Instance.selectedPlayerDeck = new List<int>(playerDeck);
+        DeckManager.Instance.selectedEnemyDeck = new List<int>(enemyDeck);
+
+        // シーン遷移
         SceneManager.LoadScene("BattleScene");
     }
 }

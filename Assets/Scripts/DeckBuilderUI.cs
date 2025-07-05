@@ -14,6 +14,7 @@ public class DeckBuilderUI : MonoBehaviour
     [SerializeField] private Toggle rubyToggle;
     [SerializeField] private Toggle sapphireToggle;
     [SerializeField] private Toggle steelToggle;
+    [SerializeField] private Text deckCountText;
 
     public Text deckNameText;
 
@@ -144,6 +145,10 @@ public class DeckBuilderUI : MonoBehaviour
                 currentDeck.cardIDs.Remove(entity.cardId); // 1枚削除
                 RefreshDeckCardList();
             });
+        }
+        if (deckCountText != null)
+        {
+            deckCountText.text = $"デッキ枚数：{currentDeck.cardIDs.Count}枚";
         }
     }
 

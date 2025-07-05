@@ -17,6 +17,7 @@ public class MainMenuUI : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Start(): " + this.name + " deckListParent = " + (deckListParent == null ? "NULL" : deckListParent.name));
         LoadDecksAndDisplay();
         UpdateSelectedDecksDisplay();
     }
@@ -78,6 +79,7 @@ public class MainMenuUI : MonoBehaviour
         DeckManager.Instance.selectedPlayerDeck = new List<int>(playerDeck.cardIDs);
         DeckManager.Instance.selectedEnemyDeck = new List<int>(enemyDeck.cardIDs);
 
-        SceneManager.LoadScene("BattleScene");
+        //SceneManager.LoadScene("BattleScene");
+        SceneManager.LoadScene("MulliganScene");
     }
 }

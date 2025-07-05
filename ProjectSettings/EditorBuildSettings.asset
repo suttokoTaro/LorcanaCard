@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DeckListScene.unity
     guid: 13b83318e7d30f24a8e0fb0082f35a4f
+  - enabled: 1
+    path: Assets/Scenes/MulliganScene.unity
+    guid: 195567aa758ece9459b0e6370657bfa2
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: b1bddd5750029bb49a78fe150a41d39e, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: af558c2f6cddb1845b6d3fe1a5a5ae1b, type: 2}
