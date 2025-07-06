@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardId: 3003
   icon: {fileID: 21300000, guid: 3bd3a3fdab2b362458f42d91777f6047, type: 3}
+  backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30C1\u30A7\u30EB\u30CA\u30DC\u30FC\u30B0"
   color: umber
   cost: 10

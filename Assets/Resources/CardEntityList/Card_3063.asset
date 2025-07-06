@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardId: 3063
   icon: {fileID: 21300000, guid: adb5e037905c20242828121e8437520d, type: 3}
+  backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u3084\u3063\u3068\u904B\u304C\u5411\u3044\u3066\u6765\u305F\u308F"
   color: amethyst
   cost: 3
