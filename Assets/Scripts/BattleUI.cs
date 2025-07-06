@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class BattleUI : MonoBehaviour
 {
@@ -11,6 +12,25 @@ public class BattleUI : MonoBehaviour
     [SerializeField] Text playerLoaPointText, enemyLoaPointText;
     [SerializeField] Text playerDeckCountText, enemyDeckCountText;
     [SerializeField] private GameObject confirmExitPanel;
+    [SerializeField] private GameObject zoomCanvas;
+    [SerializeField] private Image zoomImage;
+
+    private Coroutine zoomCoroutine;
+
+    private IEnumerator ShowZoom(Sprite sprite)
+    {
+        yield return new WaitForSeconds(0.4f);
+        if (zoomCanvas != null && zoomImage != null)
+        {
+            zoomImage.sprite = sprite;
+            zoomCanvas.SetActive(true);
+        }
+    }
+    private void HideZoom()
+    {
+        if (zoomCanvas != null)
+            zoomCanvas.SetActive(false);
+    }
 
     public int playerLoaPoint;
     public int enemyLoaPoint;
@@ -71,6 +91,27 @@ public class BattleUI : MonoBehaviour
         CardController card = Instantiate(cardPrefab, place);
         card.CreateCardAndViewIcon(cardID);
 
+        // ズーム表示の EventTrigger を追加
+        EventTrigger trigger = card.gameObject.AddComponent<EventTrigger>();
+
+        var down = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
+        down.callback.AddListener((eventData) =>
+        {
+            CardEntity entity = Resources.Load<CardEntity>($"CardEntityList/Card_{cardID}");
+            if (entity?.icon != null)
+                zoomCoroutine = StartCoroutine(ShowZoom(entity.icon));
+        });
+        trigger.triggers.Add(down);
+
+        var up = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
+        up.callback.AddListener((eventData) =>
+        {
+            if (zoomCoroutine != null)
+                StopCoroutine(zoomCoroutine);
+            HideZoom();
+        });
+        trigger.triggers.Add(up);
+
         // デッキ枚数表示値の更新処理
         UpdateDeckCountText();
     }
@@ -80,6 +121,27 @@ public class BattleUI : MonoBehaviour
     {
         CardController card = Instantiate(cardPrefab, place);
         card.CreateCardAndViewBackIcon(cardID);
+
+        // ズーム表示の EventTrigger を追加
+        EventTrigger trigger = card.gameObject.AddComponent<EventTrigger>();
+
+        var down = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
+        down.callback.AddListener((eventData) =>
+        {
+            CardEntity entity = Resources.Load<CardEntity>($"CardEntityList/Card_{cardID}");
+            if (entity?.icon != null)
+                zoomCoroutine = StartCoroutine(ShowZoom(entity.icon));
+        });
+        trigger.triggers.Add(down);
+
+        var up = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
+        up.callback.AddListener((eventData) =>
+        {
+            if (zoomCoroutine != null)
+                StopCoroutine(zoomCoroutine);
+            HideZoom();
+        });
+        trigger.triggers.Add(up);
 
         // デッキ枚数表示値の更新処理
         UpdateDeckCountText();
