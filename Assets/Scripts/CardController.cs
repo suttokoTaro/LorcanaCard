@@ -7,6 +7,7 @@ public class CardController : MonoBehaviour
     public CardView view; // カードの見た目の処理
     public CardModel model; // カードのデータを処理
 
+
     private void Awake()
     {
         view = GetComponent<CardView>();

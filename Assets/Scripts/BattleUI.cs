@@ -8,8 +8,8 @@ public class BattleUI : MonoBehaviour
 {
     [SerializeField] CardController cardPrefab;
     [SerializeField] Transform playerHandArea, enemyHandArea, playerDeckArea, enemyDeckArea;
-    [SerializeField] Text playerLoaPointText;
-    [SerializeField] Text enemyLoaPointText;
+    [SerializeField] Text playerLoaPointText, enemyLoaPointText;
+    [SerializeField] Text playerDeckCountText, enemyDeckCountText;
     [SerializeField] private GameObject confirmExitPanel;
 
     public int playerLoaPoint;
@@ -18,42 +18,83 @@ public class BattleUI : MonoBehaviour
     bool isPlayerTurn = true;
     List<int> playerDeckList = new List<int>() { };
     List<int> enemyDeckList = new List<int>() { };
+    public static BattleUI Instance { get; private set; }
 
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         playerLoaPoint = 0;
         enemyLoaPoint = 0;
         ShowLoaPoint();
 
-        // DeckManager からデッキを受け取る
+
         if (DeckManager.Instance != null)
         {
+            // DeckManager からデッキを受け取ってデッキエリアにセットする
             playerDeckList = new List<int>(DeckManager.Instance.selectedPlayerDeck);
             enemyDeckList = new List<int>(DeckManager.Instance.selectedEnemyDeck);
-        }
 
-        // 初期手札を受け取って配る
-        foreach (int cardId in DeckManager.Instance.playerInitialHand)
-        {
-            CreateCard(cardId, playerHandArea);
-        }
-        foreach (int cardId in DeckManager.Instance.enemyInitialHand)
-        {
-            CreateCard(cardId, enemyHandArea);
+            for (int i = playerDeckList.Count - 1; i >= 0; i--)
+            {
+                int cardId = playerDeckList[i];
+                CreateBackIconCard(cardId, playerDeckArea);
+            }
+            for (int i = enemyDeckList.Count - 1; i >= 0; i--)
+            {
+                int cardId = enemyDeckList[i];
+                CreateBackIconCard(cardId, enemyDeckArea);
+            }
+            // string playerDeckStr = string.Join(", ", playerDeckList);
+            // string enemyDeckStr = string.Join(", ", enemyDeckList);
+            // Debug.Log($"▶️ playerDeckList: [{playerDeckStr}]");
+            // Debug.Log($"▶️ enemyDeckList:  [{enemyDeckStr}]");
+
+            // DeckManager から初期手札を受け取って配る
+            foreach (int cardId in DeckManager.Instance.playerInitialHand)
+            {
+                CreateFrontIconCard(cardId, playerHandArea);
+            }
+            foreach (int cardId in DeckManager.Instance.enemyInitialHand)
+            {
+                CreateFrontIconCard(cardId, enemyHandArea);
+            }
         }
     }
 
 
-    /** カードの生成 */
-    void CreateCard(int cardID, Transform place)
+    /** 表画像表示のカードの生成 */
+    void CreateFrontIconCard(int cardID, Transform place)
     {
-        // エリアの種類に応じて、カードの生成処理（HandかFieldかTrashなら表向き／DeckかInkwellなら裏向き）
+        CardController card = Instantiate(cardPrefab, place);
+        card.CreateCardAndViewIcon(cardID);
+
+        // デッキ枚数表示値の更新処理
+        UpdateDeckCountText();
+    }
+
+    /** 裏画像表ののカードの生成 */
+    void CreateBackIconCard(int cardID, Transform place)
+    {
         CardController card = Instantiate(cardPrefab, place);
         card.CreateCardAndViewBackIcon(cardID);
 
         // デッキ枚数表示値の更新処理
+        UpdateDeckCountText();
     }
 
+    /** デッキ枚数表示値の更新処理 */
+    public void UpdateDeckCountText()
+    {
+        if (playerDeckCountText != null)
+            //playerDeckCountText.text = $"枚数: {playerDeckList.Count}";
+            playerDeckCountText.text = $"Deck: {playerDeckArea.childCount}";
+        if (enemyDeckCountText != null)
+            //enemyDeckCountText.text = $"枚数: {enemyDeckList.Count}";
+            enemyDeckCountText.text = $"Deck: {enemyDeckArea.childCount}";
+    }
 
     void PlayerDrawCard()
     {
@@ -61,7 +102,7 @@ public class BattleUI : MonoBehaviour
         {
             int cardID = playerDeckList[0];
             playerDeckList.RemoveAt(0);
-            CreateCard(cardID, playerHandArea);
+            CreateFrontIconCard(cardID, playerHandArea);
         }
     }
 
@@ -71,7 +112,7 @@ public class BattleUI : MonoBehaviour
         {
             int cardID = enemyDeckList[0];
             enemyDeckList.RemoveAt(0);
-            CreateCard(cardID, enemyHandArea);
+            CreateFrontIconCard(cardID, enemyHandArea);
         }
     }
 

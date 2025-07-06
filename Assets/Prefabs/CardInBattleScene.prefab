@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 468814097825308247}
   - component: {fileID: 3021027870080085880}
   m_Layer: 5
-  m_Name: Card
+  m_Name: CardInBattleScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +190,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 280}
+  m_SizeDelta: {x: 150, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7461371919365614087
 CanvasRenderer:
@@ -213,8 +213,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardParent: {fileID: 0}
-  zoomParent: {fileID: 0}
-  holdTime: 0.5
 --- !u!225 &1482344922280515995
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -252,7 +250,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98c2af5b944ed54f9f44e3dbe9f8fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
-  powerText: {fileID: 0}
-  costText: {fileID: 0}
   iconImage: {fileID: 1898781450353174574}
+  countText: {fileID: 0}
