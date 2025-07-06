@@ -19,7 +19,7 @@ public class BattleUI : MonoBehaviour
 
     private IEnumerator ShowZoom(Sprite sprite)
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(1.4f);
         if (zoomCanvas != null && zoomImage != null)
         {
             zoomImage.sprite = sprite;

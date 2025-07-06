@@ -1639,7 +1639,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 280}
+  m_CellSize: {x: 150, y: 210}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
@@ -1668,7 +1668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRectTransform: {fileID: 689179937}
-  cellSize: {x: 200, y: 280}
+  cellSize: {x: 150, y: 210}
   defaultSpacing: 15
   minSpacing: -400
 --- !u!1 &750668670
@@ -3505,7 +3505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRectTransform: {fileID: 1951219944}
-  cellSize: {x: 200, y: 280}
+  cellSize: {x: 150, y: 210}
   defaultSpacing: 20
   minSpacing: -200
 --- !u!114 &1951219949
@@ -3528,7 +3528,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 280}
+  m_CellSize: {x: 150, y: 210}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
