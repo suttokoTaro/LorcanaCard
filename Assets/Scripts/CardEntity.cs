@@ -9,8 +9,11 @@ public class CardEntity : ScriptableObject
     // カードのユニークID
     public int cardId;
 
-    // カード画像
+    // カードの表画像
     public Sprite icon;
+
+    // カードの裏画像
+    public Sprite backIcon;
 
     // カード名
     public new string name;
@@ -26,6 +29,6 @@ public class CardEntity : ScriptableObject
 
     // カード攻撃力 
     public int power;
-    
+
 
 }
