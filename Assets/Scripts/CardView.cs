@@ -5,20 +5,24 @@ using UnityEngine.UI;
 
 public class CardView : MonoBehaviour
 {
-    // カード名表示用テキスト（不要想定）
-    [SerializeField] Text nameText;
-    // カード枚数表示用テキスト（デッキ編集画面にて使用想定）
-    [SerializeField] Text countText;
-    // カードの表画像（デッキ編集画面、マリガン画面、対戦画面で使用想定）
+    // カード画像表示用
     [SerializeField] Image iconImage;
 
-    public void Show(CardModel cardModel)
+    // カード枚数表示用テキスト（デッキ編集画面にて使用想定）
+    [SerializeField] Text countText;
+
+    /**カードの表画像の表示 */
+    public void ShowIcon(CardModel cardModel)
     {
         if (iconImage != null)
             iconImage.sprite = cardModel.icon;
+    }
 
-        if (nameText != null)
-            nameText.text = $"Card ID: {cardModel.cardId}";
+    /**カードの裏画像の表示 */
+    public void ShowBackIcon(CardModel cardModel)
+    {
+        if (iconImage != null)
+            iconImage.sprite = cardModel.backIcon;
     }
 
     /** カード枚数のセット（デッキ編集画面で使用する） */

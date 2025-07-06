@@ -3445,7 +3445,7 @@ GameObject:
   - component: {fileID: 2012533715}
   - component: {fileID: 2012533714}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: BattleUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3464,8 +3464,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 468814097825308247, guid: a725ab8e23ef4014f8eefee95eda51b6, type: 3}
-  playerHand: {fileID: 689179937}
-  enemyHand: {fileID: 1951219944}
+  playerHandArea: {fileID: 689179937}
+  enemyHandArea: {fileID: 1951219944}
+  playerDeckArea: {fileID: 1430512486}
+  enemyDeckArea: {fileID: 1955603580}
   playerLoaPointText: {fileID: 2118619273}
   enemyLoaPointText: {fileID: 813888817}
   confirmExitPanel: {fileID: 1950530356}

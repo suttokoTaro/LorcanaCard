@@ -12,9 +12,17 @@ public class CardController : MonoBehaviour
         view = GetComponent<CardView>();
     }
 
-    public void Init(int cardID) // カードを生成した時に呼ばれる関数
+    /** カードの生成（表画像表示） */
+    public void CreateCardAndViewIcon(int cardID)
     {
-        model = new CardModel(cardID); // カードデータを生成
-        view.Show(model); // 表示
+        model = new CardModel(cardID);
+        view.ShowIcon(model);
+    }
+
+    /** カードの生成（表画像表示） */
+    public void CreateCardAndViewBackIcon(int cardID)
+    {
+        model = new CardModel(cardID);
+        view.ShowBackIcon(model);
     }
 }
