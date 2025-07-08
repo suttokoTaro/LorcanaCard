@@ -26,7 +26,7 @@ public class BattleUI : MonoBehaviour
             zoomCanvas.SetActive(true);
         }
     }
-    private void HideZoom()
+    public void HideZoom()
     {
         if (zoomCanvas != null)
             zoomCanvas.SetActive(false);
@@ -94,6 +94,7 @@ public class BattleUI : MonoBehaviour
         // ズーム表示の EventTrigger を追加
         EventTrigger trigger = card.gameObject.AddComponent<EventTrigger>();
 
+        // === PointerDown: 長押し検出で表示開始 ===
         var down = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
         down.callback.AddListener((eventData) =>
         {
@@ -103,12 +104,13 @@ public class BattleUI : MonoBehaviour
         });
         trigger.triggers.Add(down);
 
+        // === PointerUp: 表示を閉じない（StopCoroutine のみ） ===
         var up = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
         up.callback.AddListener((eventData) =>
         {
             if (zoomCoroutine != null)
                 StopCoroutine(zoomCoroutine);
-            HideZoom();
+            // HideZoom(); ← 呼ばない！
         });
         trigger.triggers.Add(up);
 
@@ -139,7 +141,7 @@ public class BattleUI : MonoBehaviour
         {
             if (zoomCoroutine != null)
                 StopCoroutine(zoomCoroutine);
-            HideZoom();
+            // HideZoom();
         });
         trigger.triggers.Add(up);
 
