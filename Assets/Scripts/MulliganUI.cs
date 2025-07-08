@@ -14,14 +14,14 @@ class MulliganManager : MonoBehaviour
 
     private IEnumerator ShowZoom(Sprite sprite)
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.6f);
         if (zoomCanvas != null && zoomImage != null)
         {
             zoomImage.sprite = sprite;
             zoomCanvas.SetActive(true);
         }
     }
-    private void HideZoom()
+    public void HideZoom()
     {
         if (zoomCanvas != null)
             zoomCanvas.SetActive(false);
@@ -118,7 +118,7 @@ class MulliganManager : MonoBehaviour
                 {
                     if (zoomCoroutine != null)
                         StopCoroutine(zoomCoroutine);
-                    HideZoom();
+                    //HideZoom();
                 });
                 trigger.triggers.Add(up);
             }

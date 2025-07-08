@@ -208,7 +208,7 @@ public class DeckBuilderUI : MonoBehaviour
             up.callback.AddListener((eventData) =>
             {
                 StopAllCoroutines();
-                HideZoom();
+                //HideZoom();
             });
             trigger.triggers.Add(up);
 
@@ -294,7 +294,7 @@ public class DeckBuilderUI : MonoBehaviour
 
     private IEnumerator ShowZoom(Sprite sprite)
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.6f);
 
         if (zoomCanvas != null && zoomImage != null)
         {
@@ -303,7 +303,7 @@ public class DeckBuilderUI : MonoBehaviour
         }
     }
 
-    private void HideZoom()
+    public void HideZoom()
     {
         if (zoomCanvas != null)
             zoomCanvas.SetActive(false);
