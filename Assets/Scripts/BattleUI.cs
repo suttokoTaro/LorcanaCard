@@ -14,9 +14,26 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private GameObject confirmExitPanel;
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
+    [SerializeField] public GameObject deckMenuCanvas; // Inspector でセット
 
     private Coroutine zoomCoroutine;
+    private Coroutine deckMenuCoroutine;
 
+    /** デッキニューCanvasの表示 */
+    private IEnumerator ShowDeckMenu(CardController card)
+    {
+        yield return new WaitForSeconds(1.0f);
+        deckMenuCanvas.SetActive(true);
+        // 必要に応じて cardId やカード参照を保存
+    }
+
+    /** デッキニューCanvasの非表示 */
+    public void HideDeckMenu()
+    {
+        deckMenuCanvas.SetActive(false);
+    }
+
+    /** ZoomCanvasの表示 */
     private IEnumerator ShowZoom(Sprite sprite)
     {
         yield return new WaitForSeconds(1.0f);
@@ -26,6 +43,7 @@ public class BattleUI : MonoBehaviour
             zoomCanvas.SetActive(true);
         }
     }
+    /** ZoomCanvasの非表示 */
     public void HideZoom()
     {
         if (zoomCanvas != null)
@@ -46,14 +64,15 @@ public class BattleUI : MonoBehaviour
     }
     void Start()
     {
+        // ロア値の初期表示
         playerLoaPoint = 0;
         enemyLoaPoint = 0;
         ShowLoaPoint();
 
-
+        // DeckManagerから受け取ったカードをセットする
         if (DeckManager.Instance != null)
         {
-            // DeckManager からデッキを受け取ってデッキエリアにセットする
+            // 初期手札を除くデッキをデッキエリアにセットする
             playerDeckList = new List<int>(DeckManager.Instance.selectedPlayerDeck);
             enemyDeckList = new List<int>(DeckManager.Instance.selectedEnemyDeck);
 
@@ -67,12 +86,8 @@ public class BattleUI : MonoBehaviour
                 int cardId = enemyDeckList[i];
                 CreateBackIconCard(cardId, enemyDeckArea);
             }
-            // string playerDeckStr = string.Join(", ", playerDeckList);
-            // string enemyDeckStr = string.Join(", ", enemyDeckList);
-            // Debug.Log($"▶️ playerDeckList: [{playerDeckStr}]");
-            // Debug.Log($"▶️ enemyDeckList:  [{enemyDeckStr}]");
 
-            // DeckManager から初期手札を受け取って配る
+            // 初期手札をハンドエリアにセットする
             foreach (int cardId in DeckManager.Instance.playerInitialHand)
             {
                 CreateFrontIconCard(cardId, playerHandArea);
@@ -98,9 +113,19 @@ public class BattleUI : MonoBehaviour
         var down = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
         down.callback.AddListener((eventData) =>
         {
-            CardEntity entity = Resources.Load<CardEntity>($"CardEntityList/Card_{cardID}");
-            if (entity?.icon != null)
-                zoomCoroutine = StartCoroutine(ShowZoom(entity.icon));
+            // 親エリア名で Deck にいるか判定
+            string parentName = card.transform.parent?.name.ToLower();
+            bool isDeck = parentName != null && parentName.Contains("deck");
+            if (isDeck)
+            {
+                deckMenuCoroutine = StartCoroutine(ShowDeckMenu(card)); // ✅ Deck メニュー表示（Zoomはしない）
+            }
+            else
+            {
+                CardEntity entity = Resources.Load<CardEntity>($"CardEntityList/Card_{cardID}");
+                if (entity?.icon != null)
+                    zoomCoroutine = StartCoroutine(ShowZoom(entity.icon));
+            }
         });
         trigger.triggers.Add(down);
 
@@ -109,8 +134,13 @@ public class BattleUI : MonoBehaviour
         up.callback.AddListener((eventData) =>
         {
             if (zoomCoroutine != null)
+            {
                 StopCoroutine(zoomCoroutine);
-            // HideZoom(); ← 呼ばない！
+            }
+            if (deckMenuCoroutine != null)
+            {
+                StopCoroutine(deckMenuCoroutine);
+            }
         });
         trigger.triggers.Add(up);
 
@@ -130,19 +160,34 @@ public class BattleUI : MonoBehaviour
         var down = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
         down.callback.AddListener((eventData) =>
         {
-            CardEntity entity = Resources.Load<CardEntity>($"CardEntityList/Card_{cardID}");
-            if (entity?.icon != null)
-                zoomCoroutine = StartCoroutine(ShowZoom(entity.icon));
+            // 親エリア名で Deck にいるか判定
+            string parentName = card.transform.parent?.name.ToLower();
+            bool isDeck = parentName != null && parentName.Contains("deck");
+            if (isDeck)
+            {
+                deckMenuCoroutine = StartCoroutine(ShowDeckMenu(card)); // ✅ Deck メニュー表示（Zoomはしない）
+            }
+            else
+            {
+                CardEntity entity = Resources.Load<CardEntity>($"CardEntityList/Card_{cardID}");
+                if (entity?.icon != null)
+                    zoomCoroutine = StartCoroutine(ShowZoom(entity.icon));
+            }
         });
         trigger.triggers.Add(down);
 
         var up = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
         up.callback.AddListener((eventData) =>
-        {
-            if (zoomCoroutine != null)
-                StopCoroutine(zoomCoroutine);
-            // HideZoom();
-        });
+            {
+                if (zoomCoroutine != null)
+                {
+                    StopCoroutine(zoomCoroutine);
+                }
+                if (deckMenuCoroutine != null)
+                {
+                    StopCoroutine(deckMenuCoroutine);
+                }
+            });
         trigger.triggers.Add(up);
 
         // デッキ枚数表示値の更新処理
@@ -160,6 +205,7 @@ public class BattleUI : MonoBehaviour
             enemyDeckCountText.text = $"Deck: {enemyDeckArea.childCount}";
     }
 
+    /**
     void PlayerDrawCard()
     {
         if (playerDeckList.Count > 0)
@@ -179,9 +225,10 @@ public class BattleUI : MonoBehaviour
             CreateFrontIconCard(cardID, enemyHandArea);
         }
     }
-
+    */
 
     /** ターン終了ボタン押下時の処理 */
+    /**
     public void ChangeTurn()
     {
         isPlayerTurn = !isPlayerTurn; // ターンを逆にする
@@ -206,6 +253,7 @@ public class BattleUI : MonoBehaviour
     {
         EnemyDrawCard();
     }
+    */
 
 
     /** ロア値の加減ボタン押下時の処理 */
@@ -236,7 +284,7 @@ public class BattleUI : MonoBehaviour
     }
 
 
-    /** ターン終了ボタン押下時の処理 */
+    /** 対戦終了ボタン押下時の処理 */
     public void OnClickEndBattleButton()
     {
         if (confirmExitPanel != null)
@@ -250,5 +298,45 @@ public class BattleUI : MonoBehaviour
     {
         if (confirmExitPanel != null)
             confirmExitPanel.SetActive(false);
+    }
+
+    public void ShuffleDeckArea(Transform deckArea)
+    {
+        int childCount = deckArea.childCount;
+
+        // 子オブジェクトを一時リストに取得
+        List<Transform> cards = new List<Transform>();
+        for (int i = 0; i < childCount; i++)
+        {
+            cards.Add(deckArea.GetChild(i));
+        }
+
+        // シャッフル
+        for (int i = 0; i < cards.Count; i++)
+        {
+            int randIndex = Random.Range(i, cards.Count);
+            var temp = cards[i];
+            cards[i] = cards[randIndex];
+            cards[randIndex] = temp;
+        }
+
+        // 並び替えた順に SetAsLastSibling で再配置
+        foreach (var card in cards)
+        {
+            card.SetAsLastSibling();
+        }
+
+        Debug.Log("Deck shuffled visually!");
+    }
+    public void MoveTopDeckCardToBottom(Transform deckArea)
+    {
+        int count = deckArea.childCount;
+        if (count <= 1) return;
+        // 一番上のカード（＝最後の子）を取得
+        Transform topCard = deckArea.GetChild(count - 1);
+        // 一番下に移動
+        topCard.SetAsFirstSibling();
+
+        Debug.Log("Moved top deck card to bottom.");
     }
 }
