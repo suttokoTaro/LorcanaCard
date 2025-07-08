@@ -15,8 +15,10 @@ MonoBehaviour:
   cardId: 1128
   icon: {fileID: 21300000, guid: bff6810abc244e5449a2e0050c726ebc, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30DE\u30A6\u30A4"
+  name: BE PREPARED
   color: ruby
   cost: 7
+  cardType: "action\u30FBsong"
   endurePoint: 0
   power: 0
+  loaPoint: 0

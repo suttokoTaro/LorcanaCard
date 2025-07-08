@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41df4d9a9809974b92be282b335880c, type: 3}
+  m_Name: Card_1124
+  m_EditorClassIdentifier: 
+  cardId: 1124
+  icon: {fileID: 21300000, guid: 1a81fffc3bcb19447968de7501993f7b, type: 3}
+  backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
+  name: "\u30C6\u30A3\u30D6\u30B9\u8ECD\u66F9"
+  color: ruby
+  cost: 1
+  cardType: character
+  endurePoint: 2
+  power: 2
+  loaPoint: 1

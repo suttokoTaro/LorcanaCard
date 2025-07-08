@@ -18,5 +18,7 @@ MonoBehaviour:
   name: "\u91CE\u5FC3\u3068\u7259"
   color: ruby
   cost: 2
+  cardType: "action\u30FBsong"
   endurePoint: 0
   power: 0
+  loaPoint: 0

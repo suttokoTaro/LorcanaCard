@@ -18,5 +18,7 @@ MonoBehaviour:
   name: "\u30AF\u30B9\u30B3"
   color: amethyst
   cost: 2
+  cardType: character
   endurePoint: 2
   power: 1
+  loaPoint: 1

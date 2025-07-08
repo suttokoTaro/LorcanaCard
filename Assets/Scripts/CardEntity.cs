@@ -24,11 +24,17 @@ public class CardEntity : ScriptableObject
     // カードコスト
     public int cost;
 
+    // カード種類
+    public new string cardType;
+
     // カード耐久力
     public int endurePoint;
 
     // カード攻撃力 
     public int power;
 
+    // カードロア値
+
+    public int loaPoint;
 
 }

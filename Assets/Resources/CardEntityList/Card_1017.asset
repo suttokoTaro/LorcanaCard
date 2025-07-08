@@ -18,5 +18,7 @@ MonoBehaviour:
   name: "\u30D7\u30F3\u30D0\u30A1"
   color: umber
   cost: 4
+  cardType: character
   endurePoint: 5
   power: 3
+  loaPoint: 1

@@ -18,5 +18,7 @@ MonoBehaviour:
   name: "\u30CF\u30AF\u30CA\u30FB\u30DE\u30BF\u30BF"
   color: umber
   cost: 4
+  cardType: "action\u30FBsong"
   endurePoint: 0
   power: 0
+  loaPoint: 0

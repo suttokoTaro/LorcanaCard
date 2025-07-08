@@ -18,5 +18,7 @@ MonoBehaviour:
   name: "\u6012\u3063\u3066\u3070\u304B\u308A\u306D\uFF01"
   color: umber
   cost: 1
+  cardType: action
   endurePoint: 0
   power: 0
+  loaPoint: 0

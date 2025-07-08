@@ -18,5 +18,7 @@ MonoBehaviour:
   name: "\u30DF\u30CB\u30FC\u30DE\u30A6\u30B9"
   color: ruby
   cost: 3
+  cardType: character
   endurePoint: 3
   power: 1
+  loaPoint: 0
