@@ -11,6 +11,9 @@ public class CardView : MonoBehaviour
     // カード枚数表示用テキスト（デッキ編集画面にて使用想定）
     [SerializeField] Text countText;
 
+    [SerializeField] private Text damageText;
+    [SerializeField] private GameObject damagePanel; // 表示パネル（非表示可）
+
     /**カードの表画像の表示 */
     public void ShowIcon(CardModel cardModel)
     {
@@ -37,5 +40,18 @@ public class CardView : MonoBehaviour
     {
         if (countText != null)
             countText.text = "";
+    }
+
+    /** ダメージポイントの更新 */
+    public void UpdateDamage(int amount)
+    {
+        damageText.text = amount.ToString();
+        damagePanel.SetActive(true);
+    }
+    /** ダメージパネルの表示操作 */
+    public void SetDamagePanelVisible(bool visible)
+    {
+        if (damagePanel != null)
+            damagePanel.SetActive(visible);
     }
 }

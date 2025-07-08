@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class CardController : MonoBehaviour, IPointerClickHandler
 {
+
+    [SerializeField] private Button plusButton;
+    [SerializeField] private Button minusButton;
     public CardView view; // カードの見た目の処理
     public CardModel model; // カードのデータを処理
     public bool isTapped = false; // 縦か横かの状態保持
@@ -43,4 +47,33 @@ public class CardController : MonoBehaviour, IPointerClickHandler
         float rotationZ = isTapped ? 90f : 0f;
         transform.localRotation = Quaternion.Euler(0f, 0f, rotationZ);
     }
+
+    private void Start()
+    {
+        plusButton.onClick.AddListener(() => ModifyDamage(+1));
+        minusButton.onClick.AddListener(() => ModifyDamage(-1));
+        UpdateDamageButtonVisibility(); // 初期状態チェック
+    }
+    private void Update()
+    {
+        // 親が変わったときに自動判定
+        UpdateDamageButtonVisibility();
+    }
+    private void UpdateDamageButtonVisibility()
+    {
+        string parentName = transform.parent?.name.ToLower();
+        bool isInField = parentName != null && parentName.Contains("field");
+
+        //plusButton.gameObject.SetActive(isInField);
+        //minusButton.gameObject.SetActive(isInField);
+        view.SetDamagePanelVisible(isInField);
+    }
+
+    public void ModifyDamage(int delta)
+    {
+        model.AddDamage(delta);
+        view.UpdateDamage(model.damage);
+    }
+
+
 }

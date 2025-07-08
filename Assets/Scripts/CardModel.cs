@@ -22,6 +22,8 @@ public class CardModel
     // カード攻撃力 
     public int power;
 
+    public int damage = 0;
+
 
     public CardModel(int cardID)
     {
@@ -36,5 +38,11 @@ public class CardModel
         endurePoint = cardEntity.endurePoint;
         power = cardEntity.power;
 
+    }
+
+    /** ダメージポイントの増減 */
+    public void AddDamage(int amount)
+    {
+        damage += amount;
     }
 }
