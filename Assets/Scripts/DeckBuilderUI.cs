@@ -15,7 +15,7 @@ public class DeckBuilderUI : MonoBehaviour
     [SerializeField] private Toggle sapphireToggle;
     [SerializeField] private Toggle steelToggle;
     [SerializeField] private Text deckCountText;
-
+    private bool[] activeCostFilters = new bool[11]; // index 1〜10を使用
     public Text deckNameText;
 
     public Transform deckCardListContent; // デッキ内カード表示用
@@ -92,7 +92,23 @@ public class DeckBuilderUI : MonoBehaviour
             deckNameInputField.onEndEdit.AddListener(OnDeckNameChanged);
         }
 
+        for (int i = 1; i <= 9; i++)
+        {
+            var toggle = GameObject.Find($"CostToggle_{i}")?.GetComponent<Toggle>();
+            int capturedCost = i; // ループ変数キャプチャ
+            if (toggle != null)
+            {
+                toggle.onValueChanged.AddListener((isOn) =>
+                {
+                    OnCostToggleChanged(capturedCost, isOn);
+                });
+            }
+            else
+            {
+                Debug.LogWarning($"CostToggle_{i} が見つかりません");
+            }
 
+        }
     }
 
     void RefreshDeckCardList()
@@ -148,7 +164,7 @@ public class DeckBuilderUI : MonoBehaviour
         }
         if (deckCountText != null)
         {
-            deckCountText.text = $"デッキ枚数：{currentDeck.cardIDs.Count}枚";
+            deckCountText.text = $"現在：{currentDeck.cardIDs.Count}枚";
         }
     }
 
@@ -170,12 +186,26 @@ public class DeckBuilderUI : MonoBehaviour
             Debug.Log($"[ColorCheck] cardId: {entity.cardId}, color: '{entity.color}'");
 
             string cardColor = entity.color?.Trim().ToLower();
-            bool matchesFilter = activeColorFilters.Count == 0 ||
-                                 activeColorFilters.Exists(f => f.Trim().ToLower() == cardColor);
+            bool matchesColor = activeColorFilters.Count == 0 ||
+            activeColorFilters.Exists(f => f.Trim().ToLower() == cardColor);
 
-            if (matchesFilter)
+            bool matchesCost = false;
+            for (int i = 1; i <= 10; i++)
             {
-                Debug.Log($"→ 表示: {entity.cardId}");
+                if (activeCostFilters[i] && entity.cost == i)
+                {
+                    matchesCost = true;
+                    break;
+                }
+            }
+            // フィルターが1つもONでなければ全表示
+            bool anyCostSelected = false;
+            for (int i = 1; i <= 10; i++)
+                if (activeCostFilters[i]) { anyCostSelected = true; break; }
+            if (!anyCostSelected) matchesCost = true;
+
+            if (matchesColor && matchesCost)
+            {
                 filtered.Add(entity);
             }
         }
@@ -258,6 +288,15 @@ public class DeckBuilderUI : MonoBehaviour
 
         Debug.Log("active filters: " + string.Join(",", activeColorFilters));
         GenerateAllCardList();
+    }
+
+    public void OnCostToggleChanged(int cost, bool isOn)
+    {
+        if (cost >= 1 && cost <= 10)
+        {
+            activeCostFilters[cost] = isOn;
+            GenerateAllCardList(); // 再描画
+        }
     }
 
     private void OnDeckNameChanged(string newName)
