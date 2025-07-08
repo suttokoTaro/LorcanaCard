@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card_1051
   m_EditorClassIdentifier: 
   cardId: 1051
-  icon: {fileID: 21300000, guid: 7dbdb38c9a3ad00459108288414c2242, type: 3}
+  icon: {fileID: 21300000, guid: 5af2f85e47a28ee4a9b5b0f26e6eb96d, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30DF\u30C3\u30AD\u30FC\u30DE\u30A6\u30B9"
   color: amethyst

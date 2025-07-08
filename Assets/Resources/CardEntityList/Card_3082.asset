@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41df4d9a9809974b92be282b335880c, type: 3}
+  m_Name: Card_3082
+  m_EditorClassIdentifier: 
+  cardId: 3082
+  icon: {fileID: 21300000, guid: 7bb105ad71b38ca49a25751f3562a432, type: 3}
+  backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
+  name: "\u30D4\u30FC\u30BF\u30FC\u30FB\u30D1\u30F3"
+  color: emerald
+  cost: 4
+  endurePoint: 3
+  power: 3

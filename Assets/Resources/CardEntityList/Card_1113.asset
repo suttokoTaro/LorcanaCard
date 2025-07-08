@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card_1113
   m_EditorClassIdentifier: 
   cardId: 1113
-  icon: {fileID: 21300000, guid: 4bdca1c0129d99b4d9240d88fe596f1f, type: 3}
+  icon: {fileID: 21300000, guid: 733df931683f264468bc4781b31180cc, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30DE\u30EC\u30D5\u30A3\u30BB\u30F3\u30C8"
   color: ruby
