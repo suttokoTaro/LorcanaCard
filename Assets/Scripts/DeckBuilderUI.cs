@@ -183,7 +183,7 @@ public class DeckBuilderUI : MonoBehaviour
         List<CardEntity> filtered = new List<CardEntity>();
         foreach (CardEntity entity in allEntities)
         {
-            Debug.Log($"[ColorCheck] cardId: {entity.cardId}, color: '{entity.color}'");
+            //Debug.Log($"[ColorCheck] cardId: {entity.cardId}, color: '{entity.color}'");
 
             string cardColor = entity.color?.Trim().ToLower();
             bool matchesColor = activeColorFilters.Count == 0 ||
@@ -286,7 +286,7 @@ public class DeckBuilderUI : MonoBehaviour
                 activeColorFilters.Remove(normalizedColor);
         }
 
-        Debug.Log("active filters: " + string.Join(",", activeColorFilters));
+        //Debug.Log("active filters: " + string.Join(",", activeColorFilters));
         GenerateAllCardList();
     }
 

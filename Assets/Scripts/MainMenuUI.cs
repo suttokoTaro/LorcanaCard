@@ -17,6 +17,8 @@ public class MainMenuUI : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("PersistentDataPath: " + Application.persistentDataPath);
+        DeckStorage.EnsureDefaultDecksLoaded(); // ← これを先頭に追加！
         Debug.Log("Start(): " + this.name + " deckListParent = " + (deckListParent == null ? "NULL" : deckListParent.name));
         LoadDecksAndDisplay();
         UpdateSelectedDecksDisplay();
