@@ -248,4 +248,9 @@ class MulliganManager : MonoBehaviour
         // シーン遷移
         SceneManager.LoadScene("BattleScene");
     }
+
+    public void OnClickBackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenuScene");
+    }
 }
