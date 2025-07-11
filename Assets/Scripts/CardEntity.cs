@@ -40,7 +40,6 @@ public class CardEntity : ScriptableObject
     public int power;
 
     // カードロア値
-
     public int loaPoint;
 
 }

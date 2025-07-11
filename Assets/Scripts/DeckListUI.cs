@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/** デッキリスト画面 */
 public class DeckListUI : MonoBehaviour
 {
     public Transform contentParent; // ScrollView の Content
@@ -15,21 +16,25 @@ public class DeckListUI : MonoBehaviour
         LoadAndDisplayDecks();
     }
 
+    /** デッキリストの読み込み（表示の更新） */
     void LoadAndDisplayDecks()
     {
-        currentDeckList = DeckStorage.LoadDecks();
-
+        // まず一度デッキリストエリアの既存のオブジェクトをすべて削除
         foreach (Transform child in contentParent)
         {
-            Destroy(child.gameObject); // 既存の表示を消す
+            Destroy(child.gameObject);
         }
 
+        currentDeckList = DeckStorage.LoadDecks();
         foreach (var deck in currentDeckList.decks)
         {
+            // deckItemプレハブのインスタンスを、デッキリストエリアに生成する
             GameObject item = Instantiate(deckItemPrefab, contentParent);
+
+            // デッキ名の設定
             item.transform.Find("DeckNameText").GetComponent<Text>().text = deck.deckName;
 
-            // 編集ボタン
+            // 編集ボタンの設定（ボタン押下時にデッキ編集画面に遷移する処理）
             item.transform.Find("EditButton").GetComponent<Button>().onClick.AddListener(() =>
             {
                 Debug.Log("編集: " + deck.deckName);
@@ -37,7 +42,7 @@ public class DeckListUI : MonoBehaviour
                 UnityEngine.SceneManagement.SceneManager.LoadScene("DeckBuilderScene");
             });
 
-            // 削除ボタン
+            // 削除ボタンの設定（ボタン押下時にデッキを削除して、デッキリスト表示を更新する処理
             item.transform.Find("DeleteButton").GetComponent<Button>().onClick.AddListener(() =>
             {
                 currentDeckList.decks.Remove(deck);
@@ -46,10 +51,12 @@ public class DeckListUI : MonoBehaviour
             });
         }
     }
+
+    /** 新規作成ボタン押下時処理：新しいデッキを作成し、デッキ編集画面に遷移する */
     public void OnClickCreateNewDeck()
     {
         DeckData newDeck = new DeckData();
-        newDeck.deckId = System.Guid.NewGuid().ToString(); // 🔥 一意なID生成
+        newDeck.deckId = System.Guid.NewGuid().ToString(); // デッキのユニークIDの生成 
         newDeck.deckName = "新しいデッキ";
         newDeck.cardIDs = new List<int>();
 
@@ -60,9 +67,11 @@ public class DeckListUI : MonoBehaviour
         SelectedDeckData.selectedDeck = newDeck;
         SceneManager.LoadScene("DeckBuilderScene");
     }
+
+    /** 戻るボタン押下時処理：メインメニュー画面に戻る */
     public void OnClickBackToMainMenu()
     {
-        SceneManager.LoadScene("MainMenuScene"); // 実際のシーン名に置き換えてください
+        SceneManager.LoadScene("MainMenuScene");
     }
 
 }
