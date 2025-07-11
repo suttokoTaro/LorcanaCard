@@ -16,9 +16,11 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 15b1c2d50e152c34186b68f581dfb43d, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30A2\u30EB\u30DE\u30FB\u30DE\u30C9\u30EA\u30AC\u30EB"
+  versionName: "\u6BCD\u5BB6\u9577"
   color: umber
   cost: 3
   cardType: character
+  cardClass: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u5C0E\u304D\u624B\u30FB\u30DE\u30C9\u30EA\u30AC\u30EB\u5BB6"
   endurePoint: 3
   power: 1
   loaPoint: 2

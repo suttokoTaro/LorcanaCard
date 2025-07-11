@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41df4d9a9809974b92be282b335880c, type: 3}
+  m_Name: Card_4076
+  m_EditorClassIdentifier: 
+  cardId: 4076
+  icon: {fileID: 21300000, guid: 7a32c2ab67b14f94fa5af06484685960, type: 3}
+  backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
+  name: "\u30D8\u30E9"
+  versionName: "\u795E\u3005\u306E\u5973\u738B"
+  color: emerald
+  cost: 3
+  cardType: character
+  cardClass: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u5973\u738B\u30FB\u795E\u683C"
+  endurePoint: 3
+  power: 1
+  loaPoint: 2

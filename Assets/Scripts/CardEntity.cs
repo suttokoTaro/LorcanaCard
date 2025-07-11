@@ -18,6 +18,9 @@ public class CardEntity : ScriptableObject
     // カード名
     public new string name;
 
+    // カード名（バージョン名)
+    public new string versionName;
+
     // カード色
     public new string color;
 
@@ -26,6 +29,9 @@ public class CardEntity : ScriptableObject
 
     // カード種類
     public new string cardType;
+
+    // カードクラス
+    public new string cardClass;
 
     // カード耐久力
     public int endurePoint;
