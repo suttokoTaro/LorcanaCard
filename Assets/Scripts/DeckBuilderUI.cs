@@ -254,9 +254,12 @@ public class DeckBuilderUI : MonoBehaviour
             // テキスト表示
             Text nameText = item.transform.Find("nameText")?.GetComponent<Text>();
             Text countText = item.transform.Find("CountText")?.GetComponent<Text>();
+            //Panel countTextPanel = item.transform.Find("CountTextPanel")?.GetComponent<Panel>();
+            Transform countTextPanel = item.transform.Find("CountTextPanel");
 
             if (nameText != null) nameText.text = $"Card ID: {cardId}";
             if (countText != null) countText.text = ""; // 下部エリアなので枚数表示なし
+            if (countTextPanel != null) countTextPanel.gameObject.SetActive(false);
 
             // ボタンに追加処理
             item.GetComponent<Button>().onClick.AddListener(() =>
