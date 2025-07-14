@@ -13,8 +13,7 @@ public class DeckListUI : MonoBehaviour
 
     [SerializeField] private GameObject showDeckCanvas;
     [SerializeField] private Text deckNameText;
-    [SerializeField]
-    private Text deckCountText;
+    [SerializeField] private Text deckCountText;
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
     public GameObject cardItemPrefab;
