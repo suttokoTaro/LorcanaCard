@@ -1013,7 +1013,7 @@ MonoBehaviour:
   deckNameText: {fileID: 1428424088}
   deckCardListContent: {fileID: 714598922}
   allCardListContent: {fileID: 103400860}
-  cardItemPrefab: {fileID: 4564078084730412638, guid: 704b3665909d5cf4e87abf2a19eadada, type: 3}
+  cardItemPrefab: {fileID: 4564078084730412638, guid: a63c83b3a96c9db45bde506bd88b22c6, type: 3}
   saveButton: {fileID: 1934790799}
   backButton: {fileID: 1579638197}
   zoomCanvas: {fileID: 1914540132}

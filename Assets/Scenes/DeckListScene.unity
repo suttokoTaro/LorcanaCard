@@ -1247,6 +1247,7 @@ GameObject:
   - component: {fileID: 458687710}
   - component: {fileID: 458687711}
   - component: {fileID: 458687712}
+  - component: {fileID: 458687713}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1312,6 +1313,20 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 1
+--- !u!114 &458687713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458687709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &540138467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,7 +1665,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 787767554}
   m_HandleRect: {fileID: 787767553}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -78,6 +78,10 @@ public class MainMenuUI : MonoBehaviour
     {
         SceneManager.LoadScene("DeckListScene");
     }
+    public void OnClickCardList()
+    {
+        SceneManager.LoadScene("CardListScene");
+    }
 
     // public void OnClickBattle()
     // {
