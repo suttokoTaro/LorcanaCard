@@ -7,7 +7,7 @@ public class SwipeDetector : MonoBehaviour
     private Vector2 startPos;
     private Vector2 endPos;
 
-    [SerializeField] private float swipeThreshold = 80f; // スワイプとみなす距離
+    [SerializeField] private float swipeThreshold = 50f; // スワイプとみなす距離
 
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;

@@ -3374,6 +3374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea68600c7db0cb44ab979f7101591e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPos: {x: 0, y: 0}
 --- !u!1 &1206812684
 GameObject:
   m_ObjectHideFlags: 0
@@ -3832,7 +3833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df1337c77b08fc2408629bf6bd237e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swipeThreshold: 150
+  swipeThreshold: 50
   zoomCanvas: {fileID: 1053372138}
   zoomImage: {fileID: 1189272645}
 --- !u!1 &1342370977
@@ -6330,7 +6331,7 @@ MonoBehaviour:
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
-  m_DecelerationRate: 0.135
+  m_DecelerationRate: 0.04
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 951324684}
   m_HorizontalScrollbar: {fileID: 0}
