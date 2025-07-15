@@ -29,11 +29,11 @@ public class SwipeHandler : MonoBehaviour, IDragHandler, IEndDragHandler
 
     private void OnSwipeLeft()
     {
-        Debug.Log("← 左にスワイプされました");
+        // Debug.Log("← 左にスワイプされました");
     }
 
     private void OnSwipeRight()
     {
-        Debug.Log("→ 右にスワイプされました");
+        // Debug.Log("→ 右にスワイプされました");
     }
 }

@@ -46,7 +46,7 @@ public class CardListUUI : MonoBehaviour
         // 全カード読み込み
         CardEntity[] allCardEntities = Resources.LoadAll<CardEntity>("CardEntityList");
 
-        Debug.LogWarning("全カード数：" + allCardEntities.Length);
+        // Debug.LogWarning("全カード数：" + allCardEntities.Length);
 
         // フィルター条件に合致したカードリスト
         List<CardEntity> filteredCardEntities = new List<CardEntity>();
@@ -240,17 +240,7 @@ public class CardListUUI : MonoBehaviour
             activeSeriesFilters[cardSeries] = isOn;
             RefreshCardList();
         }
-        // if (isOn)
-        // {
-        //     if (!activeSeriesFilters.Contains(strCardSeries))
-        //         activeSeriesFilters.Add(strCardSeries);
-        // }
-        // else
-        // {
-        //     if (activeSeriesFilters.Contains(strCardSeries))
-        //         activeSeriesFilters.Remove(strCardSeries);
-        // }
-        Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
+        // Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
     }
 
 
