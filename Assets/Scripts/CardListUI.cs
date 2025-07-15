@@ -20,6 +20,8 @@ public class CardListUUI : MonoBehaviour
     private List<string> cardColors = new List<string> { "umber", "amethyst", "emerald", "ruby", "sapphire", "steel" };
     private List<string> activeColorFilters = new List<string>();
     private bool[] activeCostFilters = new bool[11]; // index 1〜10を使用
+    private bool[] activeSeriesFilters = new bool[11]; // index 1〜10を使用
+
 
 
     void Start()
@@ -68,15 +70,33 @@ public class CardListUUI : MonoBehaviour
                     break;
                 }
             }
-            // フィルターが1つもONでなければ全表示
+            // コストフィルターが1つもONでなければ全表示
             bool anyCostSelected = false;
             for (int i = 1; i <= 10; i++)
                 if (activeCostFilters[i]) { anyCostSelected = true; break; }
             if (!anyCostSelected) matchesCost = true;
 
 
+            // シリーズフィルター内容と合致しているかどうか
+            string cardIdStr = cardEntity.cardId.ToString();
+            string cardSeries = cardIdStr.Length > 0 ? cardIdStr.Substring(0, 1).Trim().ToLower() : "";
+            bool matchesSeries = false;
+            for (int i = 1; i <= 10; i++)
+            {
+                if (activeSeriesFilters[i] && int.Parse(cardSeries) == i)
+                {
+                    matchesSeries = true;
+                    break;
+                }
+            }
+            // フィルターが1つもONでなければ全表示
+            bool anySeriesSelected = false;
+            for (int i = 1; i <= 10; i++)
+                if (activeSeriesFilters[i]) { anySeriesSelected = true; break; }
+            if (!anySeriesSelected) matchesSeries = true;
+
             // 各フィルターに内容と合致している場合は表示対象とする
-            if (matchesColor && matchesCost)
+            if (matchesColor && matchesCost && matchesSeries)
             {
                 filteredCardEntities.Add(cardEntity);
             }
@@ -147,15 +167,6 @@ public class CardListUUI : MonoBehaviour
             }
         }
 
-        /**
-        umberToggle.onValueChanged.AddListener((isOn) => { OnColorToggleChangedCore("umber", isOn); });
-        amethystToggle.onValueChanged.AddListener((isOn) => { OnColorToggleChangedCore("amethyst", isOn); });
-        emeraldToggle.onValueChanged.AddListener((isOn) => { OnColorToggleChangedCore("emerald", isOn); });
-        rubyToggle.onValueChanged.AddListener((isOn) => { OnColorToggleChangedCore("ruby", isOn); });
-        sapphireToggle.onValueChanged.AddListener((isOn) => { OnColorToggleChangedCore("sapphire", isOn); });
-        steelToggle.onValueChanged.AddListener((isOn) => { OnColorToggleChangedCore("steel", isOn); });
-        */
-
         // フィルターエリアの1～9のToggleに対して、それぞれチェック時の処理メソッドを紐づけする
         for (int i = 1; i <= 10; i++)
         {
@@ -170,6 +181,22 @@ public class CardListUUI : MonoBehaviour
                 Debug.LogWarning($"CostToggle_{i} が見つかりません");
             }
         }
+
+        // シリーズエリアの各Toggleに対して、それぞれチェック時の処理メソッドを紐づけする
+        for (int j = 1; j <= 4; j++)
+        {
+            var seriesToggle = GameObject.Find($"SeriesToggle_{j}")?.GetComponent<Toggle>();
+            int cardSeries = j;
+            if (seriesToggle != null)
+            {
+                seriesToggle.onValueChanged.AddListener((isOn) => { OnSeriesToggleChangedCore(cardSeries, isOn); });
+            }
+            else
+            {
+                Debug.LogWarning($"SeriesToggle_{j} が見つかりません");
+            }
+        }
+
 
     }
 
@@ -201,6 +228,29 @@ public class CardListUUI : MonoBehaviour
             activeCostFilters[cost] = isOn;
             RefreshCardList();
         }
+    }
+
+    /** シリーズフィルターを更新してカード選択エリアを再表示 */
+    private void OnSeriesToggleChangedCore(int cardSeries, bool isOn)
+    {
+        string strCardSeries = cardSeries.ToString();
+
+        if (cardSeries >= 1 && cardSeries <= 10)
+        {
+            activeSeriesFilters[cardSeries] = isOn;
+            RefreshCardList();
+        }
+        // if (isOn)
+        // {
+        //     if (!activeSeriesFilters.Contains(strCardSeries))
+        //         activeSeriesFilters.Add(strCardSeries);
+        // }
+        // else
+        // {
+        //     if (activeSeriesFilters.Contains(strCardSeries))
+        //         activeSeriesFilters.Remove(strCardSeries);
+        // }
+        Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
     }
 
 
