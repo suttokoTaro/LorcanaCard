@@ -10,6 +10,7 @@ public class ToggleImageSwitcher : MonoBehaviour
 
     void Start()
     {
+        // Debug.Log("ToggleImageSwitcher　Start called");
         if (toggle != null)
         {
             //toggle.isOn = false; // ← 初期状態を非選択に設定
@@ -17,12 +18,12 @@ public class ToggleImageSwitcher : MonoBehaviour
 
             OnToggleChanged(toggle.isOn); // 初期状態の反映
 
-            OnToggleChanged(false);
             // // 初期画像を手動でセット（false の場合）
             // if (iconImage != null && normalSprite != null)
             // {
             //     iconImage.sprite = normalSprite;
             // }
+            // Debug.Log("Image enabled? " + iconImage.enabled);
         }
     }
 

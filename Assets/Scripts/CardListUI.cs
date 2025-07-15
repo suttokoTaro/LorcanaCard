@@ -160,6 +160,9 @@ public class CardListUUI : MonoBehaviour
             if (colorToggle != null)
             {
                 colorToggle.onValueChanged.AddListener((isOn) => { OnColorToggleChangedCore(cardColor, isOn); });
+                //colorToggle.isOn = false;
+                // 暫定対処：フィルター初期値を全選択とする
+                activeColorFilters.Add(cardColor);
             }
             else
             {
@@ -175,6 +178,9 @@ public class CardListUUI : MonoBehaviour
             if (costToggle != null)
             {
                 costToggle.onValueChanged.AddListener((isOn) => { OnCostToggleChanged(capturedCost, isOn); });
+                //costToggle.isOn = false;
+                // 暫定対処：フィルター初期値を全選択とする
+                activeCostFilters[i] = true;
             }
             else
             {
@@ -190,6 +196,9 @@ public class CardListUUI : MonoBehaviour
             if (seriesToggle != null)
             {
                 seriesToggle.onValueChanged.AddListener((isOn) => { OnSeriesToggleChangedCore(cardSeries, isOn); });
+                //seriesToggle.isOn = false;
+                // 暫定対処：フィルター初期値を全選択とする
+                activeSeriesFilters[j] = true;
             }
             else
             {
@@ -215,7 +224,7 @@ public class CardListUUI : MonoBehaviour
             if (activeColorFilters.Contains(normalizedColor))
                 activeColorFilters.Remove(normalizedColor);
         }
-        //Debug.LogWarning("色フィルター更新：" + string.Join(", ", activeColorFilters));
+        Debug.LogWarning("色フィルター更新：" + string.Join(", ", activeColorFilters));
 
         RefreshCardList();
     }
@@ -226,6 +235,7 @@ public class CardListUUI : MonoBehaviour
         if (cost >= 1 && cost <= 10)
         {
             activeCostFilters[cost] = isOn;
+            Debug.LogWarning("コストフィルター更新：" + string.Join(", ", activeCostFilters));
             RefreshCardList();
         }
     }
@@ -238,6 +248,7 @@ public class CardListUUI : MonoBehaviour
         if (cardSeries >= 1 && cardSeries <= 10)
         {
             activeSeriesFilters[cardSeries] = isOn;
+            Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
             RefreshCardList();
         }
         // Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
