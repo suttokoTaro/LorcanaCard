@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class DeckBuilderUI : MonoBehaviour
 {
@@ -136,6 +137,7 @@ public class DeckBuilderUI : MonoBehaviour
                 cardList.Add((entity, pair.Value));
         }
 
+
         // ソート：コスト昇順 → ID昇順
         cardList.Sort((a, b) =>
         {
@@ -217,7 +219,13 @@ public class DeckBuilderUI : MonoBehaviour
         }
 
         // ソート：cardId 昇順
-        filtered.Sort((a, b) => a.cardId.CompareTo(b.cardId));
+        //filtered.Sort((a, b) => a.cardId.CompareTo(b.cardId));
+        // ソート：色 → コスト → カードID 昇順
+        filtered = filtered
+            .OrderBy(c => (c.color ?? "").Trim().ToLower()) // 色
+            .ThenBy(c => c.cost)                            // コスト
+            .ThenBy(c => c.cardId)                          // カードID
+            .ToList();
 
         // 表示生成（フィルター条件に合致したカードリスト）
         foreach (CardEntity entity in filtered)

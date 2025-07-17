@@ -18,9 +18,9 @@ public class CardModel
     // カードコスト
     public int cost;
     // カード耐久力
-    public int endurePoint;
+    public int willpower;
     // カード攻撃力 
-    public int power;
+    public int strength;
 
     public int damage = 0;
 
@@ -35,8 +35,8 @@ public class CardModel
         name = cardEntity.name;
         color = cardEntity.color;
         cost = cardEntity.cost;
-        endurePoint = cardEntity.endurePoint;
-        power = cardEntity.power;
+        willpower = cardEntity.willpower;
+        strength = cardEntity.strength;
 
     }
 

@@ -6,7 +6,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class CardListUUI : MonoBehaviour
+public class CardListUI : MonoBehaviour
 {
     [SerializeField] public Transform cardListContent;
     [SerializeField] private SwipeDetector swipeDetector;
@@ -16,11 +16,14 @@ public class CardListUUI : MonoBehaviour
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
     [SerializeField] private Text filteredCardCountText;
+    [SerializeField] private InputField searchNameInputField;
 
     private List<string> cardColors = new List<string> { "umber", "amethyst", "emerald", "ruby", "sapphire", "steel" };
     private List<string> activeColorFilters = new List<string>();
     private bool[] activeCostFilters = new bool[11]; // index 1〜10を使用
     private bool[] activeSeriesFilters = new bool[11]; // index 1〜10を使用
+    private List<string> cardTypes = new List<string> { "character", "action", "song", "item", "location" };
+    private List<string> activeTypeFilters = new List<string>();
 
 
 
@@ -29,9 +32,14 @@ public class CardListUUI : MonoBehaviour
         // カード表示エリアの初期表示
         RefreshCardList();
 
+        // 各フィルターのToggleと押下時処理の紐づけ
         LinkedFilterToggles();
 
-
+        // 入力が変更されたらカードリスト更新
+        if (searchNameInputField != null)
+        {
+            searchNameInputField.onValueChanged.AddListener((_) => RefreshCardList());
+        }
     }
 
     /** カード表示エリアの更新 */
@@ -45,7 +53,6 @@ public class CardListUUI : MonoBehaviour
 
         // 全カード読み込み
         CardEntity[] allCardEntities = Resources.LoadAll<CardEntity>("CardEntityList");
-
         // Debug.LogWarning("全カード数：" + allCardEntities.Length);
 
         // フィルター条件に合致したカードリスト
@@ -53,10 +60,13 @@ public class CardListUUI : MonoBehaviour
 
         foreach (CardEntity cardEntity in allCardEntities)
         {
-            // カードentityに登録されている色
-            string cardColor = cardEntity.color?.Trim().ToLower();
+            // カードタイプフィルター内容と合致しているかどうか（カードタイプフィルターが一つも選択されていない場合もtrue）
+            string cardType = cardEntity.cardType?.Trim().ToLower();
+            bool matchesCardType = activeTypeFilters.Count == 0 ||
+             (cardType != null && activeTypeFilters.Exists(f => cardType.Contains(f.Trim().ToLower())));
 
             // 色フィルター内容と合致しているかどうか（色フィルターが一つも選択されていない場合もtrue）
+            string cardColor = cardEntity.color?.Trim().ToLower();
             bool matchesColor = activeColorFilters.Count == 0 ||
             activeColorFilters.Exists(f => f.Trim().ToLower() == cardColor);
 
@@ -76,7 +86,6 @@ public class CardListUUI : MonoBehaviour
                 if (activeCostFilters[i]) { anyCostSelected = true; break; }
             if (!anyCostSelected) matchesCost = true;
 
-
             // シリーズフィルター内容と合致しているかどうか
             string cardIdStr = cardEntity.cardId.ToString();
             string cardSeries = cardIdStr.Length > 0 ? cardIdStr.Substring(0, 1).Trim().ToLower() : "";
@@ -95,17 +104,23 @@ public class CardListUUI : MonoBehaviour
                 if (activeSeriesFilters[i]) { anySeriesSelected = true; break; }
             if (!anySeriesSelected) matchesSeries = true;
 
+            // 名前検索フィルター
+            string searchText = searchNameInputField?.text?.Trim().ToLower();
+            Debug.LogWarning("検索文字列：" + searchText);
+            bool matchesName = string.IsNullOrEmpty(searchText) ||
+                               (cardEntity.name != null && cardEntity.name.ToLower().Contains(searchText)) ||
+                               (cardEntity.versionName != null && cardEntity.versionName.ToLower().Contains(searchText));
+
             // 各フィルターに内容と合致している場合は表示対象とする
-            if (matchesColor && matchesCost && matchesSeries)
+            if (matchesColor && matchesCost && matchesSeries & matchesName & matchesCardType)
             {
                 filteredCardEntities.Add(cardEntity);
             }
         }
-
         Debug.LogWarning("フィルター後のカード数：" + filteredCardEntities.Count);
         if (filteredCardCountText != null)
         {
-            filteredCardCountText.text = $"表示枚数：{filteredCardEntities.Count}枚";
+            filteredCardCountText.text = $"{filteredCardEntities.Count}";
         }
 
         // ソート：cardId 昇順
@@ -120,8 +135,8 @@ public class CardListUUI : MonoBehaviour
         // スワイプビューアに渡す
         swipeDetector.SetCardList(filteredCardEntities);
 
-        int currentIndex = 0;
         // 表示生成（フィルター条件に合致したカードリスト）
+        int currentIndex = 0;
         foreach (CardEntity cardEntity in filteredCardEntities)
         {
             int cardId = cardEntity.cardId;
@@ -142,7 +157,6 @@ public class CardListUUI : MonoBehaviour
             // ボタンに追加処理
             item.GetComponent<Button>().onClick.AddListener(() =>
             {
-                //Debug.LogWarning("拡大表示したカードのindex：" + index);
                 // 拡大表示
                 ShowZoom(iconImage.sprite, index);
             });
@@ -150,10 +164,26 @@ public class CardListUUI : MonoBehaviour
         }
     }
 
-    /** 各フィルターのToggleとチェック時処理の紐づけ */
+    /** 各フィルターのToggleと押下時処理処理の紐づけ */
     private void LinkedFilterToggles()
     {
-        // フィルターエリアの各色Toggleに対して、それぞれチェック時の処理メソッドを紐づけする
+        // カードタイプエリアの各Toggleに対して、それぞれ押下時処理の処理メソッドを紐づけする
+        foreach (string cardType in cardTypes)
+        {
+            var cardTypeToggle = GameObject.Find($"TypeToggle_{cardType}")?.GetComponent<Toggle>();
+            if (cardTypeToggle != null)
+            {
+                cardTypeToggle.onValueChanged.AddListener((isOn) => { OnCardTypeToggleChangedCore(cardType, isOn); });
+                // 暫定対処：フィルター初期値を全選択とする
+                activeTypeFilters.Add(cardType);
+            }
+            else
+            {
+                Debug.LogWarning($"TypeToggle_{cardType} が見つかりません");
+            }
+        }
+
+        // フィルターエリアの各色Toggleに対して、それぞれ押下時処理の処理メソッドを紐づけする
         foreach (string cardColor in cardColors)
         {
             var colorToggle = GameObject.Find($"ColorToggle_{cardColor}")?.GetComponent<Toggle>();
@@ -170,7 +200,7 @@ public class CardListUUI : MonoBehaviour
             }
         }
 
-        // フィルターエリアの1～9のToggleに対して、それぞれチェック時の処理メソッドを紐づけする
+        // フィルターエリアの1～9のToggleに対して、それぞれ押下時処理の処理メソッドを紐づけする
         for (int i = 1; i <= 10; i++)
         {
             var costToggle = GameObject.Find($"CostToggle_{i}")?.GetComponent<Toggle>();
@@ -188,7 +218,7 @@ public class CardListUUI : MonoBehaviour
             }
         }
 
-        // シリーズエリアの各Toggleに対して、それぞれチェック時の処理メソッドを紐づけする
+        // シリーズエリアの各Toggleに対して、それぞれ押下時処理の処理メソッドを紐づけする
         for (int j = 1; j <= 4; j++)
         {
             var seriesToggle = GameObject.Find($"SeriesToggle_{j}")?.GetComponent<Toggle>();
@@ -209,6 +239,25 @@ public class CardListUUI : MonoBehaviour
 
     }
 
+    /** カードタイプフィルターを更新してカード選択エリアを再表示 */
+    private void OnCardTypeToggleChangedCore(string cardType, bool isOn)
+    {
+        string normalizedCardType = (cardType ?? "").Trim().ToLower();
+
+        if (isOn)
+        {
+            if (!activeTypeFilters.Contains(normalizedCardType))
+                activeTypeFilters.Add(normalizedCardType);
+        }
+        else
+        {
+            if (activeTypeFilters.Contains(normalizedCardType))
+                activeTypeFilters.Remove(normalizedCardType);
+        }
+        // Debug.LogWarning("色フィルター更新：" + string.Join(", ", normalizedCardType));
+        RefreshCardList();
+    }
+
     /** 色フィルターを更新してカード選択エリアを再表示 */
     private void OnColorToggleChangedCore(string color, bool isOn)
     {
@@ -224,8 +273,7 @@ public class CardListUUI : MonoBehaviour
             if (activeColorFilters.Contains(normalizedColor))
                 activeColorFilters.Remove(normalizedColor);
         }
-        Debug.LogWarning("色フィルター更新：" + string.Join(", ", activeColorFilters));
-
+        // Debug.LogWarning("色フィルター更新：" + string.Join(", ", activeColorFilters));
         RefreshCardList();
     }
 
@@ -235,7 +283,7 @@ public class CardListUUI : MonoBehaviour
         if (cost >= 1 && cost <= 10)
         {
             activeCostFilters[cost] = isOn;
-            Debug.LogWarning("コストフィルター更新：" + string.Join(", ", activeCostFilters));
+            // Debug.LogWarning("コストフィルター更新：" + string.Join(", ", activeCostFilters));
             RefreshCardList();
         }
     }
@@ -248,10 +296,9 @@ public class CardListUUI : MonoBehaviour
         if (cardSeries >= 1 && cardSeries <= 10)
         {
             activeSeriesFilters[cardSeries] = isOn;
-            Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
+            // Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
             RefreshCardList();
         }
-        // Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
     }
 
 
@@ -260,7 +307,6 @@ public class CardListUUI : MonoBehaviour
     {
         if (filterCanvas != null)
         {
-            //filterCanvas.SetActive(true);
             filterCanvas.sortingOrder = 10;
         }
     }
@@ -279,9 +325,10 @@ public class CardListUUI : MonoBehaviour
     public void HideFilterCanvas()
     {
         if (filterCanvas != null)
-            //filterCanvas.SetActive(false);
             filterCanvas.sortingOrder = -10;
     }
+
+    /** カードの拡大表示 */
     private void ShowZoom(Sprite sprite, Text index)
     {
         if (zoomCanvas != null && zoomImage != null)
@@ -291,6 +338,8 @@ public class CardListUUI : MonoBehaviour
             zoomCanvas.SetActive(true);
         }
     }
+
+    /** カードの拡大表示の非表示 */
     public void HideZoom()
     {
         if (zoomCanvas != null)
