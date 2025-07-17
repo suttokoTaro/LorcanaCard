@@ -31,7 +31,8 @@ public class ToggleImageSwitcher : MonoBehaviour
     {
         if (iconImage != null)
         {
-            iconImage.sprite = isOn ? checkedSprite : normalSprite;
+            //iconImage.sprite = isOn ? checkedSprite : normalSprite;
+            iconImage.sprite = !isOn ? checkedSprite : normalSprite;
         }
     }
 }

@@ -23,10 +23,20 @@ public class CardListUI : MonoBehaviour
     private List<string> cardColors = new List<string> { "umber", "amethyst", "emerald", "ruby", "sapphire", "steel" };
     private List<string> activeColorFilters = new List<string>();
     private bool[] activeCostFilters = new bool[11]; // index 1〜10を使用
-    private bool[] activeSeriesFilters = new bool[11]; // index 1〜10を使用
+    private bool[] activeSeriesFilters = new bool[5]; // index 1〜10を使用
 
     private List<string> extraFilters = new List<string> { "bodyguard", "challenger", "evasive", "reckless", "resist", "rush", "shift", "singer", "singTogether", "support", "ward" };
-
+    private bool checkFlag_bodyguard = false;
+    private bool checkFlag_challenger = false;
+    private bool checkFlag_evasive = false;
+    private bool checkFlag_reckless = false;
+    private bool checkFlag_resist = false;
+    private bool checkFlag_rush = false;
+    private bool checkFlag_shift = false;
+    private bool checkFlag_singer = false;
+    private bool checkFlag_singTogether = false;
+    private bool checkFlag_support = false;
+    private bool checkFlag_ward = false;
     private List<string> rarities = new List<string> { "1_common", "2_uncommon", "3_rare", "4_superrare", "5_legendary" };
     private List<string> activeRarityFilters = new List<string>();
 
@@ -101,7 +111,7 @@ public class CardListUI : MonoBehaviour
             string cardIdStr = cardEntity.cardId.ToString();
             string cardSeries = cardIdStr.Length > 0 ? cardIdStr.Substring(0, 1).Trim().ToLower() : "";
             bool matchesSeries = false;
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 4; i++)
             {
                 if (activeSeriesFilters[i] && int.Parse(cardSeries) == i)
                 {
@@ -111,7 +121,7 @@ public class CardListUI : MonoBehaviour
             }
             // シリーズフィルターが1つもONでなければ全表示
             bool anySeriesSelected = false;
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 4; i++)
                 if (activeSeriesFilters[i]) { anySeriesSelected = true; break; }
             if (!anySeriesSelected) matchesSeries = true;
 
@@ -127,8 +137,23 @@ public class CardListUI : MonoBehaviour
                                (cardEntity.name != null && cardEntity.name.ToLower().Contains(searchText)) ||
                                (cardEntity.versionName != null && cardEntity.versionName.ToLower().Contains(searchText));
 
+
+            bool matchesExtraFilter = true;
+            if (checkFlag_bodyguard && matchesExtraFilter) { matchesExtraFilter = (cardEntity.bodyguardFlag > 0); }
+            if (checkFlag_challenger && matchesExtraFilter) { matchesExtraFilter = (cardEntity.challengerFlag > 0); }
+            if (checkFlag_evasive && matchesExtraFilter) { matchesExtraFilter = (cardEntity.evasiveFlag > 0); }
+            if (checkFlag_reckless && matchesExtraFilter) { matchesExtraFilter = (cardEntity.recklessFlag > 0); }
+            if (checkFlag_resist && matchesExtraFilter) { matchesExtraFilter = (cardEntity.resistFlag > 0); }
+            if (checkFlag_rush && matchesExtraFilter) { matchesExtraFilter = (cardEntity.rushFlag > 0); }
+            if (checkFlag_shift && matchesExtraFilter) { matchesExtraFilter = (cardEntity.shiftFlag > 0); }
+            if (checkFlag_singer && matchesExtraFilter) { matchesExtraFilter = (cardEntity.singerFlag > 0); }
+            if (checkFlag_singTogether && matchesExtraFilter) { matchesExtraFilter = (cardEntity.singTogetherFlag > 0); }
+            if (checkFlag_support && matchesExtraFilter) { matchesExtraFilter = (cardEntity.supportFlag > 0); }
+            if (checkFlag_ward && matchesExtraFilter) { matchesExtraFilter = (cardEntity.wardFlag > 0); }
+
+
             // 各フィルターに内容と合致している場合は表示対象とする
-            if (matchesCardType && matchesColor && matchesCost && matchesSeries & matchesRarity & matchesName)
+            if (matchesCardType && matchesColor && matchesCost && matchesExtraFilter && matchesSeries & matchesRarity & matchesName)
             {
                 filteredCardEntities.Add(cardEntity);
             }
@@ -192,7 +217,7 @@ public class CardListUI : MonoBehaviour
             {
                 cardTypeToggle.onValueChanged.AddListener((isOn) => { OnCardTypeToggleChangedCore(cardType, isOn); });
                 // 暫定対処：フィルター初期値を全選択とする
-                activeTypeFilters.Add(cardType);
+                //activeTypeFilters.Add(cardType);
             }
             else
             {
@@ -209,7 +234,7 @@ public class CardListUI : MonoBehaviour
                 colorToggle.onValueChanged.AddListener((isOn) => { OnColorToggleChangedCore(cardColor, isOn); });
                 //colorToggle.isOn = false;
                 // 暫定対処：フィルター初期値を全選択とする
-                activeColorFilters.Add(cardColor);
+                //activeColorFilters.Add(cardColor);
             }
             else
             {
@@ -227,7 +252,7 @@ public class CardListUI : MonoBehaviour
                 costToggle.onValueChanged.AddListener((isOn) => { OnCostToggleChanged(capturedCost, isOn); });
                 //costToggle.isOn = false;
                 // 暫定対処：フィルター初期値を全選択とする
-                activeCostFilters[i] = true;
+                //activeCostFilters[i] = true;
             }
             else
             {
@@ -236,6 +261,7 @@ public class CardListUI : MonoBehaviour
         }
 
         // Extraの各Toggleに対して、それぞれ押下時処理の処理メソッドを紐づけする
+        /**
         foreach (string extraFilter in extraFilters)
         {
             var extraToggle = GameObject.Find($"ExtraToggle_{extraFilter}")?.GetComponent<Toggle>();
@@ -248,6 +274,39 @@ public class CardListUI : MonoBehaviour
                 Debug.LogWarning($"ExtraToggle_{extraFilter} が見つかりません");
             }
         }
+        */
+        var extraToggle_bodyguard = GameObject.Find("ExtraToggle_bodyguard")?.GetComponent<Toggle>();
+        extraToggle_bodyguard.onValueChanged.AddListener((isOn) => { checkFlag_bodyguard = !isOn; RefreshCardList(); });
+
+        var extraToggle_challenger = GameObject.Find("ExtraToggle_challenger")?.GetComponent<Toggle>();
+        extraToggle_challenger.onValueChanged.AddListener((isOn) => { checkFlag_challenger = !isOn; RefreshCardList(); });
+
+        var extraToggle_evasive = GameObject.Find("ExtraToggle_evasive")?.GetComponent<Toggle>();
+        extraToggle_evasive.onValueChanged.AddListener((isOn) => { checkFlag_evasive = !isOn; RefreshCardList(); });
+
+        var extraToggle_reckless = GameObject.Find("ExtraToggle_reckless")?.GetComponent<Toggle>();
+        extraToggle_reckless.onValueChanged.AddListener((isOn) => { checkFlag_reckless = !isOn; RefreshCardList(); });
+
+        var extraToggle_resist = GameObject.Find("ExtraToggle_resist")?.GetComponent<Toggle>();
+        extraToggle_resist.onValueChanged.AddListener((isOn) => { checkFlag_resist = !isOn; RefreshCardList(); });
+
+        var extraToggle_rush = GameObject.Find("ExtraToggle_rush")?.GetComponent<Toggle>();
+        extraToggle_rush.onValueChanged.AddListener((isOn) => { checkFlag_rush = !isOn; RefreshCardList(); });
+
+        var extraToggle_shift = GameObject.Find("ExtraToggle_shift")?.GetComponent<Toggle>();
+        extraToggle_shift.onValueChanged.AddListener((isOn) => { checkFlag_shift = !isOn; RefreshCardList(); });
+
+        var extraToggle_singer = GameObject.Find("ExtraToggle_singer")?.GetComponent<Toggle>();
+        extraToggle_singer.onValueChanged.AddListener((isOn) => { checkFlag_singer = !isOn; RefreshCardList(); });
+
+        var extraToggle_singTogether = GameObject.Find("ExtraToggle_singTogether")?.GetComponent<Toggle>();
+        extraToggle_singTogether.onValueChanged.AddListener((isOn) => { checkFlag_singTogether = !isOn; RefreshCardList(); });
+
+        var extraToggle_support = GameObject.Find("ExtraToggle_support")?.GetComponent<Toggle>();
+        extraToggle_support.onValueChanged.AddListener((isOn) => { checkFlag_support = !isOn; RefreshCardList(); });
+
+        var extraToggle_ward = GameObject.Find("ExtraToggle_ward")?.GetComponent<Toggle>();
+        extraToggle_ward.onValueChanged.AddListener((isOn) => { checkFlag_ward = !isOn; RefreshCardList(); });
 
         // シリーズの各Toggleに対して、それぞれ押下時処理の処理メソッドを紐づけする
         for (int j = 1; j <= 4; j++)
@@ -259,7 +318,7 @@ public class CardListUI : MonoBehaviour
                 seriesToggle.onValueChanged.AddListener((isOn) => { OnSeriesToggleChangedCore(cardSeries, isOn); });
                 //seriesToggle.isOn = false;
                 // 暫定対処：フィルター初期値を全選択とする
-                activeSeriesFilters[j] = true;
+                //activeSeriesFilters[j] = true;
             }
             else
             {
@@ -274,7 +333,7 @@ public class CardListUI : MonoBehaviour
             {
                 rarityToggle.onValueChanged.AddListener((isOn) => { OnRarityToggleChangedCore(rarity, isOn); });
                 // 暫定対処：フィルター初期値を全選択とする
-                activeRarityFilters.Add(rarity);
+                //activeRarityFilters.Add(rarity);
             }
             else
             {
@@ -291,7 +350,7 @@ public class CardListUI : MonoBehaviour
         //string normalizedCardType = (cardType ?? "").Trim().ToLower();
         string normalizedCardType = cardType;
 
-        if (isOn)
+        if (!isOn)
         {
             if (!activeTypeFilters.Contains(normalizedCardType))
                 activeTypeFilters.Add(normalizedCardType);
@@ -311,7 +370,7 @@ public class CardListUI : MonoBehaviour
         //string normalizedColor = (color ?? "").Trim().ToLower();
         string normalizedColor = color;
 
-        if (isOn)
+        if (!isOn)
         {
             if (!activeColorFilters.Contains(normalizedColor))
                 activeColorFilters.Add(normalizedColor);
@@ -330,7 +389,7 @@ public class CardListUI : MonoBehaviour
     {
         if (cost >= 1 && cost <= 10)
         {
-            activeCostFilters[cost] = isOn;
+            activeCostFilters[cost] = !isOn;
             Debug.LogWarning("コストフィルター更新：" + string.Join(", ", activeCostFilters));
             RefreshCardList();
         }
@@ -348,7 +407,7 @@ public class CardListUI : MonoBehaviour
 
         if (cardSeries >= 1 && cardSeries <= 10)
         {
-            activeSeriesFilters[cardSeries] = isOn;
+            activeSeriesFilters[cardSeries] = !isOn;
             Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
             RefreshCardList();
         }
@@ -360,7 +419,7 @@ public class CardListUI : MonoBehaviour
         //string normalizedRarity = (rarity ?? "").Trim().ToLower();
         string normalizedRarity = rarity;
 
-        if (isOn)
+        if (!isOn)
         {
             if (!activeRarityFilters.Contains(normalizedRarity))
                 activeRarityFilters.Add(normalizedRarity);
