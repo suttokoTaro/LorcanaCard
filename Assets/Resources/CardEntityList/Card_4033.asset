@@ -13,14 +13,30 @@ MonoBehaviour:
   m_Name: Card_4033
   m_EditorClassIdentifier: 
   cardId: 4033
+  setSeries: 4
+  idInSetSeries: 033
   icon: {fileID: 21300000, guid: 818f964a9dec85f4d9e2c8d10337a7a1, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30A2\u30C8\u30E9\u30F3\u30C6\u30A3\u30AB"
   versionName: "\u30B3\u30F3\u30B5\u30FC\u30C8\u30DB\u30FC\u30EB"
-  color: umber
+  color: 1_umber
   cost: 1
-  cardType: location
-  cardClass: "\u30ED\u30B1\u30FC\u30B7\u30E7\u30F3"
-  endurePoint: 6
-  power: 0
-  loaPoint: 0
+  cardType: 5_location
+  classification: 
+  willpower: 6
+  strength: 0
+  loreValue: 0
+  rarity: 1_common
+  inkwellFlag: 0
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

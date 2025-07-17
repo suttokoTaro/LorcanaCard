@@ -13,14 +13,30 @@ MonoBehaviour:
   m_Name: Card_4047
   m_EditorClassIdentifier: 
   cardId: 4047
+  setSeries: 4
+  idInSetSeries: 047
   icon: {fileID: 21300000, guid: 20c33c5610031ab44963658cfd2e1841, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30EB\u30A4\u30FC\u30B5\u30FB\u30DE\u30C9\u30EA\u30AC\u30EB"
   versionName: "\u9B54\u6CD5\u306E\u529B\u6301\u3061"
-  color: amethyst
+  color: 2_amethyst
   cost: 4
-  cardType: character
-  cardClass: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u4EF2\u9593\u30FB\u30DE\u30C9\u30EA\u30AC\u30EB\u5BB6"
-  endurePoint: 3
-  power: 4
-  loaPoint: 1
+  cardType: 1_character
+  classification: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u4EF2\u9593\u30FB\u30DE\u30C9\u30EA\u30AC\u30EB\u5BB6"
+  willpower: 3
+  strength: 4
+  loreValue: 1
+  rarity: 1_common
+  inkwellFlag: 0
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 1
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

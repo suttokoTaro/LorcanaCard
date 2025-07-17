@@ -12,6 +12,9 @@ public class CardEntity : ScriptableObject
     // カードの収録シリーズ
     public new string setSeries;
 
+    // カードの収録シリーズ
+    public new string idInSetSeries;
+
     // カードの表画像
     public Sprite icon;
 
@@ -33,7 +36,7 @@ public class CardEntity : ScriptableObject
     // カード種類
     public new string cardType;
 
-    // カードクラス
+    // カードクラス（特徴）
     public new string classification;
 
     // カード耐久力
@@ -48,8 +51,11 @@ public class CardEntity : ScriptableObject
     // カードのレアリティ（灰丸= Common 白本= Uncommon 銅△= Rare 銀◇= Super Rare 金五= Legendary）
     public new string rarity;
 
-    // カードのインクに使えるかどうか
+    // カードのインクに使えるかどうか（0:インクなし、1:インクあり）
     public int inkwellFlag;
+
+    // バニラ（0:バニラ以外、1:バニラ）
+    public int vanillaFlag;
 
     // 護衛
     public int bodyguardFlag;

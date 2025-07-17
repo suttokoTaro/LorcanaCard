@@ -13,14 +13,30 @@ MonoBehaviour:
   m_Name: Card_4029
   m_EditorClassIdentifier: 
   cardId: 4029
+  setSeries: 4
+  idInSetSeries: 029
   icon: {fileID: 21300000, guid: 4e9f48d0af63f0f44985e7b27207a050, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: LOST IN THE WOODS
   versionName: "\u604B\u306E\u8FF7\u3044\u5B50"
-  color: umber
+  color: 1_umber
   cost: 4
-  cardType: "action\u30FBsong"
-  cardClass: "\u30A2\u30AF\u30B7\u30E7\u30F3\u30FB\u6B4C"
-  endurePoint: 0
-  power: 0
-  loaPoint: 0
+  cardType: "3_action\u30FBsong"
+  classification: 
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 2_uncommon
+  inkwellFlag: 0
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0
