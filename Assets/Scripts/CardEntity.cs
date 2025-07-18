@@ -39,7 +39,7 @@ public class CardEntity : ScriptableObject
     // カードクラス（特徴）
     public new string classification;
 
-    // カード耐久力
+    // カード意思力
     public int willpower;
 
     // カード攻撃力 

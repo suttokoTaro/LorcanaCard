@@ -13,10 +13,30 @@ MonoBehaviour:
   m_Name: Card_3060
   m_EditorClassIdentifier: 
   cardId: 3060
+  setSeries: 3
+  idInSetSeries: 060
   icon: {fileID: 21300000, guid: 735bcbd098fc4224693fc3581020e2df, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u8D08\u308A\u7269\u3092\u6388\u3051\u3088\u3046"
-  color: amethyst
+  versionName: 
+  color: 2_amethyst
   cost: 1
-  endurePoint: 0
-  power: 0
+  cardType: '2_action '
+  classification: 
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 1_common
+  inkwellFlag: 1
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

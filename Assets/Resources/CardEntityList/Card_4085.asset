@@ -13,14 +13,30 @@ MonoBehaviour:
   m_Name: Card_4085
   m_EditorClassIdentifier: 
   cardId: 4085
+  setSeries: 4
+  idInSetSeries: 085
   icon: {fileID: 21300000, guid: e4b7da6542555e3478530520feac2d36, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30D4\u30FC\u30C8"
   versionName: "\u751F\u307E\u308C\u305F\u65E5\u304B\u3089\u30A6\u30BD\u304C\u5F97\u610F"
-  color: emerald
+  color: 3_emerald
   cost: 2
-  cardType: character
-  cardClass: "\u30C9\u30EA\u30FC\u30E0\u30DC\u30FC\u30F3\u30FB\u30F4\u30A3\u30E9\u30F3\u30BA\u30FB\u9283\u58EB"
-  endurePoint: 3
-  power: 2
-  loaPoint: 1
+  cardType: 1_character
+  classification: "\u30C9\u30EA\u30FC\u30E0\u30DC\u30FC\u30F3\u30FB\u30F4\u30A3\u30E9\u30F3\u30BA\u30FB\u9283\u58EB"
+  willpower: 3
+  strength: 2
+  loreValue: 1
+  rarity: 4_superrare
+  inkwellFlag: 0
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

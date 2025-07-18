@@ -13,12 +13,30 @@ MonoBehaviour:
   m_Name: Card_2066
   m_EditorClassIdentifier: 
   cardId: 2066
+  setSeries: 2
+  idInSetSeries: 066
   icon: {fileID: 21300000, guid: 24d1cf9e64f83394da98d69750949b2f, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30DE\u30FC\u30EA\u30F3"
-  color: amethyst
+  name: "\u30AF\u30ED\u30C3\u30B1\u30FC\u306E\u30DE\u30EC\u30C3\u30C8"
+  versionName: 
+  color: 2_amethyst
   cost: 1
-  cardType: character
-  endurePoint: 5
-  power: 1
-  loaPoint: 1
+  cardType: 4_item
+  classification: 
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 1_common
+  inkwellFlag: 0
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0
