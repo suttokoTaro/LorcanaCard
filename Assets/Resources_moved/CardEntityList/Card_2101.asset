@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41df4d9a9809974b92be282b335880c, type: 3}
+  m_Name: Card_2101
+  m_EditorClassIdentifier: 
+  cardId: 2101
+  setSeries: 2
+  idInSetSeries: 101
+  icon: {fileID: 21300000, guid: 7b20237d10035e842826dcecb5b19ad7, type: 3}
+  backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
+  name: "\u3054\u3061\u305D\u3046\u306E\u30D9\u30EB"
+  versionName: 
+  color: 3_emerald
+  cost: 3
+  cardType: 2_action
+  classification: 
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 2_uncommon
+  inkwellFlag: 1
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

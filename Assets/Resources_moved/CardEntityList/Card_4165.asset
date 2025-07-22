@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41df4d9a9809974b92be282b335880c, type: 3}
+  m_Name: Card_4165
+  m_EditorClassIdentifier: 
+  cardId: 4165
+  icon: {fileID: 21300000, guid: ab9af5886a7de994fa619276d694afa1, type: 3}
+  backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
+  name: "\u306A\u3093\u3066\u305F\u304F\u3055\u3093\u306E\u5B9D\u7269"
+  versionName: 
+  color: sapphire
+  cost: 6
+  cardType: "action\u30FBsong"
+  cardClass: "\u30A2\u30AF\u30B7\u30E7\u30F3\u30FB\u6B4C"
+  endurePoint: 0
+  power: 0
+  loaPoint: 0

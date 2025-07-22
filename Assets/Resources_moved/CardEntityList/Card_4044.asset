@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41df4d9a9809974b92be282b335880c, type: 3}
+  m_Name: Card_4044
+  m_EditorClassIdentifier: 
+  cardId: 4044
+  setSeries: 4
+  idInSetSeries: 044
+  icon: {fileID: 21300000, guid: a8ceba85e2cf7124b80596e0fcb2e6d6, type: 3}
+  backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
+  name: "\u30D5\u30ED\u30C3\u30C8\u30B5\u30E0\uFF06\u30B8\u30A7\u30C3\u30C8\u30B5\u30E0"
+  versionName: "\u30A6\u30C4\u30DC\u30FB\u30AB\u30E9\u30DF\u30C6\u30A3"
+  color: 2_amethyst
+  cost: 6
+  cardType: 1_character
+  classification: "\u30D5\u30E9\u30C3\u30C9\u30DC\u30FC\u30F3\u30FB\u4EF2\u9593"
+  willpower: 5
+  strength: 5
+  loreValue: 2
+  rarity: 2_uncommon
+  inkwellFlag: 0
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 1
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

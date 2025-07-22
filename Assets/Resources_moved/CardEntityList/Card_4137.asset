@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41df4d9a9809974b92be282b335880c, type: 3}
+  m_Name: Card_4137
+  m_EditorClassIdentifier: 
+  cardId: 4137
+  icon: {fileID: 21300000, guid: 5b73c24e0a2ba6140ac33b2c1dbfb1f0, type: 3}
+  backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
+  name: "\u30A2\u30CA"
+  versionName: "\u5D50\u306B\u7ACB\u3061\u5411\u304B\u3046\u8005"
+  color: sapphire
+  cost: 2
+  cardType: character
+  cardClass: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u30D2\u30FC\u30ED\u30FC\u30FB\u5973\u738B"
+  endurePoint: 4
+  power: 1
+  loaPoint: 1
