@@ -13,12 +13,30 @@ MonoBehaviour:
   m_Name: Card_1025
   m_EditorClassIdentifier: 
   cardId: 1025
+  setSeries: 1
+  idInSetSeries: 025
   icon: {fileID: 21300000, guid: 6067bfff62139924db686f2c930b06d3, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30D3\u30FC\u30FB\u30A2\u30EF\u30FC\u30FB\u30B2\u30B9\u30C8"
-  color: umber
+  name: BE OUR GUEST
+  versionName: "\u30D3\u30FC\u30FB\u30A2\u30EF\u30FC\u30FB\u30B2\u30B9\u30C8"
+  color: 1_umber
   cost: 2
-  cardType: "action\u30FBsong"
-  endurePoint: 0
-  power: 0
-  loaPoint: 0
+  cardType: "3_action\u30FBsong"
+  classification: 
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 2_uncommon
+  inkwellFlag: 1
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

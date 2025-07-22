@@ -13,10 +13,30 @@ MonoBehaviour:
   m_Name: Card_1045
   m_EditorClassIdentifier: 
   cardId: 1045
+  setSeries: 1
+  idInSetSeries: 045
   icon: {fileID: 21300000, guid: f62bcafe71c2bde40b88fac506334feb, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30A2\u30FC\u30B9\u30E9\u306E\u8C9D\u6BBB\u30CD\u30C3\u30AF\u30EC\u30B9"
-  color: amethyst
+  name: "\u30B8\u30E3\u30D5\u30A1\u30FC"
+  versionName: "\u90AA\u60AA\u306A\u9B54\u6CD5\u4F7F\u3044"
+  color: 2_amethyst
   cost: 4
-  endurePoint: 0
-  power: 0
+  cardType: 1_character
+  classification: "\u30C9\u30EA\u30FC\u30E0\u30DC\u30FC\u30F3\u30FB\u30F4\u30A3\u30E9\u30F3\u30BA\u30FB\u9B54\u6CD5\u4F7F\u3044"
+  willpower: 5
+  strength: 2
+  loreValue: 1
+  rarity: 1_common
+  inkwellFlag: 0
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 1
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

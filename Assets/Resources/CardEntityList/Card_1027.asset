@@ -13,12 +13,30 @@ MonoBehaviour:
   m_Name: Card_1027
   m_EditorClassIdentifier: 
   cardId: 1027
+  setSeries: 1
+  idInSetSeries: 027
   icon: {fileID: 21300000, guid: 3f34cb8b14976b94cb46d6cb60056f32, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30CF\u30AF\u30CA\u30FB\u30DE\u30BF\u30BF"
-  color: umber
+  name: HAKUNA MATATA
+  versionName: "\u30CF\u30AF\u30CA\u30FB\u30DE\u30BF\u30BF"
+  color: 1_umber
   cost: 4
-  cardType: "action\u30FBsong"
-  endurePoint: 0
-  power: 0
-  loaPoint: 0
+  cardType: "3_action\u30FBsong"
+  classification: 
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 1_common
+  inkwellFlag: 1
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

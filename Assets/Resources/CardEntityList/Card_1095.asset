@@ -13,10 +13,30 @@ MonoBehaviour:
   m_Name: Card_1095
   m_EditorClassIdentifier: 
   cardId: 1095
+  setSeries: 1
+  idInSetSeries: 095
   icon: {fileID: 21300000, guid: ff4d5709f5b6eef4585be1b49b76c0d4, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30DF\u30C3\u30AD\u30FC\u30DE\u30A6\u30B9"
-  color: emerald
+  name: MOTHER KNOWS BEST
+  versionName: "\u304A\u6BCD\u69D8\u306F\u3042\u306A\u305F\u306E\u5473\u65B9"
+  color: 3_emerald
   cost: 3
-  endurePoint: 0
-  power: 0
+  cardType: "3_action\u30FBsong"
+  classification: 
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 2_uncommon
+  inkwellFlag: 0
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

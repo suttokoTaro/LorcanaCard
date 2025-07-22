@@ -13,10 +13,30 @@ MonoBehaviour:
   m_Name: Card_1081
   m_EditorClassIdentifier: 
   cardId: 1081
+  setSeries: 1
+  idInSetSeries: 081
   icon: {fileID: 21300000, guid: 449661ce1de7ba446b5302c4367d6ee5, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30DF\u30C3\u30AD\u30FC\u30DE\u30A6\u30B9"
-  color: emerald
+  name: "\u30B8\u30E3\u30B9\u30D1\u30FC"
+  versionName: "\u3061\u3093\u3051\u306A\u30C1\u30F3\u30D4\u30E9"
+  color: 3_emerald
   cost: 3
-  endurePoint: 0
-  power: 0
+  cardType: 1_character
+  classification: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u4EF2\u9593"
+  willpower: 4
+  strength: 2
+  loreValue: 1
+  rarity: 2_uncommon
+  inkwellFlag: 1
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

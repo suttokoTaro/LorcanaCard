@@ -13,10 +13,30 @@ MonoBehaviour:
   m_Name: Card_1065
   m_EditorClassIdentifier: 
   cardId: 1065
+  setSeries: 1
+  idInSetSeries: 065
   icon: {fileID: 21300000, guid: 3d99747eee533a34ea5c0368207ecd4e, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30DF\u30C3\u30AD\u30FC\u30DE\u30A6\u30B9"
-  color: amethyst
+  name: REFLECTION
+  versionName: "\u30EA\u30D5\u30EC\u30AF\u30B7\u30E7\u30F3"
+  color: 2_amethyst
   cost: 1
-  endurePoint: 0
-  power: 0
+  cardType: "3_action\u30FBsong"
+  classification: 
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 2_uncommon
+  inkwellFlag: 1
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0
