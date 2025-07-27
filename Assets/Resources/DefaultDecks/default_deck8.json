@@ -1,6 +1,9 @@
 {
     "deckId": "default-8",
     "deckName": "4弾 紫赤",
+    "color1": 2,
+    "color2": 4,
+    "leaderCardId": 4129,
     "cardIDs": [
         3036, 3036, 3036, 3036,
         4048, 4048, 4048, 4048,

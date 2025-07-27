@@ -70,11 +70,7 @@ public class CardListUI : MonoBehaviour
         // 各フィルターのToggleと押下時処理の紐づけ
         LinkedFilterToggles();
 
-        // 入力が変更されたらカードリスト更新
-        if (searchNameInputField != null)
-        {
-            searchNameInputField.onValueChanged.AddListener((_) => RefreshCardListFiltered());
-        }
+
     }
 
     /** カード表示エリアの更新 */
@@ -466,8 +462,11 @@ public class CardListUI : MonoBehaviour
                 Debug.LogWarning($"RarityToggle_{rarity} が見つかりません");
             }
         }
-
-
+        // 入力が変更されたらカードリスト更新
+        if (searchNameInputField != null)
+        {
+            searchNameInputField.onValueChanged.AddListener((_) => RefreshCardListFiltered());
+        }
     }
 
     /** カードタイプフィルターを更新してカード選択エリアを再表示 */
@@ -633,6 +632,12 @@ public class CardListUI : MonoBehaviour
             zoomCanvas.SetActive(false);
             //Debug.LogWarning("Zoom非表示");
         }
+    }
+
+    /** Decksボタン押下時処理：Decks画面に遷移 */
+    public void OnClickDecksButton()
+    {
+        SceneManager.LoadScene("DecksScene");
     }
 
     /** 戻るボタン押下時処理：メインメニュー画面に戻る */

@@ -29,6 +29,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/CardListTrialScene.unity
     guid: d75c2e423f2a2d04491336a2f830ca66
+  - enabled: 1
+    path: Assets/Scenes/DecksScene.unity
+    guid: cd263812b2b9d36499fe860cc26fe1de
+  - enabled: 1
+    path: Assets/Scenes/DeckDetailScene.unity
+    guid: 2738df7f1f978e147b69c76cd6a31f01
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: b1bddd5750029bb49a78fe150a41d39e, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: af558c2f6cddb1845b6d3fe1a5a5ae1b, type: 2}

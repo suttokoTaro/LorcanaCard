@@ -1,6 +1,9 @@
 {
     "deckId": "default-9",
     "deckName": "4弾 青鋼",
+    "color1": 5,
+    "color2": 6,
+    "leaderCardId": 2142,
     "cardIDs": [
         2169, 2169, 2169, 2169,
         4200, 4200, 4200, 4200,

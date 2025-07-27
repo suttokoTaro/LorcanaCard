@@ -1,6 +1,9 @@
 {
     "deckId": "default-4",
     "deckName": "3弾 紫鋼",
+    "color1": 2,
+    "color2": 6,
+    "leaderCardId": 3190,
     "cardIDs": [
         3189, 3189, 3189, 3189,
         2045, 2045, 2045,
