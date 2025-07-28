@@ -13,12 +13,30 @@ MonoBehaviour:
   m_Name: Card_1163
   m_EditorClassIdentifier: 
   cardId: 1163
+  setSeries: 1
+  idInSetSeries: 163
   icon: {fileID: 21300000, guid: a0f323141e4217d489b40449322b2a54, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: LET IT GO
-  color: sapphire
+  versionName: "\u30EC\u30C3\u30C8\u30FB\u30A4\u30C3\u30C8\u30FB\u30B4\u30FC"
+  color: 5_sapphire
   cost: 5
-  cardType: "action\u30FBsong"
-  endurePoint: 0
-  power: 0
-  loaPoint: 0
+  cardType: "3_action\u30FBsong"
+  classification: 
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 3_rare
+  inkwellFlag: 1
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0

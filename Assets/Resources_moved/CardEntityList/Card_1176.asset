@@ -13,12 +13,30 @@ MonoBehaviour:
   m_Name: Card_1176
   m_EditorClassIdentifier: 
   cardId: 1176
+  setSeries: 1
+  idInSetSeries: 176
   icon: {fileID: 21300000, guid: 200b60dca9e3a8b4b885df601189face, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30B1\u30EB\u30D9\u30ED\u30B9"
-  color: steel
+  versionName: "\u4E09\u3064\u9996\u306E\u756A\u72AC"
+  color: 6_steel
   cost: 5
-  cardType: character
-  endurePoint: 6
-  power: 5
-  loaPoint: 1
+  cardType: 1_character
+  classification: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3"
+  willpower: 6
+  strength: 5
+  loreValue: 1
+  rarity: 1_common
+  inkwellFlag: 1
+  vanillaFlag: 1
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0
