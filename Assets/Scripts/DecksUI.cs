@@ -87,6 +87,9 @@ public class DecksUI : MonoBehaviour
             newDeck.deckId = System.Guid.NewGuid().ToString(); // デッキのユニークIDの生成 
             newDeck.deckName = SelectedDeckData.selectedDeck.deckName + "_copy";
             newDeck.cardIDs = SelectedDeckData.selectedDeck.cardIDs;
+            newDeck.leaderCardId = SelectedDeckData.selectedDeck.leaderCardId;
+            newDeck.color1 = SelectedDeckData.selectedDeck.color1;
+            newDeck.color2 = SelectedDeckData.selectedDeck.color2;
 
             DeckDataList deckList = DeckStorage.LoadDecks();
             deckList.decks.Add(newDeck);

@@ -5,16 +5,23 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.EventSystems;
 using System.Linq;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Threading.Tasks;
 
 public class DeckDetailUI : MonoBehaviour
 {
     [SerializeField] private InputField deckNameInputField;
+    [SerializeField] private Image deckIcon, colorIcon1, colorIcon2;
     [SerializeField] private Text deckCountText;
+    [SerializeField] private Canvas deckCardSelectCanvas;
     public Text deckNameText;
-    public Transform deckCardListContent; // デッキ内カード表示用
+    public Transform deckCardListContent, deckCardListContentInSelectCanvas, selectCardContent; // デッキ内カード表示用
     public GameObject cardItemPrefab;
     private DeckData currentDeck;
-    void Start()
+    IList<CardEntity> allCardEntities;
+    private Coroutine refreshCoroutine;
+    async void Start()
     {
         // デッキリスト画面で選択したデッキ情報が取得できない場合エラーを返す
         currentDeck = SelectedDeckData.selectedDeck;
@@ -30,15 +37,23 @@ public class DeckDetailUI : MonoBehaviour
             deckNameInputField.onEndEdit.AddListener(OnDeckNameChanged);
         }
         // デッキリストエリアの表示の更新
-        RefreshDeckCardList();
+        await RefreshDeckCardList();
+
+        // ラベルでCardEntityを非同期ロード
+        //AsyncOperationHandle<IList<CardEntity>> handle = Addressables.LoadAssetsAsync<CardEntity>("CardEntityList", null);
+        //allCardEntities = await handle.Task;
+        allCardEntities = CardEntityCache.Instance.AllCardEntities;
+
+        // 非同期表示（バッチ処理）
+        StartCoroutine(RefreshSelectCardList());
     }
 
     /** デッキリストエリアの表示の更新 */
-    void RefreshDeckCardList()
+    async Task RefreshDeckCardList()
     {
         // まず一度デッキリストエリアの既存のオブジェクトをすべて削除
-        foreach (Transform child in deckCardListContent)
-            Destroy(child.gameObject);
+        foreach (Transform child in deckCardListContent) { Destroy(child.gameObject); }
+        foreach (Transform child in deckCardListContentInSelectCanvas) { Destroy(child.gameObject); }
 
         // カードIDごとの枚数の算出
         var cardCountDict = new Dictionary<int, int>();
@@ -53,7 +68,8 @@ public class DeckDetailUI : MonoBehaviour
         List<(CardEntity entity, int count)> cardList = new List<(CardEntity, int)>();
         foreach (var pair in cardCountDict)
         {
-            var entity = Resources.Load<CardEntity>($"CardEntityList/Card_{pair.Key}");
+            //var entity = Resources.Load<CardEntity>($"CardEntityList/Card_{pair.Key}");
+            var entity = await LoadCardEntityByIdAsync(pair.Key);
             if (entity != null)
                 cardList.Add((entity, pair.Value));
         }
@@ -71,16 +87,23 @@ public class DeckDetailUI : MonoBehaviour
         foreach (var (entity, count) in cardList)
         {
             GameObject item = Instantiate(cardItemPrefab, deckCardListContent);
-
-            // 画像
             var icon = item.transform.Find("Image")?.GetComponent<Image>();
             if (icon != null) icon.sprite = entity.icon;
-
-            // テキスト
-            var nameText = item.transform.Find("nameText")?.GetComponent<Text>();
             var countText = item.transform.Find("CountText")?.GetComponent<Text>();
-            if (nameText != null) nameText.text = $"Card ID: {entity.cardId}";
             if (countText != null) countText.text = $"{count}";
+
+            GameObject itemInSelectCanvas = Instantiate(cardItemPrefab, deckCardListContentInSelectCanvas);
+            var iconInSelectCanvas = itemInSelectCanvas.transform.Find("Image")?.GetComponent<Image>();
+            if (iconInSelectCanvas != null) iconInSelectCanvas.sprite = entity.icon;
+            var countTextInSelectCanvas = itemInSelectCanvas.transform.Find("CountText")?.GetComponent<Text>();
+            if (countTextInSelectCanvas != null) countTextInSelectCanvas.text = $"{count}";
+
+            // 押下時に1枚削除する
+            itemInSelectCanvas.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                currentDeck.cardIDs.Remove(entity.cardId); // 1枚削除
+                RefreshDeckCardList();
+            });
         }
 
         // デッキ枚数表示値の更新
@@ -88,7 +111,24 @@ public class DeckDetailUI : MonoBehaviour
         {
             deckCountText.text = $"{currentDeck.cardIDs.Count}枚";
         }
+
+        // デッキアイコンの設定
+        var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
+        //var defaultLeaderCard = await LoadCardEntityByIdAsync(1001);
+        deckIcon.sprite = defaultLeaderCard.backIcon;
+        var leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{currentDeck.leaderCardId}");
+        //var leaderCard = await LoadCardEntityByIdAsync(currentDeck.leaderCardId);
+        if (leaderCard != null)
+        {
+            deckIcon.sprite = leaderCard.icon;
+        }
+        // デッキ色アイコンの設定
+        var color1 = Resources.Load<ColorEntity>($"ColorEntityList/ColorEntity_{currentDeck.color1}");
+        colorIcon1.sprite = color1.colorIcon;
+        var color2 = Resources.Load<ColorEntity>($"ColorEntityList/ColorEntity_{currentDeck.color2}");
+        colorIcon2.sprite = color2.colorIcon;
     }
+
     /** デッキ名の変更 */
     private void OnDeckNameChanged(string newName)
     {
@@ -99,7 +139,8 @@ public class DeckDetailUI : MonoBehaviour
             Debug.Log($"デッキ名変更＆保存: {newName}");
         }
     }
-    /** デッキの保存 */
+
+    /** デッキ保存ボタン押下時の処理 */
     public void OnClickSaveButton()
     {
         DeckDataList list = DeckStorage.LoadDecks();
@@ -116,8 +157,115 @@ public class DeckDetailUI : MonoBehaviour
         Debug.Log("デッキ保存完了");
     }
 
+    /** 戻るボタン押下時の処理 */
     public void OnClickBackButton()
     {
         SceneManager.LoadScene("DecksScene");
+    }
+
+    /** カード選択ボタン押下時の処理 */
+    public void OnClickSelectCardButton()
+    {
+        //SceneManager.LoadScene("DeckCardSelectScene");
+        if (deckCardSelectCanvas != null)
+        {
+            deckCardSelectCanvas.sortingOrder = 10;
+        }
+    }
+
+    /** カードIDからcardEntity情報の取得（非同期） */
+    public async Task<CardEntity> LoadCardEntityByIdAsync(int id)
+    {
+        string address = $"Card_{id}";
+        AsyncOperationHandle<CardEntity> handle = Addressables.LoadAssetAsync<CardEntity>(address);
+        await handle.Task;
+
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            return handle.Result;
+        }
+        else
+        {
+            Debug.LogError($"CardEntity {address} の読み込みに失敗しました");
+            return null;
+        }
+    }
+    /// <summary>
+    /// //////////////////////////////////////////////////////////////////////////////////////////////////
+    /// </summary>
+
+    /** カード表示エリアの更新 */
+    private IEnumerator RefreshSelectCardList()
+    {
+        // まずカード一覧を完全に削除
+        foreach (Transform child in selectCardContent)
+        {
+            Destroy(child.gameObject);
+        }
+        // フィルター条件に合致したカードリスト
+        List<CardEntity> filteredCardEntities = new List<CardEntity>();
+        List<string> deckColors = new List<string>();
+        var intColor1 = currentDeck.color1;
+        var intColor2 = currentDeck.color2;
+        if (intColor1 != 0) { deckColors.Add(intColor1.ToString()); }
+        if (intColor2 != 0) { deckColors.Add(intColor2.ToString()); }
+        Debug.LogWarning("デッキカード色：" + string.Join(", ", deckColors));
+
+        foreach (CardEntity cardEntity in allCardEntities)
+        {
+            string cardColor = cardEntity.color;
+            bool matchesColor = deckColors.Count == 0 ||
+            (cardColor != null && deckColors.Exists(f => cardColor.Contains(f)));
+
+            if (matchesColor) { filteredCardEntities.Add(cardEntity); }
+        }
+
+        // ソート：色 → コスト → カードID 昇順
+        filteredCardEntities = filteredCardEntities
+            .OrderBy(c => (c.color ?? "").Trim().ToLower()) // 色
+            .ThenBy(c => c.cost)                            // コスト
+            .ThenBy(c => c.cardId)                          // カードID
+            .ToList();
+
+        // 表示生成（フィルター条件に合致したカードリスト）
+        int currentIndex = 0;
+        int batchSize = 30;
+        foreach (CardEntity cardEntity in filteredCardEntities)
+        {
+            int cardId = cardEntity.cardId;
+            GameObject item = Instantiate(cardItemPrefab, selectCardContent);
+
+            // 画像表示
+            Image iconImage = item.transform.Find("Image")?.GetComponent<Image>();
+            if (iconImage != null) iconImage.sprite = cardEntity.icon;
+
+            Text countText = item.transform.Find("CountText")?.GetComponent<Text>();
+            Transform countTextPanel = item.transform.Find("CountTextPanel");
+            if (countText != null) countText.text = "";
+            if (countTextPanel != null) countTextPanel.gameObject.SetActive(false);
+            // ボタンに追加処理
+            item.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                currentDeck.cardIDs.Add(cardId);
+                RefreshDeckCardList();
+            });
+
+            Text index = item.transform.Find("Index")?.GetComponent<Text>();
+            index.text = currentIndex.ToString();
+            if ((currentIndex + 1) % batchSize == 0)
+            {
+                yield return null;
+            }
+            currentIndex = currentIndex + 1;
+        }
+        refreshCoroutine = null;
+    }
+
+    public void onClickHideSelectCardCanvas()
+    {
+        if (deckCardSelectCanvas != null)
+        {
+            deckCardSelectCanvas.sortingOrder = -10;
+        }
     }
 }

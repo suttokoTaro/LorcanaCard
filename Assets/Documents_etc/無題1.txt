@@ -1,0 +1,83 @@
+
+
+
+■Set Series
+1
+2
+3
+4
+
+■Color
+1_umber
+2_amethyst
+3_emerald
+4_ruby
+5_sapphire
+6_steel
+
+■Card Type
+1_character
+2_action
+3_action・song
+4_item
+5_location
+
+■Rarity
+1_common
+2_uncommon
+3_rare
+4_superrare
+5_legendary
+
+■Extra
+・インク：inkwellFlag
+・バニラ：vanillaFlag;
+・護衛：bodyguardFlag;
+・果敢：challengerFlag;
+・回避：evasiveFlag;
+・暴勇：recklessFlag;
+・耐久：resistFlag;
+・突進：rushFlag;
+・変身：shiftFlag;
+・歌声：singerFlag;
+・合唱：singTogetherFlag;
+・支援：supportFlag;
+・魔除：wardFlag;
+
+
+
+    [SerializeField] private Toggle umberToggle;
+    [SerializeField] private Toggle amethystToggle;
+    [SerializeField] private Toggle emeraldToggle;
+    [SerializeField] private Toggle rubyToggle;
+    [SerializeField] private Toggle sapphireToggle;
+    [SerializeField] private Toggle steelToggle;
+    
+    
+    カードタイプの種類:
+キャラクター (Character):
+冒険に連れて行くキャラクターを表すカードです。プレイヤーは、キャラクターカードを使って、他のキャラクターと戦ったり、クエストを達成したりします.
+アクション (Action):
+一時的な効果をもたらすカードです。キャラクターを強化したり、相手にダメージを与えたり、様々な効果を発揮します.
+アイテム (Item):
+装備することで、キャラクターを強化したり、特別な能力を与えたりするカードです.
+ロケーション (Location):
+
+
+Action・Song
+
+
+character
+action・song
+item
+location
+
+（灰丸= Common 白本= Uncommon 銅△= Rare 銀◇= Super Rare 金五= Legendary）
+common
+uncommon
+rare
+sr
+legendary
+
+
+

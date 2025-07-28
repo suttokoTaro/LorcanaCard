@@ -61,6 +61,15 @@ public class CardListUI : MonoBehaviour
         AsyncOperationHandle<IList<CardEntity>> handle = Addressables.LoadAssetsAsync<CardEntity>("CardEntityList", null);
         allCardEntities = await handle.Task;
 
+        // CardEntityCacheがまだ存在しないなら生成
+        if (CardEntityCache.Instance == null)
+        {
+            GameObject go = new GameObject("CardEntityCache");
+            go.AddComponent<CardEntityCache>();
+        }
+        // キャッシュに保存
+        CardEntityCache.Instance.SetCardEntities(allCardEntities);
+
         // 非同期表示（バッチ処理）
         StartCoroutine(RefreshCardList());
 
@@ -270,7 +279,7 @@ public class CardListUI : MonoBehaviour
             if (countTextPanel != null) countTextPanel.gameObject.SetActive(false);
 
             Text index = item.transform.Find("Index")?.GetComponent<Text>();
-            index.text = currentIndex.ToString(); ;
+            index.text = currentIndex.ToString();
 
             // ボタンに追加処理
             item.GetComponent<Button>().onClick.AddListener(() =>
