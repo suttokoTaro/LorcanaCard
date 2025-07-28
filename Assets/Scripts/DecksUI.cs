@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class DecksUI : MonoBehaviour
 {
     [SerializeField] private GameObject ConfirmDuplicatePanel;
     [SerializeField] private GameObject ConfirmDeletePanel;
+    [SerializeField] private Text decksCountText;
+    [SerializeField] private Button sortButton; // ← ソートボタンをInspectorに設定
     public Transform deckContentParent;
     public GameObject decksItemPrefab;
     private DeckDataList currentDeckList;
+    private bool isSortDescending = false; // 初期状態：昇順
 
     void Start()
     {
+        sortButton.onClick.AddListener(OnSortButtonClicked); // ソートボタンにイベント登録
         LoadAndDisplayDecks();
     }
 
@@ -28,6 +33,23 @@ public class DecksUI : MonoBehaviour
         }
 
         currentDeckList = DeckStorage.LoadDecks();
+        if (isSortDescending)
+        {
+            currentDeckList.decks = currentDeckList.decks
+                .OrderByDescending(deck => deck.deckId) // デッキ名で降順ソート
+                .ToList();
+        }
+        else
+        {
+            currentDeckList.decks = currentDeckList.decks
+                .OrderBy(deck => deck.deckId) // デッキ名で昇順ソート
+                .ToList();
+        }
+        if (decksCountText != null)
+        {
+            decksCountText.text = $"Decks ({currentDeckList.decks.Count})";
+        }
+
         foreach (var deck in currentDeckList.decks)
         {
             // deckItemプレハブのインスタンスを、デッキリストエリアに生成する
@@ -76,6 +98,11 @@ public class DecksUI : MonoBehaviour
                     ConfirmDeletePanel.SetActive(true);
             });
         }
+    }
+    void OnSortButtonClicked()
+    {
+        isSortDescending = !isSortDescending; // トグルで昇順/降順を切り替え
+        LoadAndDisplayDecks();                // 再読み込み（ソートして表示）
     }
 
     /** デッキ複製確認：はいを押下時処理 */
