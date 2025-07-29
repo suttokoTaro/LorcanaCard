@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Card_4097
   m_EditorClassIdentifier: 
   cardId: 4097
-  setSeries: 4
+  setSeries: "04_\uFF35\uFF32\uFF33\uFF35\uFF2C\uFF21\u2019\uFF33\u3000\uFF32\uFF25\uFF34\uFF35\uFF32\uFF2E\u3000\u9006\u8972\u306E\u30A2\u30FC\u30B9\u30E9"
   idInSetSeries: 097
   icon: {fileID: 21300000, guid: bb7e98aa5c1d4d24aa1f2697dc6b85cb, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: WE DON'T TALK ABOUT BRUNO
+  name: "We Don\u2019t Talk About Bruno"
   versionName: "\u79D8\u5BC6\u306E\u30D6\u30EB\u30FC\u30CE"
   color: 3_emerald
   cost: 5
   cardType: "3_action\u30FBsong"
-  classification: 
+  classification: "\u6B4C"
   willpower: 0
   strength: 0
   loreValue: 0
@@ -40,3 +40,5 @@ MonoBehaviour:
   singTogetherFlag: 0
   supportFlag: 0
   wardFlag: 0
+  effectText: "\uFF08\u30B3\u30B9\u30C8\uFF15\u4EE5\u4E0A\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306F\u3059\u308B\u3053\u3068\u3067\u3053\u306E\u6B4C\u3092\u30B3\u30B9\u30C8\u3092\u652F\u6255\u308F\u305A\u306B\u6B4C\u3048\u308B\u3002\uFF09\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\uFF11\u4F53\u3092\u9078\u3073\u3001\u305D\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306E\u30D7\u30EC\u30A4\u30E4\u30FC\u306E\u624B\u672D\u306B\u623B\u3057\u3001\u305D\u306E\u5F8C\u305D\u306E\u30D7\u30EC\u30A4\u30E4\u30FC\u306F\u30AB\u30FC\u30C9\u3092\uFF11\u679A\u30E9\u30F3\u30C0\u30E0\u306B\u9078\u3093\u3067\u6368\u3066\u308B\u3002"
+  flavorText: "\u4E88\u8A00\u304C\u904B\u547D\u3092\u6C7A\u3081\u308B\uFF01"

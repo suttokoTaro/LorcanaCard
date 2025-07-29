@@ -13,14 +13,32 @@ MonoBehaviour:
   m_Name: Card_4155
   m_EditorClassIdentifier: 
   cardId: 4155
+  setSeries: "04_\uFF35\uFF32\uFF33\uFF35\uFF2C\uFF21\u2019\uFF33\u3000\uFF32\uFF25\uFF34\uFF35\uFF32\uFF2E\u3000\u9006\u8972\u306E\u30A2\u30FC\u30B9\u30E9"
+  idInSetSeries: 155
   icon: {fileID: 21300000, guid: dbd1c99d10f11a748a29d2ab4df5f39c, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30B7\u30B9\u30FC"
   versionName: "\u8CE2\u304D\u53CB"
-  color: sapphire
+  color: 5_sapphire
   cost: 6
-  cardType: character
-  cardClass: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u30D2\u30FC\u30ED\u30FC\u30FB\u795E\u683C\u30FB\u30C9\u30E9\u30B4\u30F3"
-  endurePoint: 6
-  power: 6
-  loaPoint: 2
+  cardType: 1_character
+  classification: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u30D2\u30FC\u30ED\u30FC\u30FB\u795E\u683C\u30FB\u30C9\u30E9\u30B4\u30F3"
+  willpower: 6
+  strength: 6
+  loreValue: 2
+  rarity: 2_uncommon
+  inkwellFlag: 1
+  vanillaFlag: 1
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0
+  effectText: '-'
+  flavorText: "\u300C\u7121\u7406\u3060\u3068\u601D\u3063\u3066\u3082\u3001\u3084\u3063\u3066\u307F\u308B\u306E\u3002\u4E00\u6B69\u3092\u8E0F\u307F\u51FA\u3059\u306E\u3063\u3066\u5927\u4E8B\u3002\u6C17\u6301\u3061\u304C\u63FA\u308C\u3066\u3082\u306D\u300D"

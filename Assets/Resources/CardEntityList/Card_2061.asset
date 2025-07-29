@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card_2061
   m_EditorClassIdentifier: 
   cardId: 2061
-  setSeries: 2
+  setSeries: "02_\uFF32\uFF29\uFF33\uFF25 \uFF2F\uFF26 \uFF34\uFF28\uFF25 \uFF26\uFF2C\uFF2F\uFF2F\uFF24\uFF22\uFF2F\uFF32\uFF2E\u3000\u30D5\u30E9\u30C3\u30C9\u30DC\u30FC\u30F3\u306E\u6E3E\u6C8C"
   idInSetSeries: 061
   icon: {fileID: 21300000, guid: 5ab2f4b375f16444d8d28f6bc9417651, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
@@ -40,3 +40,6 @@ MonoBehaviour:
   singTogetherFlag: 0
   supportFlag: 0
   wardFlag: 0
+  effectText: '-'
+  flavorText: "\u30A4\u30BA\u30DE \u300C\u30E9\u30DE\u304C\uFF01\u76EE\u3092\u9589\u3058\u305F\u3089\u30E9\u30DE\u304C\u982D\u306B\u6D6E\u304B\u3093\u3067\u6B62\u30E9\u30DE\u306A\u3044\u308F\uFF01\u300D\u30AF\u30ED\u30F3\u30AF
+    \u300C\u5947\u5999\u3063\u3059\u306D\u3002\u4FFA\u3055\u3063\u304D\u30D5\u30E9\u30C3\u30C9\u3067\u6D41\u3055\u308C\u3066\u308B\u30E9\u30DE\u898B\u307E\u3057\u305F\u3001\u304B\u308F\u3044\u305D\u3046\u300D"

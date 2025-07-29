@@ -13,10 +13,33 @@ MonoBehaviour:
   m_Name: Card_3163
   m_EditorClassIdentifier: 
   cardId: 3163
+  setSeries: "03_\uFF29\uFF2E\uFF34\uFF2F \uFF34\uFF28\uFF25 \uFF29\uFF2E\uFF2B\uFF2C\uFF21\uFF2E\uFF24\uFF33\u3000\u30A4\u30F3\u30AF\u30E9\u30F3\u30C9\u63A2\u8A2A"
+  idInSetSeries: 163
   icon: {fileID: 21300000, guid: 7b954e624ce70c545bcfd9ba0043a349, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30AA\u30FC\u30EC\u30EA\u30A2\u30F3\u30FB\u30B8\u30E3\u30A4\u30ED\u30BB\u30F3\u30B5\u30FC"
-  color: sapphire
+  versionName: '-'
+  color: 5_sapphire
   cost: 2
-  endurePoint: 0
-  power: 0
+  cardType: 4_item
+  classification: '-'
+  willpower: 0
+  strength: 0
+  loreValue: 0
+  rarity: 3_rare
+  inkwellFlag: 1
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0
+  effectText: "\u77E5\u8B58\u63A2\u77E5 \u3042\u306A\u305F\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\uFF11\u4F53\u304C\u30AF\u30A8\u30B9\u30C8\u3059\u308B\u305F\u3073\u3001\u3042\u306A\u305F\u306E\u30C7\u30C3\u30AD\u306E\u4E00\u756A\u4E0A\u306E\u30AB\u30FC\u30C9\u3092\u898B\u3066\u3082\u3088\u3044\u3002\u305D\u308C\u3092\u30C7\u30C3\u30AD\u306E\u4E00\u756A\u4E0A\u304B\u4E00\u756A\u4E0B\u306B\u7F6E\u304F\u3002"
+  flavorText: "\u300C\u3053\u3044\u3064\u306F\u5931\u308F\u308C\u305F\u30ED\u30A2\u306E\u5728\u51E6\u3092\u6307\u3057\u793A\u3057\u3066\u304F\u308C\u308B\u3002\u305F\u3060\u3057\u8DB3\u4E0B\u306F\u81EA\u5206\u3067\u6CE8\u610F\u3057\u308D\u300D\u2015
+    \u30A4\u30EB\u30DF\u30CB\u30A2\u306E\u30F4\u30A7\u30F3\u30C1\u30E5\u30ED"

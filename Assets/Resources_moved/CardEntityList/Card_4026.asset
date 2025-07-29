@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Card_4026
   m_EditorClassIdentifier: 
   cardId: 4026
-  setSeries: 4
+  setSeries: "04_\uFF35\uFF32\uFF33\uFF35\uFF2C\uFF21\u2019\uFF33\u3000\uFF32\uFF25\uFF34\uFF35\uFF32\uFF2E\u3000\u9006\u8972\u306E\u30A2\u30FC\u30B9\u30E9"
   idInSetSeries: 026
   icon: {fileID: 21300000, guid: 2717117347249bd4f99ffa86414ba0da, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u5E30\u3063\u3066\u304D\u305F\u30D6\u30EB\u30FC\u30CE"
-  versionName: 
+  versionName: '-'
   color: 1_umber
   cost: 2
   cardType: 2_action
-  classification: 
+  classification: '-'
   willpower: 0
   strength: 0
   loreValue: 0
@@ -40,3 +40,5 @@ MonoBehaviour:
   singTogetherFlag: 0
   supportFlag: 0
   wardFlag: 0
+  effectText: "\u3042\u306A\u305F\u306E\u6368\u3066\u672D\u304B\u3089\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u30FB\u30AB\u30FC\u30C9\uFF11\u679A\u3092\u624B\u672D\u306B\u623B\u3059\u3002\u305D\u306E\u5F8C\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\uFF11\u4F53\u3092\u9078\u3073\u3001\uFF12\u30C0\u30E1\u30FC\u30B8\u307E\u3067\u53D6\u308A\u9664\u304F\u3002"
+  flavorText: "\u300C\u50D5\u3001\u4F55\u304B\u5927\u4E8B\u306A\u5C55\u958B\u898B\u9003\u3057\u3061\u3083\u3063\u3066\u305F\u304B\u306A\uFF1F\u300D"

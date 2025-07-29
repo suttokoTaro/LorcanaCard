@@ -13,14 +13,33 @@ MonoBehaviour:
   m_Name: Card_4110
   m_EditorClassIdentifier: 
   cardId: 4110
+  setSeries: "04_\uFF35\uFF32\uFF33\uFF35\uFF2C\uFF21\u2019\uFF33\u3000\uFF32\uFF25\uFF34\uFF35\uFF32\uFF2E\u3000\u9006\u8972\u306E\u30A2\u30FC\u30B9\u30E9"
+  idInSetSeries: 110
   icon: {fileID: 21300000, guid: 1f4053ef943553f4e80753af673e197d, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
   name: "\u30AB\u30FC\u30F3"
   versionName: "\u611B\u99AC"
-  color: ruby
+  color: 4_ruby
   cost: 2
-  cardType: character
-  cardClass: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u4EF2\u9593"
-  endurePoint: 2
-  power: 3
-  loaPoint: 1
+  cardType: 1_character
+  classification: "\u30B9\u30C8\u30FC\u30EA\u30FC\u30DC\u30FC\u30F3\u30FB\u4EF2\u9593"
+  willpower: 2
+  strength: 3
+  loreValue: 1
+  rarity: 2_uncommon
+  inkwellFlag: 1
+  vanillaFlag: 1
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 0
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0
+  effectText: '-'
+  flavorText: "\u5F71\u306E\u5982\u304F\u9759\u304B \u98A8\u3092\u8D8A\u3048\u308B\u901F\u3055\u52C7\u731B\u306A\u308B\u30AB\u30FC\u30F3
+    \u5929\u4E0B\u7121\u53CC\u306E\u99FF\u99AC"

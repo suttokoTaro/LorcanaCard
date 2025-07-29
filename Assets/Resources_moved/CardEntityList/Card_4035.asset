@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card_4035
   m_EditorClassIdentifier: 
   cardId: 4035
-  setSeries: 4
+  setSeries: "04_\uFF35\uFF32\uFF33\uFF35\uFF2C\uFF21\u2019\uFF33\u3000\uFF32\uFF25\uFF34\uFF35\uFF32\uFF2E\u3000\u9006\u8972\u306E\u30A2\u30FC\u30B9\u30E9"
   idInSetSeries: 035
   icon: {fileID: 21300000, guid: aac470b25333d804f965384ca4eb9e53, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
@@ -27,7 +27,7 @@ MonoBehaviour:
   strength: 3
   loreValue: 1
   rarity: 2_uncommon
-  inkwellFlag: 0
+  inkwellFlag: 1
   vanillaFlag: 1
   bodyguardFlag: 0
   challengerFlag: 0
@@ -40,3 +40,5 @@ MonoBehaviour:
   singTogetherFlag: 0
   supportFlag: 0
   wardFlag: 0
+  effectText: '-'
+  flavorText: "\u300C\u6614\u3080\u304B\u3057\u3001\u5C71\u306E\u4E2D\u306B\u3068\u3066\u3082\u7279\u5225\u306A\u5BB6\u65CF\u304C\u4F4F\u3080\u30AB\u30B7\u30FC\u30BF\u304C\u3042\u308A\u307E\u3057\u305F\u2026\u300D"

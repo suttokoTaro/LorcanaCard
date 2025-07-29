@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card_4015
   m_EditorClassIdentifier: 
   cardId: 4015
-  setSeries: 4
+  setSeries: "04_\uFF35\uFF32\uFF33\uFF35\uFF2C\uFF21\u2019\uFF33\u3000\uFF32\uFF25\uFF34\uFF35\uFF32\uFF2E\u3000\u9006\u8972\u306E\u30A2\u30FC\u30B9\u30E9"
   idInSetSeries: 015
   icon: {fileID: 21300000, guid: 312e4d85db57de14493461d0ed11f1f1, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
@@ -27,7 +27,7 @@ MonoBehaviour:
   strength: 2
   loreValue: 1
   rarity: 2_uncommon
-  inkwellFlag: 0
+  inkwellFlag: 1
   vanillaFlag: 0
   bodyguardFlag: 0
   challengerFlag: 0
@@ -38,5 +38,8 @@ MonoBehaviour:
   shiftFlag: 0
   singerFlag: 0
   singTogetherFlag: 0
-  supportFlag: 1
+  supportFlag: 2
   wardFlag: 0
+  effectText: "\u652F\u63F4\uFF08\u3053\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u304C\u30AF\u30A8\u30B9\u30C8\u3059\u308B\u305F\u3073\u3001\u4ED6\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\uFF11\u4F53\u3092\u9078\u3073\u3001\u3053\u306E\u30BF\u30FC\u30F3\u3001\u3053\u308C\u306E\u3092\u305D\u308C\u306E\u306B\u52A0\u3048\u3066\u3082\u3088\u3044\u3002\uFF09\u30B9\u30C8\u30E9\u30A4\u30AF\u30FB\u30A2\u30C3\u30D7\u30FB\u30B6\u30FB\u30DF\u30E5\u30FC\u30B8\u30C3\u30AF
+    \u3053\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u3092\u30D7\u30EC\u30A4\u3057\u305F\u3068\u304D\u3001\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\uFF11\u4F53\u3092\u9078\u3073\u3001\u305D\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306F\u3053\u306E\u30BF\u30FC\u30F3\u3001\u652F\u63F4\u3092\u5F97\u308B\u3002"
+  flavorText: '-'

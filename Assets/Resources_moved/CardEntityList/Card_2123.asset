@@ -13,12 +13,33 @@ MonoBehaviour:
   m_Name: Card_2123
   m_EditorClassIdentifier: 
   cardId: 2123
+  setSeries: "02_\uFF32\uFF29\uFF33\uFF25 \uFF2F\uFF26 \uFF34\uFF28\uFF25 \uFF26\uFF2C\uFF2F\uFF2F\uFF24\uFF22\uFF2F\uFF32\uFF2E\u3000\u30D5\u30E9\u30C3\u30C9\u30DC\u30FC\u30F3\u306E\u6E3E\u6C8C"
+  idInSetSeries: 123
   icon: {fileID: 21300000, guid: ab723ed2bdfa7e64e8d1146f696ee268, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30DF\u30CB\u30FC\u30DE\u30A6\u30B9"
-  color: ruby
+  name: "\u30E9\u30FC\u30E4"
+  versionName: "\u30CF\u30FC\u30C8\u306E\u6307\u5C0E\u8005"
+  color: 4_ruby
   cost: 6
-  cardType: character
-  endurePoint: 3
-  power: 1
-  loaPoint: 0
+  cardType: 1_character
+  classification: "\u30D5\u30E9\u30C3\u30C9\u30DC\u30FC\u30F3\u30FB\u30D2\u30FC\u30ED\u30FC\u30FB\u30D7\u30EA\u30F3\u30BB\u30B9"
+  willpower: 3
+  strength: 5
+  loreValue: 2
+  rarity: 4_superrare
+  inkwellFlag: 1
+  vanillaFlag: 0
+  bodyguardFlag: 0
+  challengerFlag: 0
+  evasiveFlag: 0
+  recklessFlag: 0
+  resistFlag: 0
+  rushFlag: 0
+  shiftFlag: 2
+  singerFlag: 0
+  singTogetherFlag: 0
+  supportFlag: 0
+  wardFlag: 0
+  effectText: "\u5909\u8EAB\uFF14\uFF08\uFF14\u3092\u652F\u6255\u3046\u3053\u3068\u3067\u3053\u306E\u30AB\u30FC\u30C9\u3092\u3042\u306A\u305F\u306E\u300A\u30E9\u30FC\u30E4\u300B\u306E\u4E0A\u306B\u30D7\u30EC\u30A4\u3057\u3066\u3082\u3088\u3044\u3002\uFF09\u30AF\u30DE\u30F3\u30C9\u30E9\u306E\u52C7\u8005
+    \u3053\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u304C\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u3066\u3044\u308B\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\uFF11\u4F53\u306B\u30C1\u30E3\u30EC\u30F3\u30B8\u3059\u308B\u305F\u3073\u3001\u3053\u308C\u306F\u305D\u306E\u30C1\u30E3\u30EC\u30F3\u30B8\u306B\u3088\u3063\u3066\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u306A\u3044\u3002"
+  flavorText: '-'

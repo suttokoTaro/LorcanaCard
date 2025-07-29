@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card_3100
   m_EditorClassIdentifier: 
   cardId: 3100
-  setSeries: 3
+  setSeries: "03_\uFF29\uFF2E\uFF34\uFF2F \uFF34\uFF28\uFF25 \uFF29\uFF2E\uFF2B\uFF2C\uFF21\uFF2E\uFF24\uFF33\u3000\u30A4\u30F3\u30AF\u30E9\u30F3\u30C9\u63A2\u8A2A"
   idInSetSeries: 100
   icon: {fileID: 21300000, guid: 5a046f6c7685e7245a60b98c0ab9780f, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
@@ -22,13 +22,13 @@ MonoBehaviour:
   color: 3_emerald
   cost: 1
   cardType: 5_location
-  classification: 
+  classification: '-'
   willpower: 4
   strength: 0
   loreValue: 1
   rarity: 1_common
   inkwellFlag: 1
-  vanillaFlag: 0
+  vanillaFlag: 1
   bodyguardFlag: 0
   challengerFlag: 0
   evasiveFlag: 0
@@ -40,3 +40,6 @@ MonoBehaviour:
   singTogetherFlag: 0
   supportFlag: 0
   wardFlag: 0
+  effectText: '-'
+  flavorText: "\u300C\u3053\u306E\u53E4\u5C4B\u6577\u306B\u306F\u30AA\u30D0\u30B1\u304C\u51FA\u308B\u3068\u3044\u3046\u5642\u3092\u805E\u3044\u305F\u3053\u3068\u304C\u3042\u308B\u3093\u3060\u304C\u3001\u3069\u3046\u306A\u3093\u3060\uFF1F\u300D\u2015
+    \u5927\u4F50"
