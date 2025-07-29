@@ -90,4 +90,7 @@ public class CardEntity : ScriptableObject
     // 魔除
     public int wardFlag;
 
+    public string effectText;
+    public string flavorText;
+
 }
