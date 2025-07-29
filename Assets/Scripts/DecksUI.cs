@@ -106,6 +106,7 @@ public class DecksUI : MonoBehaviour
     }
     public void OnClickCreateDeckButton()
     {
+        SelectedDeckData.selectedDeck = null;
         SceneManager.LoadScene("DeckDetailScene");
     }
 
