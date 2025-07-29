@@ -35,8 +35,11 @@ public class DeckDetailUI : MonoBehaviour
         currentDeck = SelectedDeckData.selectedDeck;
         if (currentDeck == null)
         {
-            Debug.LogError("選択したデッキ情報が取得できません。");
-            return;
+            DeckData newDeck = new DeckData();
+            newDeck.deckId = System.Guid.NewGuid().ToString(); // デッキのユニークIDの生成 
+            newDeck.deckName = "新しいデッキ";
+            newDeck.cardIDs = new List<int>();
+            currentDeck = newDeck;
         }
         // デッキ名入力エリアが存在する場合、取得したデッキ情報のデッキ名を設定し、編集可能とする
         if (deckNameInputField != null)

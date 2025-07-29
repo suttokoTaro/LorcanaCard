@@ -104,6 +104,10 @@ public class DecksUI : MonoBehaviour
         isSortDescending = !isSortDescending; // トグルで昇順/降順を切り替え
         LoadAndDisplayDecks();                // 再読み込み（ソートして表示）
     }
+    public void OnClickCreateDeckButton()
+    {
+        SceneManager.LoadScene("DeckDetailScene");
+    }
 
     /** デッキ複製確認：はいを押下時処理 */
     public void OnClickDuplicateYes()
