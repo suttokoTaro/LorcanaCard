@@ -292,7 +292,8 @@ public class BattleUI : MonoBehaviour
     }
     public void OnClickConfirmExitYes()
     {
-        SceneManager.LoadScene("MainMenuScene");
+        //SceneManager.LoadScene("MainMenuScene");
+        SceneManager.LoadScene("SimLabScene");
     }
     public void OnClickConfirmExitNo()
     {

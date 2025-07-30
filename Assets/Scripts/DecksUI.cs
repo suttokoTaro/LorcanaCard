@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class DecksUI : MonoBehaviour
 {
@@ -16,9 +18,25 @@ public class DecksUI : MonoBehaviour
     public GameObject decksItemPrefab;
     private DeckDataList currentDeckList;
     private bool isSortDescending = false; // 初期状態：昇順
+    private IList<CardEntity> allCardEntities;
 
-    void Start()
+
+    private async void Start()
     {
+
+        // ラベルでCardEntityを非同期ロード
+        AsyncOperationHandle<IList<CardEntity>> handle = Addressables.LoadAssetsAsync<CardEntity>("CardEntityList", null);
+        allCardEntities = await handle.Task;
+
+        // CardEntityCacheがまだ存在しないなら生成
+        if (CardEntityCache.Instance == null)
+        {
+            GameObject go = new GameObject("CardEntityCache");
+            go.AddComponent<CardEntityCache>();
+        }
+        // キャッシュに保存
+        CardEntityCache.Instance.SetCardEntities(allCardEntities);
+
         // デッキデータが存在しない場合、デフォルトデッキをロードする
         DeckStorage.EnsureDefaultDecksLoaded();
 
