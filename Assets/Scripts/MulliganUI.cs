@@ -251,6 +251,7 @@ class MulliganManager : MonoBehaviour
 
     public void OnClickBackToMainMenu()
     {
-        SceneManager.LoadScene("MainMenuScene");
+        //SceneManager.LoadScene("MainMenuScene");
+        SceneManager.LoadScene("SimLabScene");
     }
 }

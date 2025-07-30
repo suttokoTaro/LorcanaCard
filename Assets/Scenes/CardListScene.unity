@@ -3985,7 +3985,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.000015258789, y: 1}
+  m_SizeDelta: {x: 0, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &381283766
 MonoBehaviour:
@@ -5616,7 +5616,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 506360262}
+  m_TargetGraphic: {fileID: 1768664433}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -6921,7 +6921,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 652428105}
+  m_TargetGraphic: {fileID: 126770563}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -18869,7 +18869,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1963603418}
+  m_TargetGraphic: {fileID: 982677256}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:

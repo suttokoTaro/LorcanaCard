@@ -11,6 +11,7 @@ public class SimLabUI : MonoBehaviour
 {
     public Transform decksAreaContent;
     public GameObject decksItemInSimLabPrefab;
+    [SerializeField] private GameObject player1DeckPanel, player2DeckPanel;
     [SerializeField] private Text player1_DeckNameText, player2_DeckNameText;
     [SerializeField] private Image player1_DeckIcon, player1_colorIcon1, player1_colorIcon2;
     [SerializeField] private Image player2_DeckIcon, player2_colorIcon1, player2_colorIcon2;
@@ -27,6 +28,7 @@ public class SimLabUI : MonoBehaviour
         DeckStorage.EnsureDefaultDecksLoaded();
 
         LoadAndDisplayDecks();
+        UpdateSelectedDecksDisplay();
     }
 
     /** デッキリスト表示の更新 */
@@ -102,6 +104,8 @@ public class SimLabUI : MonoBehaviour
         /** Player1エリア */
         if (player1Deck != null)
         {
+            player1DeckPanel.SetActive(true);
+
             player1_DeckNameText.text = player1Deck.deckName;
 
             // デッキアイコンの設定
@@ -121,6 +125,8 @@ public class SimLabUI : MonoBehaviour
         /** Player2エリア */
         if (player2Deck != null)
         {
+            player2DeckPanel.SetActive(true);
+
             player2_DeckNameText.text = player2Deck.deckName;
 
             // デッキアイコンの設定
@@ -138,6 +144,41 @@ public class SimLabUI : MonoBehaviour
         }
         startButton.interactable = player1Deck != null && player2Deck != null;
 
+    }
+
+    /** Player1デッキパネル押下時の処理 */
+    public void OnClickPlayer1DeckPanel()
+    {
+        if (player1Deck != null)
+        {
+            player1Deck = null;
+            SelectedDeckData.playerDeck = null;
+            player1DeckPanel.SetActive(false);
+            startButton.interactable = player1Deck != null && player2Deck != null;
+        }
+    }
+    /** Player2デッキパネル押下時の処理 */
+    public void OnClickPlayer2DeckPanel()
+    {
+        if (player2Deck != null)
+        {
+            player2Deck = null;
+            SelectedDeckData.enemyDeck = null;
+            player2DeckPanel.SetActive(false);
+            startButton.interactable = player1Deck != null && player2Deck != null;
+        }
+    }
+
+
+    /** STARTボタン押下時の処理 */
+    public void OnClickStartButton()
+    {
+        if (player1Deck == null || player2Deck == null) return;
+
+        DeckManager.Instance.selectedPlayerDeck = new List<int>(player1Deck.cardIDs);
+        DeckManager.Instance.selectedEnemyDeck = new List<int>(player2Deck.cardIDs);
+
+        SceneManager.LoadScene("MulliganScene");
     }
 
     /** CardListボタン押下時処理：CardList画面に遷移 */
