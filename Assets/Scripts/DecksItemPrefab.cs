@@ -9,6 +9,7 @@ public class DecksItemPrefab : MonoBehaviour
     public Text deckNameText;
 
     public Image deckIcon;
+    public Image deckIconBack;
     public Image colorIcon1;
     public Image colorIcon2;
 

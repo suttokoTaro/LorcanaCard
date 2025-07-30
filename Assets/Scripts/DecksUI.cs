@@ -23,6 +23,11 @@ public class DecksUI : MonoBehaviour
 
     private async void Start()
     {
+        // デッキデータが存在しない場合、デフォルトデッキをロードする
+        DeckStorage.EnsureDefaultDecksLoaded();
+
+        sortButton.onClick.AddListener(OnSortButtonClicked); // ソートボタンにイベント登録
+        LoadAndDisplayDecks();
 
         // ラベルでCardEntityを非同期ロード
         AsyncOperationHandle<IList<CardEntity>> handle = Addressables.LoadAssetsAsync<CardEntity>("CardEntityList", null);
@@ -36,12 +41,6 @@ public class DecksUI : MonoBehaviour
         }
         // キャッシュに保存
         CardEntityCache.Instance.SetCardEntities(allCardEntities);
-
-        // デッキデータが存在しない場合、デフォルトデッキをロードする
-        DeckStorage.EnsureDefaultDecksLoaded();
-
-        sortButton.onClick.AddListener(OnSortButtonClicked); // ソートボタンにイベント登録
-        LoadAndDisplayDecks();
     }
 
 
@@ -84,10 +83,12 @@ public class DecksUI : MonoBehaviour
             // デッキアイコンの設定
             var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
             deckItem.deckIcon.sprite = defaultLeaderCard.backIcon;
+            deckItem.deckIconBack.sprite = defaultLeaderCard.backIcon;
             var leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{deck.leaderCardId}");
             if (leaderCard != null)
             {
                 deckItem.deckIcon.sprite = leaderCard.icon;
+                deckItem.deckIconBack.sprite = leaderCard.icon;
             }
             // デッキ色アイコンの設定
             var color1 = Resources.Load<ColorEntity>($"ColorEntityList/ColorEntity_{deck.color1}");

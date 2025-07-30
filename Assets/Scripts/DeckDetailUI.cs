@@ -230,6 +230,7 @@ public class DeckDetailUI : MonoBehaviour
         }
         DeckStorage.SaveDecks(list);
         Debug.Log("デッキ保存完了");
+        SceneManager.LoadScene("DecksScene");
     }
 
     /** 戻るボタン押下時の処理 */
