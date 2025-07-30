@@ -38,6 +38,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DeckCardSelectScene.unity
     guid: 4fa543134071c2f428ecc67bd5ba5c3b
+  - enabled: 1
+    path: Assets/Scenes/SimLabScene.unity
+    guid: b41500617ba4de6428e2c85905fdf7ab
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: b1bddd5750029bb49a78fe150a41d39e, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: af558c2f6cddb1845b6d3fe1a5a5ae1b, type: 2}

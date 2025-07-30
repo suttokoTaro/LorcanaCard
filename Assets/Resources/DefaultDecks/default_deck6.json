@@ -1,9 +1,11 @@
 {
     "deckId": "default-6",
-    "deckName": "4弾 紫緑",
+    "deckName": "4弾 紫緑 (default-6)",
     "color1": 2,
     "color2": 3,
     "leaderCardId": 2052,
+    "createdAt": "2025-01-06T00:00:00",
+    "updatedAt": "2025-01-06T00:00:00",
     "cardIDs": [
         3036, 3036,
         3070, 3070, 3070, 3070,

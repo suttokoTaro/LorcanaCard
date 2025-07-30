@@ -1,9 +1,11 @@
 {
     "deckId": "default-3",
-    "deckName": "3弾 黄鋼",
+    "deckName": "3弾 黄鋼 (default-3)",
     "color1": 1,
     "color2": 6,
     "leaderCardId": 3190,
+    "createdAt": "2025-01-03T00:00:00",
+    "updatedAt": "2025-01-03T00:00:00",
     "cardIDs": [
         2003, 2003, 2003, 2003,
         2027, 2027, 2027, 2027,

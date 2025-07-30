@@ -649,6 +649,12 @@ public class CardListUI : MonoBehaviour
         SceneManager.LoadScene("DecksScene");
     }
 
+    /** SimLabボタン押下時処理：Decks画面に遷移 */
+    public void OnClickSimLabButton()
+    {
+        SceneManager.LoadScene("SimLabScene");
+    }
+
     /** 戻るボタン押下時処理：メインメニュー画面に戻る */
     public void OnClickBackToMainMenu()
     {

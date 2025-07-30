@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.EventSystems;
+using System;
 using System.Linq;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -214,6 +215,8 @@ public class DeckDetailUI : MonoBehaviour
     /** デッキ保存ボタン押下時の処理 */
     public void OnClickSaveButton()
     {
+        string updatedAt = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+        currentDeck.updatedAt = updatedAt;
         DeckDataList list = DeckStorage.LoadDecks();
         int index = list.decks.FindIndex(d => d.deckId == currentDeck.deckId);
         if (index >= 0)
@@ -222,6 +225,7 @@ public class DeckDetailUI : MonoBehaviour
         }
         else
         {
+            currentDeck.createdAt = updatedAt;
             list.decks.Add(currentDeck);
         }
         DeckStorage.SaveDecks(list);

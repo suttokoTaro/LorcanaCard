@@ -1,9 +1,11 @@
 {
     "deckId": "default-8",
-    "deckName": "4弾 紫赤",
+    "deckName": "4弾 紫赤 (default-8)",
     "color1": 2,
     "color2": 4,
     "leaderCardId": 4129,
+    "createdAt": "2025-01-08T00:00:00",
+    "updatedAt": "2025-01-08T00:00:00",
     "cardIDs": [
         3036, 3036, 3036, 3036,
         4048, 4048, 4048, 4048,

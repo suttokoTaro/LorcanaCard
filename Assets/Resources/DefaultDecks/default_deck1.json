@@ -1,9 +1,11 @@
 {
     "deckId": "default-1",
-    "deckName": "3弾 紫赤",
+    "deckName": "3弾 紫赤 (default-1)",
     "color1": 2,
     "color2": 4,
     "leaderCardId": 3112,
+    "createdAt": "2025-01-01T00:00:00",
+    "updatedAt": "2025-01-01T00:00:00",
     "cardIDs": [
         1052, 1052, 1052, 1052,
         3054, 3054, 3054, 3054,

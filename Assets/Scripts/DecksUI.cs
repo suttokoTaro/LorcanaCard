@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 using System.Linq;
 
 public class DecksUI : MonoBehaviour
@@ -18,6 +19,9 @@ public class DecksUI : MonoBehaviour
 
     void Start()
     {
+        // デッキデータが存在しない場合、デフォルトデッキをロードする
+        DeckStorage.EnsureDefaultDecksLoaded();
+
         sortButton.onClick.AddListener(OnSortButtonClicked); // ソートボタンにイベント登録
         LoadAndDisplayDecks();
     }
@@ -36,13 +40,13 @@ public class DecksUI : MonoBehaviour
         if (isSortDescending)
         {
             currentDeckList.decks = currentDeckList.decks
-                .OrderByDescending(deck => deck.deckId) // デッキ名で降順ソート
+                .OrderBy(deck => deck.updatedAt) // デッキ名で降順ソート
                 .ToList();
         }
         else
         {
             currentDeckList.decks = currentDeckList.decks
-                .OrderBy(deck => deck.deckId) // デッキ名で昇順ソート
+                .OrderByDescending(deck => deck.updatedAt) // デッキ名で昇順ソート
                 .ToList();
         }
         if (decksCountText != null)
@@ -122,7 +126,9 @@ public class DecksUI : MonoBehaviour
             newDeck.leaderCardId = SelectedDeckData.selectedDeck.leaderCardId;
             newDeck.color1 = SelectedDeckData.selectedDeck.color1;
             newDeck.color2 = SelectedDeckData.selectedDeck.color2;
-
+            string updatedAt = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+            newDeck.createdAt = updatedAt;
+            newDeck.updatedAt = updatedAt;
             DeckDataList deckList = DeckStorage.LoadDecks();
             deckList.decks.Add(newDeck);
             DeckStorage.SaveDecks(deckList);
@@ -166,5 +172,11 @@ public class DecksUI : MonoBehaviour
     public void OnClickCardListButton()
     {
         SceneManager.LoadScene("CardListScene");
+    }
+
+    /** SimLabボタン押下時処理：Decks画面に遷移 */
+    public void OnClickSimLabButton()
+    {
+        SceneManager.LoadScene("SimLabScene");
     }
 }
