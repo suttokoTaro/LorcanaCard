@@ -178,6 +178,9 @@ public class SimLabUI : MonoBehaviour
         DeckManager.Instance.selectedPlayerDeck = new List<int>(player1Deck.cardIDs);
         DeckManager.Instance.selectedEnemyDeck = new List<int>(player2Deck.cardIDs);
 
+        DeckManager.Instance.selectedPlayer1DeckData = player1Deck;
+        DeckManager.Instance.selectedPlayer2DeckData = player2Deck;
+
         SceneManager.LoadScene("MulliganScene");
     }
 

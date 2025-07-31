@@ -112,12 +112,12 @@ public class CardListUI : MonoBehaviour
             bool matchesWish = true;
             bool matchesOwned = true;
 
-            if (filterWishToggle.isOn)
+            if (!filterWishToggle.isOn)
             {
                 int currentWishCount = WishListStorage.GetCount(cardEntity.cardId);
                 matchesWish = currentWishCount >= 1;
             }
-            if (filterOwnedToggle.isOn)
+            if (!filterOwnedToggle.isOn)
             {
                 int currentOwnedCount = OwnedListStorage.GetCount(cardEntity.cardId);
                 matchesOwned = currentOwnedCount >= 1;

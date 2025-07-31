@@ -12,6 +12,9 @@ public class DeckManager : MonoBehaviour
     public List<int> playerInitialHand; // マリガン完了後の7枚
     public List<int> enemyInitialHand;
 
+    public DeckData selectedPlayer1DeckData;
+    public DeckData selectedPlayer2DeckData;
+
     void Awake()
     {
         if (Instance == null)

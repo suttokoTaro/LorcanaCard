@@ -1603,6 +1603,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoomCanvas: {fileID: 1753711196}
   zoomImage: {fileID: 1865475556}
+  player1BackIcon: {fileID: 1102553392}
+  player2BackIcon: {fileID: 1995641181}
   playerHandArea: {fileID: 771251433}
   playerRedrawButton: {fileID: 1432987390}
   enemyHandArea: {fileID: 113901259}
@@ -1723,7 +1725,7 @@ GameObject:
   - component: {fileID: 1102553393}
   - component: {fileID: 1102553392}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Player1AreaBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3626,7 +3628,7 @@ GameObject:
   - component: {fileID: 1995641182}
   - component: {fileID: 1995641181}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Player2AreaBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

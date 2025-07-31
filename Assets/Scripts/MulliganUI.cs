@@ -10,6 +10,7 @@ class MulliganManager : MonoBehaviour
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
 
+    [SerializeField] private Image player1BackIcon, player2BackIcon;
     private Coroutine zoomCoroutine;
 
     private IEnumerator ShowZoom(Sprite sprite)
@@ -62,6 +63,16 @@ class MulliganManager : MonoBehaviour
         // 表示
         DisplayHand(playerHandArea, playerHand, "Player");
         DisplayHand(enemyHandArea, enemyHand, "Enemy");
+
+        var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
+
+        player1BackIcon.sprite = defaultLeaderCard.backIcon;
+        var player1_leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{DeckManager.Instance.selectedPlayer1DeckData.leaderCardId}");
+        if (player1_leaderCard != null) { player1BackIcon.sprite = player1_leaderCard.icon; }
+
+        player2BackIcon.sprite = defaultLeaderCard.backIcon;
+        var player2_leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{DeckManager.Instance.selectedPlayer2DeckData.leaderCardId}");
+        if (player2_leaderCard != null) { player2BackIcon.sprite = player2_leaderCard.icon; }
 
         battleStartButton.interactable = false;
     }
