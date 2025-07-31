@@ -37,7 +37,7 @@ public class SwipeDetector2 : MonoBehaviour
     public void SetCurrentIndex(int selectedcardIndex)
     {
         currentIndex = selectedcardIndex;
-        Debug.Log("受け取ったインデックス番号：" + selectedcardIndex);
+        //Debug.Log("受け取ったインデックス番号：" + selectedcardIndex);
     }
 
     public void ShowCard(int index)
@@ -48,7 +48,7 @@ public class SwipeDetector2 : MonoBehaviour
             {
                 zoomImage.sprite = deckCardList[index].entity.icon;
                 countText.text = deckCardList[index].count.ToString();
-                Debug.Log("拡大表示のインデックス番号：" + index);
+                //Debug.Log("拡大表示のインデックス番号：" + index);
             }
         }
     }

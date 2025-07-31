@@ -11,6 +11,7 @@ public class SwipeDetector : MonoBehaviour
 
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
+    [SerializeField] private Text wishCountText, ownedCountText;
 
     private List<CardEntity> cardList;
     private int currentIndex = 0;
@@ -36,7 +37,46 @@ public class SwipeDetector : MonoBehaviour
             {
                 zoomImage.sprite = cardList[index].icon;
                 //Debug.Log("拡大表示のインデックス番号：" + index);
+                int currentWishCount = WishListStorage.GetCount(cardList[index].cardId);
+                wishCountText.text = currentWishCount.ToString();
+                int currentOwnedCount = OwnedListStorage.GetCount(cardList[index].cardId);
+                ownedCountText.text = currentOwnedCount.ToString();
             }
+        }
+    }
+
+    public void OnClickWishPlusButton()
+    {
+        if (cardList != null && currentIndex >= 0 && currentIndex < cardList.Count)
+        {
+            WishListStorage.AddOrUpdate(cardList[currentIndex].cardId, 1);
+            //Debug.Log("wishリスト1枚追加：" + cardList[currentIndex].cardId);
+            ShowCard(currentIndex);
+        }
+    }
+    public void OnClickWishMinusButton()
+    {
+        if (cardList != null && currentIndex >= 0 && currentIndex < cardList.Count)
+        {
+            WishListStorage.AddOrUpdate(cardList[currentIndex].cardId, -1);
+            ShowCard(currentIndex);
+        }
+    }
+    public void OnClickOwnedPlusButton()
+    {
+        if (cardList != null && currentIndex >= 0 && currentIndex < cardList.Count)
+        {
+            OwnedListStorage.AddOrUpdate(cardList[currentIndex].cardId, 1);
+            //Debug.Log("wishリスト1枚追加：" + cardList[currentIndex].cardId);
+            ShowCard(currentIndex);
+        }
+    }
+    public void OnClickOwnedMinusButton()
+    {
+        if (cardList != null && currentIndex >= 0 && currentIndex < cardList.Count)
+        {
+            OwnedListStorage.AddOrUpdate(cardList[currentIndex].cardId, -1);
+            ShowCard(currentIndex);
         }
     }
 

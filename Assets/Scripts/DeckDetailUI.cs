@@ -184,7 +184,7 @@ public class DeckDetailUI : MonoBehaviour
         {
             currentDeck.deckName = newName;
             //OnClickSaveButton();
-            Debug.Log($"デッキ名変更＆保存: {newName}");
+            //Debug.Log($"デッキ名変更＆保存: {newName}");
         }
     }
 
@@ -208,7 +208,7 @@ public class DeckDetailUI : MonoBehaviour
     /** デッキカラーの変更 */
     public void HideSelectColorCanvas()
     {
-        Debug.Log("hide");
+        //Debug.Log("hide");
         selectColorCanvas.sortingOrder = -10;
     }
 
@@ -229,7 +229,7 @@ public class DeckDetailUI : MonoBehaviour
             list.decks.Add(currentDeck);
         }
         DeckStorage.SaveDecks(list);
-        Debug.Log("デッキ保存完了");
+        //Debug.Log("デッキ保存完了");
         SceneManager.LoadScene("DecksScene");
     }
 
@@ -312,7 +312,7 @@ public class DeckDetailUI : MonoBehaviour
         {
             // 名前検索フィルター
             string searchText = searchNameInputField?.text?.Trim().ToLower();
-            Debug.LogWarning("検索文字列：" + searchText);
+            //Debug.LogWarning("検索文字列：" + searchText);
             bool matchesName = string.IsNullOrEmpty(searchText) ||
                                (cardEntity.name != null && cardEntity.name.ToLower().Contains(searchText)) ||
                                (cardEntity.versionName != null && cardEntity.versionName.ToLower().Contains(searchText)) ||
@@ -332,7 +332,7 @@ public class DeckDetailUI : MonoBehaviour
             .ThenBy(c => c.cardId)                          // カードID
             .ToList();
 
-        Debug.LogWarning("フィルター後のカード数：" + filteredCardEntities.Count);
+        //Debug.LogWarning("フィルター後のカード数：" + filteredCardEntities.Count);
         if (filteredCardCountText != null)
         {
             filteredCardCountText.text = $"{filteredCardEntities.Count}";

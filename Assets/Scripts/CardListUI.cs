@@ -17,6 +17,9 @@ public class CardListUI : MonoBehaviour
     [SerializeField] private Canvas filterCanvas;
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
+    [SerializeField] private Text wishCountText, ownedCountText;
+    [SerializeField] private Toggle filterWishToggle, filterOwnedToggle;
+
     [SerializeField] private Text filteredCardCountText, filteredCardCountText2;
     [SerializeField] private InputField searchNameInputField;
 
@@ -79,6 +82,14 @@ public class CardListUI : MonoBehaviour
         // 各フィルターのToggleと押下時処理の紐づけ
         LinkedFilterToggles();
 
+        if (filterWishToggle != null)
+        {
+            filterWishToggle.onValueChanged.AddListener((isOn) => { RefreshCardListFiltered(); });
+        }
+        if (filterOwnedToggle != null)
+        {
+            filterOwnedToggle.onValueChanged.AddListener((isOn) => { RefreshCardListFiltered(); });
+        }
 
     }
 
@@ -95,10 +106,36 @@ public class CardListUI : MonoBehaviour
         //CardEntity[] allCardEntities = Resources.LoadAll<CardEntity>("CardEntityList");
         // Debug.LogWarning("全カード数：" + allCardEntities.Length);
 
+        List<CardEntity> wishAndOwnedCardEntites = new List<CardEntity>();
+        foreach (CardEntity cardEntity in allCardEntities)
+        {
+            bool matchesWish = true;
+            bool matchesOwned = true;
+
+            if (filterWishToggle.isOn)
+            {
+                int currentWishCount = WishListStorage.GetCount(cardEntity.cardId);
+                matchesWish = currentWishCount >= 1;
+            }
+            if (filterOwnedToggle.isOn)
+            {
+                int currentOwnedCount = OwnedListStorage.GetCount(cardEntity.cardId);
+                matchesOwned = currentOwnedCount >= 1;
+            }
+            if (matchesWish && matchesOwned)
+            {
+                wishAndOwnedCardEntites.Add(cardEntity);
+                //Debug.Log("cardId:" + cardEntity.cardId + ", currentWishCount:" + WishListStorage.GetCount(cardEntity.cardId) + ", currentOwnedCount:" + WishListStorage.GetCount(cardEntity.cardId));
+            }
+        }
+        //Debug.Log("filterWishToggle:" + filterWishToggle.isOn);
+        //Debug.Log("filterOwnedToggle:" + filterOwnedToggle.isOn);
+
+
         // フィルター条件に合致したカードリスト
         List<CardEntity> filteredCardEntities = new List<CardEntity>();
 
-        foreach (CardEntity cardEntity in allCardEntities)
+        foreach (CardEntity cardEntity in wishAndOwnedCardEntites)
         {
             // カードタイプフィルター内容と合致しているかどうか（カードタイプフィルターが一つも選択されていない場合もtrue）
             //string cardType = cardEntity.cardType?.Trim().ToLower();
@@ -225,7 +262,7 @@ public class CardListUI : MonoBehaviour
 
             // 名前検索フィルター
             string searchText = searchNameInputField?.text?.Trim().ToLower();
-            Debug.LogWarning("検索文字列：" + searchText);
+            //Debug.LogWarning("検索文字列：" + searchText);
             bool matchesName = string.IsNullOrEmpty(searchText) ||
                                (cardEntity.name != null && cardEntity.name.ToLower().Contains(searchText)) ||
                                (cardEntity.versionName != null && cardEntity.versionName.ToLower().Contains(searchText)) ||
@@ -239,7 +276,7 @@ public class CardListUI : MonoBehaviour
             }
         }
 
-        Debug.LogWarning("フィルター後のカード数：" + filteredCardEntities.Count);
+        //Debug.LogWarning("フィルター後のカード数：" + filteredCardEntities.Count);
         if (filteredCardCountText != null)
         {
             filteredCardCountText.text = $"{filteredCardEntities.Count}";
@@ -285,7 +322,7 @@ public class CardListUI : MonoBehaviour
             item.GetComponent<Button>().onClick.AddListener(() =>
             {
                 // 拡大表示
-                ShowZoom(iconImage.sprite, index);
+                ShowZoom(iconImage.sprite, index, cardId);
             });
 
             if ((currentIndex + 1) % batchSize == 0)
@@ -494,7 +531,7 @@ public class CardListUI : MonoBehaviour
             if (activeTypeFilters.Contains(normalizedCardType))
                 activeTypeFilters.Remove(normalizedCardType);
         }
-        Debug.LogWarning("カードタイプフィルター更新：" + string.Join(", ", activeTypeFilters));
+        //Debug.LogWarning("カードタイプフィルター更新：" + string.Join(", ", activeTypeFilters));
         RefreshCardListFiltered();
     }
 
@@ -514,7 +551,7 @@ public class CardListUI : MonoBehaviour
             if (activeColorFilters.Contains(normalizedColor))
                 activeColorFilters.Remove(normalizedColor);
         }
-        Debug.LogWarning("色フィルター更新：" + string.Join(", ", activeColorFilters));
+        //Debug.LogWarning("色フィルター更新：" + string.Join(", ", activeColorFilters));
         RefreshCardListFiltered();
     }
 
@@ -524,7 +561,7 @@ public class CardListUI : MonoBehaviour
         if (cost >= 1 && cost <= 10)
         {
             activeCostFilters[cost] = !isOn;
-            Debug.LogWarning("コストフィルター更新：" + string.Join(", ", activeCostFilters));
+            //Debug.LogWarning("コストフィルター更新：" + string.Join(", ", activeCostFilters));
             RefreshCardListFiltered();
         }
     }
@@ -535,7 +572,7 @@ public class CardListUI : MonoBehaviour
         if (strength >= 0 && strength <= 10)
         {
             activeStrengthFilters[strength] = !isOn;
-            Debug.LogWarning("攻撃力フィルター更新：" + string.Join(", ", activeStrengthFilters));
+            //Debug.LogWarning("攻撃力フィルター更新：" + string.Join(", ", activeStrengthFilters));
             RefreshCardListFiltered();
         }
     }
@@ -546,7 +583,7 @@ public class CardListUI : MonoBehaviour
         if (willpower >= 0 && willpower <= 10)
         {
             activeWillpowerFilters[willpower] = !isOn;
-            Debug.LogWarning("意思力フィルター更新：" + string.Join(", ", activeWillpowerFilters));
+            //Debug.LogWarning("意思力フィルター更新：" + string.Join(", ", activeWillpowerFilters));
             RefreshCardListFiltered();
         }
     }
@@ -557,7 +594,7 @@ public class CardListUI : MonoBehaviour
         if (loreValue >= 0 && loreValue <= 10)
         {
             activeLoreValueFilters[loreValue] = !isOn;
-            Debug.LogWarning("ロア値フィルター更新：" + string.Join(", ", activeLoreValueFilters));
+            //Debug.LogWarning("ロア値フィルター更新：" + string.Join(", ", activeLoreValueFilters));
             RefreshCardListFiltered();
         }
     }
@@ -579,7 +616,7 @@ public class CardListUI : MonoBehaviour
             if (activeRarityFilters.Contains(normalizedRarity))
                 activeRarityFilters.Remove(normalizedRarity);
         }
-        Debug.LogWarning("レアリティフィルター更新：" + string.Join(", ", activeRarityFilters));
+        //Debug.LogWarning("レアリティフィルター更新：" + string.Join(", ", activeRarityFilters));
         RefreshCardListFiltered();
     }
 
@@ -591,7 +628,7 @@ public class CardListUI : MonoBehaviour
         if (cardSeries >= 1 && cardSeries <= 10)
         {
             activeSeriesFilters[cardSeries] = !isOn;
-            Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
+            //Debug.LogWarning("シリーズフィルター更新：" + string.Join(", ", activeSeriesFilters));
             RefreshCardListFiltered();
         }
     }
@@ -623,12 +660,16 @@ public class CardListUI : MonoBehaviour
     }
 
     /** カードの拡大表示 */
-    private void ShowZoom(Sprite sprite, Text index)
+    private void ShowZoom(Sprite sprite, Text index, int cardId)
     {
         if (zoomCanvas != null && zoomImage != null)
         {
             swipeDetector.SetCurrentIndex(int.Parse(index.text));
             zoomImage.sprite = sprite;
+            int currentWishCount = WishListStorage.GetCount(cardId);
+            wishCountText.text = currentWishCount.ToString();
+            int currentOwnedCount = OwnedListStorage.GetCount(cardId);
+            ownedCountText.text = currentOwnedCount.ToString();
             zoomCanvas.SetActive(true);
         }
     }
