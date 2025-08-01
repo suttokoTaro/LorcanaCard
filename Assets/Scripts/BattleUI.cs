@@ -22,7 +22,7 @@ public class BattleUI : MonoBehaviour
     /** デッキニューCanvasの表示 */
     private IEnumerator ShowDeckMenu(CardController card)
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.6f);
         deckMenuCanvas.SetActive(true);
         // 必要に応じて cardId やカード参照を保存
     }
@@ -36,7 +36,7 @@ public class BattleUI : MonoBehaviour
     /** ZoomCanvasの表示 */
     private IEnumerator ShowZoom(Sprite sprite)
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.6f);
         if (zoomCanvas != null && zoomImage != null)
         {
             zoomImage.sprite = sprite;
@@ -129,6 +129,23 @@ public class BattleUI : MonoBehaviour
         });
         trigger.triggers.Add(down);
 
+        // === BeginDrag: 長押し中に移動開始した場合、コルーチンを中止する ===
+        var beginDrag = new EventTrigger.Entry { eventID = EventTriggerType.BeginDrag };
+        beginDrag.callback.AddListener((eventData) =>
+        {
+            if (zoomCoroutine != null)
+            {
+                StopCoroutine(zoomCoroutine);
+                zoomCoroutine = null;
+            }
+            if (deckMenuCoroutine != null)
+            {
+                StopCoroutine(deckMenuCoroutine);
+                deckMenuCoroutine = null;
+            }
+        });
+        trigger.triggers.Add(beginDrag);
+
         // === PointerUp: 表示を閉じない（StopCoroutine のみ） ===
         var up = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
         up.callback.AddListener((eventData) =>
@@ -136,10 +153,12 @@ public class BattleUI : MonoBehaviour
             if (zoomCoroutine != null)
             {
                 StopCoroutine(zoomCoroutine);
+                zoomCoroutine = null;
             }
             if (deckMenuCoroutine != null)
             {
                 StopCoroutine(deckMenuCoroutine);
+                deckMenuCoroutine = null;
             }
         });
         trigger.triggers.Add(up);
@@ -178,17 +197,36 @@ public class BattleUI : MonoBehaviour
 
         var up = new EventTrigger.Entry { eventID = EventTriggerType.PointerUp };
         up.callback.AddListener((eventData) =>
+        {
+            if (zoomCoroutine != null)
             {
-                if (zoomCoroutine != null)
-                {
-                    StopCoroutine(zoomCoroutine);
-                }
-                if (deckMenuCoroutine != null)
-                {
-                    StopCoroutine(deckMenuCoroutine);
-                }
-            });
+                StopCoroutine(zoomCoroutine);
+                zoomCoroutine = null;
+            }
+            if (deckMenuCoroutine != null)
+            {
+                StopCoroutine(deckMenuCoroutine);
+                deckMenuCoroutine = null;
+            }
+        });
         trigger.triggers.Add(up);
+
+        // === BeginDrag: 長押し中に移動開始した場合、コルーチンを中止する ===
+        var beginDrag = new EventTrigger.Entry { eventID = EventTriggerType.BeginDrag };
+        beginDrag.callback.AddListener((eventData) =>
+        {
+            if (zoomCoroutine != null)
+            {
+                StopCoroutine(zoomCoroutine);
+                zoomCoroutine = null;
+            }
+            if (deckMenuCoroutine != null)
+            {
+                StopCoroutine(deckMenuCoroutine);
+                deckMenuCoroutine = null;
+            }
+        });
+        trigger.triggers.Add(beginDrag);
 
         // デッキ枚数表示値の更新処理
         UpdateDeckCountText();
@@ -199,10 +237,10 @@ public class BattleUI : MonoBehaviour
     {
         if (playerDeckCountText != null)
             //playerDeckCountText.text = $"枚数: {playerDeckList.Count}";
-            playerDeckCountText.text = $"Deck: {playerDeckArea.childCount}";
+            playerDeckCountText.text = $"Deck({playerDeckArea.childCount})";
         if (enemyDeckCountText != null)
             //enemyDeckCountText.text = $"枚数: {enemyDeckList.Count}";
-            enemyDeckCountText.text = $"Deck: {enemyDeckArea.childCount}";
+            enemyDeckCountText.text = $"Deck({enemyDeckArea.childCount})";
     }
 
     /**
