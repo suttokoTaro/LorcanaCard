@@ -36,7 +36,7 @@ public class CardController : MonoBehaviour, IPointerClickHandler
     {
         // 現在の親が「FieldArea」かどうかを確認
         string areaName = transform.parent.name.ToLower();
-        if (areaName.Contains("field") || areaName.Contains("ink"))
+        if (areaName.Contains("field") || areaName.Contains("ink") || areaName.Contains("item"))
         {
             ToggleTap();
         }
