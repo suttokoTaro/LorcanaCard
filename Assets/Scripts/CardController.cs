@@ -44,7 +44,7 @@ public class CardController : MonoBehaviour, IPointerClickHandler
     private void ToggleTap()
     {
         isTapped = !isTapped;
-        float rotationZ = isTapped ? 90f : 0f;
+        float rotationZ = isTapped ? -90f : 0f;
         transform.localRotation = Quaternion.Euler(0f, 0f, rotationZ);
     }
 
@@ -62,7 +62,7 @@ public class CardController : MonoBehaviour, IPointerClickHandler
     private void UpdateDamageButtonVisibility()
     {
         string parentName = transform.parent?.name.ToLower();
-        bool isInField = parentName != null && parentName.Contains("field");
+        bool isInField = parentName != null && (parentName.Contains("field") || parentName.Contains("location"));
 
         //plusButton.gameObject.SetActive(isInField);
         //minusButton.gameObject.SetActive(isInField);

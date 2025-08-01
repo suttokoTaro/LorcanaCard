@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 // フィールドにアタッチするクラス
-public class DropPlace : MonoBehaviour, IDropHandler
+public class DropPlaceOnCardItem : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData) // ドロップされた時に行う処理
     {
@@ -13,13 +13,16 @@ public class DropPlace : MonoBehaviour, IDropHandler
         if (cardMove != null) // もしカードがあれば、
         {
             // 移動処理
-            cardMove.cardParent = this.transform;
+            if (!this.transform.parent.name.ToLower().Contains("location"))
+            {
+                cardMove.cardParent = this.transform.parent;
+            }
 
             // 表裏を切り替える（カードに CardController がある前提）
             var cardCtrl = eventData.pointerDrag.GetComponent<CardController>();
             if (cardCtrl != null)
             {
-                bool isFront = ShouldBeFront(this.transform);
+                bool isFront = ShouldBeFront(this.transform.parent);
 
                 if (isFront)
                 {
@@ -31,13 +34,6 @@ public class DropPlace : MonoBehaviour, IDropHandler
                 }
             }
             cardCtrl.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-
-            string areaName = this.transform.name.ToLower();
-            if (areaName.Contains("location"))
-            {
-                float rotationZ = -90f;
-                cardCtrl.transform.localRotation = Quaternion.Euler(0f, 0f, rotationZ);
-            }
 
             // ドロップ後にデッキ枚数更新
             if (BattleUI.Instance != null)
