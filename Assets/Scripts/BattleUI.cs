@@ -14,7 +14,7 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private GameObject confirmExitPanel;
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
-    [SerializeField] public GameObject deckMenuCanvas; // Inspector でセット
+    [SerializeField] public Canvas deckMenuCanvas; // Inspector でセット
 
     private Coroutine zoomCoroutine;
     private Coroutine deckMenuCoroutine;
@@ -23,14 +23,16 @@ public class BattleUI : MonoBehaviour
     private IEnumerator ShowDeckMenu(CardController card)
     {
         yield return new WaitForSeconds(0.6f);
-        deckMenuCanvas.SetActive(true);
+        //deckMenuCanvas.SetActive(true);
+        deckMenuCanvas.sortingOrder = 10;
         // 必要に応じて cardId やカード参照を保存
     }
 
     /** デッキニューCanvasの非表示 */
     public void HideDeckMenu()
     {
-        deckMenuCanvas.SetActive(false);
+        //deckMenuCanvas.SetActive(false);
+        deckMenuCanvas.sortingOrder = -10;
     }
 
     /** ZoomCanvasの表示 */
