@@ -13,21 +13,6 @@ class MulliganManager : MonoBehaviour
     [SerializeField] private Image player1BackIcon, player2BackIcon;
     private Coroutine zoomCoroutine;
 
-    private IEnumerator ShowZoom(Sprite sprite)
-    {
-        yield return new WaitForSeconds(0.6f);
-        if (zoomCanvas != null && zoomImage != null)
-        {
-            zoomImage.sprite = sprite;
-            zoomCanvas.SetActive(true);
-        }
-    }
-    public void HideZoom()
-    {
-        if (zoomCanvas != null)
-            zoomCanvas.SetActive(false);
-    }
-
     [Header("Player")]
     public Transform playerHandArea;
     public Button playerRedrawButton;
@@ -48,6 +33,9 @@ class MulliganManager : MonoBehaviour
 
     private bool playerDone = false;
     private bool enemyDone = false;
+
+
+
     void Start()
     {
         // デッキ取得・シャッフル
@@ -77,7 +65,8 @@ class MulliganManager : MonoBehaviour
         battleStartButton.interactable = false;
     }
 
-    void DrawInitialHand(List<int> deck, List<int> hand)
+    /** 初手7枚ドロー */
+    private void DrawInitialHand(List<int> deck, List<int> hand)
     {
         for (int i = 0; i < 7; i++)
         {
@@ -85,6 +74,7 @@ class MulliganManager : MonoBehaviour
             deck.RemoveAt(0);
         }
     }
+
     void DisplayHand(Transform parent, List<int> hand, string side)
     {
         // 現在の選択リスト
@@ -186,27 +176,45 @@ class MulliganManager : MonoBehaviour
         List<int> hand = side == "Player" ? playerHand : enemyHand;
         List<int> redraw = side == "Player" ? playerRedraw : enemyRedraw;
 
-        // 🔁 降順で index を処理
+        // 降順で index を処理
         List<int> sorted = new List<int>(redraw);
         sorted.Sort((a, b) => b.CompareTo(a)); // 降順ソート
 
+        Debug.Log("1.引き直し対象枚数：" + sorted.Count);
+        Debug.Log("1.引き直し対象枚数：" + string.Join(", ", sorted));
+
+        // 🔁 一時的に戻すカードを退避
+        List<int> tempReturnCards = new();
         foreach (int i in sorted)
         {
             if (i >= 0 && i < hand.Count)
             {
-                deck.Add(hand[i]);       // 手札からデッキへ戻す
-                hand.RemoveAt(i);        // 手札から削除
+                tempReturnCards.Add(hand[i]);
+                hand.RemoveAt(i);
             }
         }
+        Debug.Log("2.退避枚数：" + tempReturnCards.Count);
+        Debug.Log("2.退避枚数：" + string.Join(", ", tempReturnCards));
 
-        // 引き直し
-        Shuffle(deck);
-        while (hand.Count < 7 && deck.Count > 0)
+        // 🔁 残りのデッキから必要な枚数をドロー
+        int drawCount = tempReturnCards.Count;
+        Debug.Log("3.引き直し直前枚数：" + deck.Count);
+        Debug.Log("3.引き直し直前枚数：" + string.Join(", ", deck));
+
+        for (int i = 0; i < drawCount && deck.Count > 0; i++)
         {
             hand.Add(deck[0]);
             deck.RemoveAt(0);
         }
+        Debug.Log("4.引き直し途中枚数：" + deck.Count);
+        Debug.Log("4.引き直し途中枚数：" + string.Join(", ", deck));
+
+        // 🔁 一時的に退避したカードをデッキに戻してシャッフル
+        deck.AddRange(tempReturnCards);
+        Debug.Log("5.引き直し直後枚数：" + deck.Count);
+        Debug.Log("5.引き直し直後枚数：" + string.Join(", ", deck));
         Shuffle(deck);
+
 
         // 状態更新
         redraw.Clear();
@@ -225,7 +233,9 @@ class MulliganManager : MonoBehaviour
         battleStartButton.interactable = playerDone && enemyDone;
     }
 
-    void Shuffle(List<int> deck)
+
+    /** デッキのシャッフル */
+    private void Shuffle(List<int> deck)
     {
         for (int i = 0; i < deck.Count; i++)
         {
@@ -234,35 +244,56 @@ class MulliganManager : MonoBehaviour
         }
     }
 
+    /** カード情報の取得 */
     private CardEntity LoadCardEntity(int cardId)
     {
         return Resources.Load<CardEntity>($"CardEntityList/Card_{cardId}");
     }
+
+    /** 引き直しボタン押下時処理：選択中のカードを引き直す */
     public void OnClickPlayerRedraw()
     {
         OnClickRedraw("Player");
     }
 
+    /** 引き直しボタン押下時処理：選択中のカードを引き直す */
     public void OnClickEnemyRedraw()
     {
         OnClickRedraw("Enemy");
     }
 
+    /** STARTボタン押下時処理：Battle画面に遷移 */
     public void OnClickBattleStart()
     {
-        // 手札とデッキを DeckManager に渡す
+        // 手札(7枚)とデッキ(53枚以上)を DeckManager に渡す
         DeckManager.Instance.playerInitialHand = new List<int>(playerHand);
         DeckManager.Instance.enemyInitialHand = new List<int>(enemyHand);
         DeckManager.Instance.selectedPlayerDeck = new List<int>(playerDeck);
         DeckManager.Instance.selectedEnemyDeck = new List<int>(enemyDeck);
 
-        // シーン遷移
         SceneManager.LoadScene("BattleScene");
     }
 
+    /** 戻るボタン押下時処理：SimLab画面に遷移 */
     public void OnClickBackToMainMenu()
     {
-        //SceneManager.LoadScene("MainMenuScene");
         SceneManager.LoadScene("SimLabScene");
+    }
+
+    private IEnumerator ShowZoom(Sprite sprite)
+    {
+        yield return new WaitForSeconds(0.6f);
+        if (zoomCanvas != null && zoomImage != null)
+        {
+            zoomImage.sprite = sprite;
+            zoomCanvas.SetActive(true);
+        }
+    }
+
+    /** Zoom画面押下時処理：Zoom画面を非表示にする */
+    public void HideZoom()
+    {
+        if (zoomCanvas != null)
+            zoomCanvas.SetActive(false);
     }
 }
