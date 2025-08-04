@@ -88,7 +88,7 @@ public class CardController : MonoBehaviour, IPointerClickHandler, IDropHandler
         if (cardMove != null) // もしカードがあれば、
         {
             var beforeArea = cardMove.cardParent;
-            Debug.Log("移動前の場所：" + beforeArea.name.ToLower());
+            //Debug.Log("移動前の場所：" + beforeArea.name.ToLower());
 
             // 移動処理
             if (this.transform.parent.name.ToLower().Contains("location")) { return; }
@@ -96,7 +96,7 @@ public class CardController : MonoBehaviour, IPointerClickHandler, IDropHandler
             cardMove.cardParent = this.transform.parent;
 
             var afterArea = cardMove.cardParent;
-            Debug.Log("移動後の場所：" + afterArea.name.ToLower());
+            //Debug.Log("移動後の場所：" + afterArea.name.ToLower());
 
             // 移動前がデッキエリアの場合
             if (beforeArea.name.ToLower().Contains("playerdeck"))

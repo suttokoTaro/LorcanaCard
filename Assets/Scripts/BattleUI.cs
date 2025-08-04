@@ -9,7 +9,7 @@ public class BattleUI : MonoBehaviour
 {
     [SerializeField] CardController cardPrefab;
     [SerializeField] DeckCardListInBattleUIPrefab deckCardPrefab;
-    [SerializeField] Transform playerHandArea, enemyHandArea, playerDeckArea, enemyDeckArea, deckMenuArea;
+    [SerializeField] Transform playerHandArea, enemyHandArea, playerDeckArea, enemyDeckArea, playerTrushArea, enemyTrushArea, deckMenuArea;
     [SerializeField] Text playerLoaPointText, enemyLoaPointText;
     [SerializeField] Text playerDeckCountText, enemyDeckCountText, deckMenuCountText;
     [SerializeField] private GameObject confirmExitPanel;
@@ -226,18 +226,113 @@ public class BattleUI : MonoBehaviour
                 Transform childTransform = playerDeckArea.GetChild(i);
                 CardController child = childTransform.GetComponent<CardController>();
 
-                Debug.Log("子要素の名前: " + child.model.cardId);
+                //Debug.Log("子要素の名前: " + child.model.cardId);
                 DeckCardListInBattleUIPrefab deckCard = Instantiate(deckCardPrefab, deckMenuArea);
+                deckCard.isPlayer1 = true;
                 deckCard.createDeckCardFront(child.model.cardId);
-                deckCard.deckPanel.onClick.AddListener(() =>
-                    {
-                        deckCard.changeFrontAndBack();
-                    });
-
+                deckCard.deckPanel.onClick.AddListener(() => { deckCard.changeFrontAndBack(); });
+                deckCard.handButton.onClick.AddListener(() => { OnClickHandButton(deckCard); });
+                deckCard.trushButton.onClick.AddListener(() => { OnClickTrushButton(deckCard); });
+                deckCard.bottomButton.onClick.AddListener(() => { OnClickBottomButton(deckCard); });
                 //deckCard.changeFrontAndBack();
             }
-            deckMenuCountText.text = $"Deck({playerDeckArea.childCount})";
+            deckMenuCountText.text = $"DECK({playerDeckArea.childCount})";
             UpdateDeckCountText();
+        }
+
+        if (areaName.Contains("enemydeck"))
+        {
+            for (int i = enemyDeckArea.childCount - 1; i >= 0; i--)
+            {
+                Transform childTransform = enemyDeckArea.GetChild(i);
+                CardController child = childTransform.GetComponent<CardController>();
+
+                //Debug.Log("子要素の名前: " + child.model.cardId);
+                DeckCardListInBattleUIPrefab deckCard = Instantiate(deckCardPrefab, deckMenuArea);
+                deckCard.isPlayer1 = false;
+                deckCard.createDeckCardFront(child.model.cardId);
+                deckCard.deckPanel.onClick.AddListener(() => { deckCard.changeFrontAndBack(); });
+                deckCard.handButton.onClick.AddListener(() => { OnClickHandButton(deckCard); });
+                deckCard.trushButton.onClick.AddListener(() => { OnClickTrushButton(deckCard); });
+                deckCard.bottomButton.onClick.AddListener(() => { OnClickBottomButton(deckCard); });
+                //deckCard.changeFrontAndBack();
+            }
+            deckMenuCountText.text = $"DECK({enemyDeckArea.childCount})";
+            UpdateDeckCountText();
+        }
+    }
+    private void OnClickHandButton(DeckCardListInBattleUIPrefab deckCard)
+    {
+        int index = deckCard.transform.GetSiblingIndex();
+        // Debug.Log("handボタン：" + index);
+        // Debug.Log("handボタン：" + deckCard.isPlayer1);
+
+        if (deckCard.isPlayer1)
+        {
+            int reverseIndex = playerDeckArea.childCount - index;
+
+            Transform childTransform = playerDeckArea.GetChild(reverseIndex - 1);
+            CardController cardCtrl = childTransform.GetComponent<CardController>();
+            cardCtrl.view.ShowIcon(cardCtrl.model);
+            childTransform.SetParent(playerHandArea);
+            refreshDeckMenuCardList(playerDeckArea.name.ToLower());
+        }
+        if (!deckCard.isPlayer1)
+        {
+            int reverseIndex = enemyDeckArea.childCount - index;
+
+            Transform childTransform = enemyDeckArea.GetChild(reverseIndex - 1);
+            CardController cardCtrl = childTransform.GetComponent<CardController>();
+            cardCtrl.view.ShowIcon(cardCtrl.model);
+            childTransform.SetParent(enemyHandArea);
+            refreshDeckMenuCardList(enemyDeckArea.name.ToLower());
+        }
+    }
+
+    private void OnClickTrushButton(DeckCardListInBattleUIPrefab deckCard)
+    {
+        int index = deckCard.transform.GetSiblingIndex();
+
+
+        if (deckCard.isPlayer1)
+        {
+            int reverseIndex = playerDeckArea.childCount - index;
+
+            Transform childTransform = playerDeckArea.GetChild(reverseIndex - 1);
+            CardController cardCtrl = childTransform.GetComponent<CardController>();
+            cardCtrl.view.ShowIcon(cardCtrl.model);
+            childTransform.SetParent(playerTrushArea);
+            refreshDeckMenuCardList(playerDeckArea.name.ToLower());
+        }
+        if (!deckCard.isPlayer1)
+        {
+            int reverseIndex = enemyDeckArea.childCount - index;
+
+            Transform childTransform = enemyDeckArea.GetChild(reverseIndex - 1);
+            CardController cardCtrl = childTransform.GetComponent<CardController>();
+            cardCtrl.view.ShowIcon(cardCtrl.model);
+            childTransform.SetParent(enemyTrushArea);
+            refreshDeckMenuCardList(enemyDeckArea.name.ToLower());
+        }
+    }
+
+    private void OnClickBottomButton(DeckCardListInBattleUIPrefab deckCard)
+    {
+        int index = deckCard.transform.GetSiblingIndex();
+
+        if (deckCard.isPlayer1)
+        {
+            int reverseIndex = playerDeckArea.childCount - index;
+            Transform childTransform = playerDeckArea.GetChild(reverseIndex - 1);
+            childTransform.SetAsFirstSibling();
+            refreshDeckMenuCardList(playerDeckArea.name.ToLower());
+        }
+        if (!deckCard.isPlayer1)
+        {
+            int reverseIndex = enemyDeckArea.childCount - index;
+            Transform childTransform = enemyDeckArea.GetChild(reverseIndex - 1);
+            childTransform.SetAsFirstSibling();
+            refreshDeckMenuCardList(enemyDeckArea.name.ToLower());
         }
     }
 

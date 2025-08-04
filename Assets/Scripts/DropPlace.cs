@@ -13,7 +13,7 @@ public class DropPlace : MonoBehaviour, IDropHandler
         if (cardMove != null) // もしカードがあれば、
         {
             var beforeArea = cardMove.cardParent;
-            Debug.Log("移動前の場所：" + beforeArea.name.ToLower());
+            //Debug.Log("移動前の場所：" + beforeArea.name.ToLower());
             if (beforeArea.name.ToLower().Contains("playerdeck"))
             {
                 //battleUI.RemoveTopDeckMenuCard(beforeArea);
@@ -23,7 +23,7 @@ public class DropPlace : MonoBehaviour, IDropHandler
             cardMove.cardParent = this.transform;
 
             var afterArea = cardMove.cardParent;
-            Debug.Log("移動後の場所：" + afterArea.name.ToLower());
+            //Debug.Log("移動後の場所：" + afterArea.name.ToLower());
 
             // 表裏を切り替える（カードに CardController がある前提）
             var cardCtrl = eventData.pointerDrag.GetComponent<CardController>();

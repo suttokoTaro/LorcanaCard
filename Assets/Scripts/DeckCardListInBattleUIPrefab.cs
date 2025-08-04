@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class DeckCardListInBattleUIPrefab : MonoBehaviour
 {
 
+    public bool isPlayer1;
     public bool isFront;
     public CardEntity cardEntity;
 

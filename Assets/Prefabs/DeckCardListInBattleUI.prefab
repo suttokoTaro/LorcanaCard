@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7660d4b5d3b80094989518ee9e3b1bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer1: 0
   isFront: 0
   cardEntity: {fileID: 0}
   deckPanel: {fileID: 6100606152313566098}
