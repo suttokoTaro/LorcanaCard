@@ -7,10 +7,10 @@ using UnityEngine.EventSystems;
 public class DropPlaceOnCardItem : MonoBehaviour, IDropHandler
 {
     private BattleUI battleUI;
-    // public void Initialize(BattleUI ui)
-    // {
-    //     battleUI = ui;
-    // }
+    public void Initialize(BattleUI ui)
+    {
+        battleUI = ui;
+    }
 
     public void OnDrop(PointerEventData eventData) // ドロップされた時に行う処理
     {

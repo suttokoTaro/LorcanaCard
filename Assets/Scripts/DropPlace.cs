@@ -16,7 +16,7 @@ public class DropPlace : MonoBehaviour, IDropHandler
             Debug.Log("移動前の場所：" + beforeArea.name.ToLower());
             if (beforeArea.name.ToLower().Contains("playerdeck"))
             {
-                battleUI.RemoveTopDeckMenuCard(beforeArea);
+                //battleUI.RemoveTopDeckMenuCard(beforeArea);
             }
 
             // 移動処理
@@ -50,10 +50,11 @@ public class DropPlace : MonoBehaviour, IDropHandler
             }
 
             // ドロップ後にデッキ枚数更新
-            if (BattleUI.Instance != null)
-            {
-                BattleUI.Instance.UpdateDeckCountText();
-            }
+            // if (BattleUI.Instance != null)
+            // {
+            //     BattleUI.Instance.UpdateDeckCountText();
+            // }
+            battleUI.UpdateDeckCountText();
         }
     }
     private bool ShouldBeFront(Transform area)

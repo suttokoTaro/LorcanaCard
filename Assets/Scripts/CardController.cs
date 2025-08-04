@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CardController : MonoBehaviour, IPointerClickHandler
+public class CardController : MonoBehaviour, IPointerClickHandler, IDropHandler
 {
 
     [SerializeField] private Button plusButton;
@@ -75,5 +75,66 @@ public class CardController : MonoBehaviour, IPointerClickHandler
         view.UpdateDamage(model.damage);
     }
 
+    private BattleUI battleUI;
+    public void Initialize(BattleUI ui)
+    {
+        battleUI = ui;
+    }
+
+
+    public void OnDrop(PointerEventData eventData) // ドロップされた時に行う処理
+    {
+        CardMovement cardMove = eventData.pointerDrag.GetComponent<CardMovement>(); // ドラッグしてきた情報からCardMovementを取得
+        if (cardMove != null) // もしカードがあれば、
+        {
+            var beforeArea = cardMove.cardParent;
+            Debug.Log("移動前の場所：" + beforeArea.name.ToLower());
+
+            // 移動処理
+            if (this.transform.parent.name.ToLower().Contains("location")) { return; }
+
+            cardMove.cardParent = this.transform.parent;
+
+            var afterArea = cardMove.cardParent;
+            Debug.Log("移動後の場所：" + afterArea.name.ToLower());
+
+            // 移動前がデッキエリアの場合
+            if (beforeArea.name.ToLower().Contains("playerdeck"))
+            {
+                //battleUI.RemoveTopDeckMenuCard(beforeArea);
+            }
+
+            // 移動後がデッキエリアの場合
+            if (afterArea.name.ToLower().Contains("playerdeck"))
+            {
+                //battleUI.CreatePlayerDeckMenuCard(model.cardId, afterArea.name.ToLower());
+            }
+
+            // 表裏を切り替える（カードに CardController がある前提）
+            var cardCtrl = eventData.pointerDrag.GetComponent<CardController>();
+            if (cardCtrl != null)
+            {
+                bool isFront = ShouldBeFront(this.transform.parent);
+
+                if (isFront)
+                {
+                    cardCtrl.view.ShowIcon(cardCtrl.model);
+                }
+                if (!isFront)
+                {
+                    cardCtrl.view.ShowBackIcon(cardCtrl.model);
+                }
+            }
+            cardCtrl.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+
+            // ドロップ後にデッキ枚数更新
+            battleUI.UpdateDeckCountText();
+        }
+    }
+    private bool ShouldBeFront(Transform area)
+    {
+        string areaName = area.name.ToLower();
+        return areaName.Contains("hand") || areaName.Contains("field") || areaName.Contains("trash") || areaName.Contains("item") || areaName.Contains("location");
+    }
 
 }

@@ -9,9 +9,9 @@ public class BattleUI : MonoBehaviour
 {
     [SerializeField] CardController cardPrefab;
     [SerializeField] DeckCardListInBattleUIPrefab deckCardPrefab;
-    [SerializeField] Transform playerHandArea, enemyHandArea, playerDeckArea, enemyDeckArea, playerDeckMenuArea, enemyDeckMenuArea;
+    [SerializeField] Transform playerHandArea, enemyHandArea, playerDeckArea, enemyDeckArea, deckMenuArea;
     [SerializeField] Text playerLoaPointText, enemyLoaPointText;
-    [SerializeField] Text playerDeckCountText, enemyDeckCountText, player1DeckMenuCountText;
+    [SerializeField] Text playerDeckCountText, enemyDeckCountText, deckMenuCountText;
     [SerializeField] private GameObject confirmExitPanel;
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
@@ -49,11 +49,11 @@ public class BattleUI : MonoBehaviour
                 int cardId = playerDeckList[i];
                 CreateBackIconCard(cardId, playerDeckArea);
             }
-            for (int i = 0; i < playerDeckList.Count; i++)
-            {
-                int cardId = playerDeckList[i];
-                CreateDeckCard(cardId, playerDeckMenuArea);
-            }
+            // for (int i = 0; i < playerDeckList.Count; i++)
+            // {
+            //     int cardId = playerDeckList[i];
+            //     CreatePlayerDeckMenuCard(cardId, playerDeckArea.name.ToLower());
+            // }
             for (int i = enemyDeckList.Count - 1; i >= 0; i--)
             {
                 int cardId = enemyDeckList[i];
@@ -70,6 +70,7 @@ public class BattleUI : MonoBehaviour
                 CreateFrontIconCard(cardId, enemyHandArea);
             }
         }
+        UpdateDeckCountText();
     }
 
 
@@ -78,6 +79,7 @@ public class BattleUI : MonoBehaviour
     {
         CardController card = Instantiate(cardPrefab, place);
         card.CreateCardAndViewIcon(cardID);
+        card.Initialize(this);
 
         // ズーム表示の EventTrigger を追加
         EventTrigger trigger = card.gameObject.AddComponent<EventTrigger>();
@@ -91,6 +93,7 @@ public class BattleUI : MonoBehaviour
             bool isDeck = parentName != null && parentName.Contains("deck");
             if (isDeck)
             {
+                refreshDeckMenuCardList(parentName);
                 deckMenuCoroutine = StartCoroutine(ShowDeckMenu(card)); // ✅ Deck メニュー表示（Zoomはしない）
             }
             else
@@ -137,7 +140,7 @@ public class BattleUI : MonoBehaviour
         trigger.triggers.Add(up);
 
         // デッキ枚数表示値の更新処理
-        UpdateDeckCountText();
+        //UpdateDeckCountText();
     }
 
     /** 裏画像表ののカードの生成 */
@@ -145,6 +148,7 @@ public class BattleUI : MonoBehaviour
     {
         CardController card = Instantiate(cardPrefab, place);
         card.CreateCardAndViewBackIcon(cardID);
+        card.Initialize(this);
 
         // ズーム表示の EventTrigger を追加
         EventTrigger trigger = card.gameObject.AddComponent<EventTrigger>();
@@ -157,6 +161,7 @@ public class BattleUI : MonoBehaviour
             bool isDeck = parentName != null && parentName.Contains("deck");
             if (isDeck)
             {
+                refreshDeckMenuCardList(parentName);
                 deckMenuCoroutine = StartCoroutine(ShowDeckMenu(card)); // ✅ Deck メニュー表示（Zoomはしない）
             }
             else
@@ -202,22 +207,69 @@ public class BattleUI : MonoBehaviour
         trigger.triggers.Add(beginDrag);
 
         // デッキ枚数表示値の更新処理
-        UpdateDeckCountText();
+        //UpdateDeckCountText();
     }
 
-    // デッキメニューエリアの更新
-    void CreateDeckCard(int cardID, Transform place)
+
+    private void refreshDeckMenuCardList(string areaName)
     {
-        DeckCardListInBattleUIPrefab deckCard = Instantiate(deckCardPrefab, place);
-        deckCard.createDeckCardFront(cardID);
-        deckCard.deckPanel.onClick.AddListener(() =>
-            {
-                deckCard.changeFrontAndBack();
-            });
+        // まず一度デッキリストエリアの既存のオブジェクトをすべて削除
+        foreach (Transform child in deckMenuArea)
+        {
+            Destroy(child.gameObject);
+        }
 
-        deckCard.changeFrontAndBack();
+        if (areaName.Contains("playerdeck"))
+        {
+            for (int i = playerDeckArea.childCount - 1; i >= 0; i--)
+            {
+                Transform childTransform = playerDeckArea.GetChild(i);
+                CardController child = childTransform.GetComponent<CardController>();
+
+                Debug.Log("子要素の名前: " + child.model.cardId);
+                DeckCardListInBattleUIPrefab deckCard = Instantiate(deckCardPrefab, deckMenuArea);
+                deckCard.createDeckCardFront(child.model.cardId);
+                deckCard.deckPanel.onClick.AddListener(() =>
+                    {
+                        deckCard.changeFrontAndBack();
+                    });
+
+                //deckCard.changeFrontAndBack();
+            }
+            deckMenuCountText.text = $"Deck({playerDeckArea.childCount})";
+            UpdateDeckCountText();
+        }
     }
 
+    // /** デッキメニュー画面にカード生成 */
+    // public void CreatePlayerDeckMenuCard(int cardID, string areaName)
+    // {
+    //     if (areaName.Contains("playerdeck"))
+    //     {
+    //         DeckCardListInBattleUIPrefab deckCard = Instantiate(deckCardPrefab, playerDeckMenuArea);
+    //         deckCard.createDeckCardFront(cardID);
+    //         deckCard.deckPanel.onClick.AddListener(() =>
+    //             {
+    //                 deckCard.changeFrontAndBack();
+    //             });
+
+    //         deckCard.changeFrontAndBack();
+    //         //MoveTopDeckCardToBottom(playerDeckMenuArea);
+    //     }
+
+    //     if (areaName.Contains("enemydeck"))
+    //     {
+    //         DeckCardListInBattleUIPrefab deckCard = Instantiate(deckCardPrefab, playerDeckMenuArea);
+    //         deckCard.createDeckCardFront(cardID);
+    //         deckCard.deckPanel.onClick.AddListener(() =>
+    //             {
+    //                 deckCard.changeFrontAndBack();
+    //             });
+
+    //         deckCard.changeFrontAndBack();
+    //         //MoveTopDeckCardToBottom(playerDeckMenuArea);
+    //     }
+    // }
 
     /** デッキ枚数表示値の更新処理 */
     public void UpdateDeckCountText()
@@ -225,8 +277,7 @@ public class BattleUI : MonoBehaviour
         if (playerDeckCountText != null)
             //playerDeckCountText.text = $"枚数: {playerDeckList.Count}";
             playerDeckCountText.text = $"Deck({playerDeckArea.childCount})";
-        if (player1DeckMenuCountText != null)
-            player1DeckMenuCountText.text = $"DECK ({playerDeckArea.childCount})";
+
         if (enemyDeckCountText != null)
             //enemyDeckCountText.text = $"枚数: {enemyDeckList.Count}";
             enemyDeckCountText.text = $"Deck({enemyDeckArea.childCount})";
@@ -261,6 +312,7 @@ public class BattleUI : MonoBehaviour
         }
 
         Debug.Log("Deck shuffled visually!");
+        refreshDeckMenuCardList(deckArea.name.ToLower());
     }
     public void MoveTopDeckCardToBottom(Transform deckArea)
     {
@@ -274,15 +326,17 @@ public class BattleUI : MonoBehaviour
         Debug.Log("Moved top deck card to bottom.");
     }
 
-    public void RemoveTopDeckMenuCard(Transform deckArea)
-    {
-        if (deckArea.name.ToLower().Contains("playerdeck"))
-        {
-            int count = playerDeckMenuArea.childCount;
-            Transform topDeckCard = playerDeckMenuArea.GetChild(0);
-            Destroy(topDeckCard.gameObject);
-        }
-    }
+    /** デッキメニュー画面のトップカードを削除する*/
+    // public void RemoveTopDeckMenuCard(Transform deckArea)
+    // {
+    //     if (deckArea.name.ToLower().Contains("playerdeck"))
+    //     {
+    //         //int count = playerDeckMenuArea.childCount;
+    //         Transform topDeckCard = playerDeckMenuArea.GetChild(0);
+    //         Debug.Log("RemoveTopDeckMenuCard 削除対象：" + topDeckCard);
+    //         Destroy(topDeckCard.gameObject);
+    //     }
+    // }
 
 
 
