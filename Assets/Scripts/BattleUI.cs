@@ -8,9 +8,10 @@ using UnityEngine.EventSystems;
 public class BattleUI : MonoBehaviour
 {
     [SerializeField] CardController cardPrefab;
-    [SerializeField] Transform playerHandArea, enemyHandArea, playerDeckArea, enemyDeckArea;
+    [SerializeField] DeckCardListInBattleUIPrefab deckCardPrefab;
+    [SerializeField] Transform playerHandArea, enemyHandArea, playerDeckArea, enemyDeckArea, playerDeckMenuArea, enemyDeckMenuArea;
     [SerializeField] Text playerLoaPointText, enemyLoaPointText;
-    [SerializeField] Text playerDeckCountText, enemyDeckCountText;
+    [SerializeField] Text playerDeckCountText, enemyDeckCountText, player1DeckMenuCountText;
     [SerializeField] private GameObject confirmExitPanel;
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
@@ -18,42 +19,7 @@ public class BattleUI : MonoBehaviour
 
     private Coroutine zoomCoroutine;
     private Coroutine deckMenuCoroutine;
-
-    /** デッキニューCanvasの表示 */
-    private IEnumerator ShowDeckMenu(CardController card)
-    {
-        yield return new WaitForSeconds(0.6f);
-        //deckMenuCanvas.SetActive(true);
-        deckMenuCanvas.sortingOrder = 10;
-        // 必要に応じて cardId やカード参照を保存
-    }
-
-    /** デッキニューCanvasの非表示 */
-    public void HideDeckMenu()
-    {
-        //deckMenuCanvas.SetActive(false);
-        deckMenuCanvas.sortingOrder = -10;
-    }
-
-    /** ZoomCanvasの表示 */
-    private IEnumerator ShowZoom(Sprite sprite)
-    {
-        yield return new WaitForSeconds(0.6f);
-        if (zoomCanvas != null && zoomImage != null)
-        {
-            zoomImage.sprite = sprite;
-            zoomCanvas.SetActive(true);
-        }
-    }
-    /** ZoomCanvasの非表示 */
-    public void HideZoom()
-    {
-        if (zoomCanvas != null)
-            zoomCanvas.SetActive(false);
-    }
-
-    public int playerLoaPoint;
-    public int enemyLoaPoint;
+    public int playerLoaPoint, enemyLoaPoint;
 
     bool isPlayerTurn = true;
     List<int> playerDeckList = new List<int>() { };
@@ -82,6 +48,11 @@ public class BattleUI : MonoBehaviour
             {
                 int cardId = playerDeckList[i];
                 CreateBackIconCard(cardId, playerDeckArea);
+            }
+            for (int i = 0; i < playerDeckList.Count; i++)
+            {
+                int cardId = playerDeckList[i];
+                CreateDeckCard(cardId, playerDeckMenuArea);
             }
             for (int i = enemyDeckList.Count - 1; i >= 0; i--)
             {
@@ -234,66 +205,86 @@ public class BattleUI : MonoBehaviour
         UpdateDeckCountText();
     }
 
+    // デッキメニューエリアの更新
+    void CreateDeckCard(int cardID, Transform place)
+    {
+        DeckCardListInBattleUIPrefab deckCard = Instantiate(deckCardPrefab, place);
+        deckCard.createDeckCardFront(cardID);
+        deckCard.deckPanel.onClick.AddListener(() =>
+            {
+                deckCard.changeFrontAndBack();
+            });
+
+        deckCard.changeFrontAndBack();
+    }
+
+
     /** デッキ枚数表示値の更新処理 */
     public void UpdateDeckCountText()
     {
         if (playerDeckCountText != null)
             //playerDeckCountText.text = $"枚数: {playerDeckList.Count}";
             playerDeckCountText.text = $"Deck({playerDeckArea.childCount})";
+        if (player1DeckMenuCountText != null)
+            player1DeckMenuCountText.text = $"DECK ({playerDeckArea.childCount})";
         if (enemyDeckCountText != null)
             //enemyDeckCountText.text = $"枚数: {enemyDeckList.Count}";
             enemyDeckCountText.text = $"Deck({enemyDeckArea.childCount})";
     }
 
-    /**
-    void PlayerDrawCard()
+
+
+    public void ShuffleDeckArea(Transform deckArea)
     {
-        if (playerDeckList.Count > 0)
+        int childCount = deckArea.childCount;
+
+        // 子オブジェクトを一時リストに取得
+        List<Transform> cards = new List<Transform>();
+        for (int i = 0; i < childCount; i++)
         {
-            int cardID = playerDeckList[0];
-            playerDeckList.RemoveAt(0);
-            CreateFrontIconCard(cardID, playerHandArea);
+            cards.Add(deckArea.GetChild(i));
+        }
+
+        // シャッフル
+        for (int i = 0; i < cards.Count; i++)
+        {
+            int randIndex = Random.Range(i, cards.Count);
+            var temp = cards[i];
+            cards[i] = cards[randIndex];
+            cards[randIndex] = temp;
+        }
+
+        // 並び替えた順に SetAsLastSibling で再配置
+        foreach (var card in cards)
+        {
+            card.SetAsLastSibling();
+        }
+
+        Debug.Log("Deck shuffled visually!");
+    }
+    public void MoveTopDeckCardToBottom(Transform deckArea)
+    {
+        int count = deckArea.childCount;
+        if (count <= 1) return;
+        // 一番上のカード（＝最後の子）を取得
+        Transform topCard = deckArea.GetChild(count - 1);
+        // 一番下に移動
+        topCard.SetAsFirstSibling();
+
+        Debug.Log("Moved top deck card to bottom.");
+    }
+
+    public void RemoveTopDeckMenuCard(Transform deckArea)
+    {
+        if (deckArea.name.ToLower().Contains("playerdeck"))
+        {
+            int count = playerDeckMenuArea.childCount;
+            Transform topDeckCard = playerDeckMenuArea.GetChild(0);
+            Destroy(topDeckCard.gameObject);
         }
     }
 
-    void EnemyDrawCard()
-    {
-        if (enemyDeckList.Count > 0)
-        {
-            int cardID = enemyDeckList[0];
-            enemyDeckList.RemoveAt(0);
-            CreateFrontIconCard(cardID, enemyHandArea);
-        }
-    }
-    */
 
-    /** ターン終了ボタン押下時の処理 */
-    /**
-    public void ChangeTurn()
-    {
-        isPlayerTurn = !isPlayerTurn; // ターンを逆にする
-        TurnCalc(); // ターンを相手に回す
-    }
-    void TurnCalc()
-    {
-        if (isPlayerTurn)
-        {
-            PlayerTurn();
-        }
-        else
-        {
-            EnemyTurn();
-        }
-    }
-    void PlayerTurn()
-    {
-        PlayerDrawCard();
-    }
-    void EnemyTurn()
-    {
-        EnemyDrawCard();
-    }
-    */
 
 
     /** ロア値の加減ボタン押下時の処理 */
@@ -341,43 +332,37 @@ public class BattleUI : MonoBehaviour
             confirmExitPanel.SetActive(false);
     }
 
-    public void ShuffleDeckArea(Transform deckArea)
+    /** デッキニューCanvasの表示 */
+    private IEnumerator ShowDeckMenu(CardController card)
     {
-        int childCount = deckArea.childCount;
-
-        // 子オブジェクトを一時リストに取得
-        List<Transform> cards = new List<Transform>();
-        for (int i = 0; i < childCount; i++)
-        {
-            cards.Add(deckArea.GetChild(i));
-        }
-
-        // シャッフル
-        for (int i = 0; i < cards.Count; i++)
-        {
-            int randIndex = Random.Range(i, cards.Count);
-            var temp = cards[i];
-            cards[i] = cards[randIndex];
-            cards[randIndex] = temp;
-        }
-
-        // 並び替えた順に SetAsLastSibling で再配置
-        foreach (var card in cards)
-        {
-            card.SetAsLastSibling();
-        }
-
-        Debug.Log("Deck shuffled visually!");
+        yield return new WaitForSeconds(0.6f);
+        //deckMenuCanvas.SetActive(true);
+        deckMenuCanvas.sortingOrder = 10;
+        // 必要に応じて cardId やカード参照を保存
     }
-    public void MoveTopDeckCardToBottom(Transform deckArea)
-    {
-        int count = deckArea.childCount;
-        if (count <= 1) return;
-        // 一番上のカード（＝最後の子）を取得
-        Transform topCard = deckArea.GetChild(count - 1);
-        // 一番下に移動
-        topCard.SetAsFirstSibling();
 
-        Debug.Log("Moved top deck card to bottom.");
+    /** デッキニューCanvasの非表示 */
+    public void HideDeckMenu()
+    {
+        //deckMenuCanvas.SetActive(false);
+        deckMenuCanvas.sortingOrder = -10;
+    }
+
+    /** ZoomCanvasの表示 */
+    private IEnumerator ShowZoom(Sprite sprite)
+    {
+        yield return new WaitForSeconds(0.6f);
+        if (zoomCanvas != null && zoomImage != null)
+        {
+            zoomImage.sprite = sprite;
+            zoomCanvas.SetActive(true);
+        }
+    }
+
+    /** ZoomCanvasの非表示 */
+    public void HideZoom()
+    {
+        if (zoomCanvas != null)
+            zoomCanvas.SetActive(false);
     }
 }

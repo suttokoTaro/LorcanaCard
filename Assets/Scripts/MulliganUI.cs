@@ -180,8 +180,8 @@ class MulliganManager : MonoBehaviour
         List<int> sorted = new List<int>(redraw);
         sorted.Sort((a, b) => b.CompareTo(a)); // 降順ソート
 
-        Debug.Log("1.引き直し対象枚数：" + sorted.Count);
-        Debug.Log("1.引き直し対象枚数：" + string.Join(", ", sorted));
+        //Debug.Log("1.引き直し対象枚数：" + sorted.Count);
+        //Debug.Log("1.引き直し対象枚数：" + string.Join(", ", sorted));
 
         // 🔁 一時的に戻すカードを退避
         List<int> tempReturnCards = new();
@@ -193,26 +193,26 @@ class MulliganManager : MonoBehaviour
                 hand.RemoveAt(i);
             }
         }
-        Debug.Log("2.退避枚数：" + tempReturnCards.Count);
-        Debug.Log("2.退避枚数：" + string.Join(", ", tempReturnCards));
+        //Debug.Log("2.退避枚数：" + tempReturnCards.Count);
+        //Debug.Log("2.退避枚数：" + string.Join(", ", tempReturnCards));
 
         // 🔁 残りのデッキから必要な枚数をドロー
         int drawCount = tempReturnCards.Count;
-        Debug.Log("3.引き直し直前枚数：" + deck.Count);
-        Debug.Log("3.引き直し直前枚数：" + string.Join(", ", deck));
+        //Debug.Log("3.引き直し直前枚数：" + deck.Count);
+        //Debug.Log("3.引き直し直前枚数：" + string.Join(", ", deck));
 
         for (int i = 0; i < drawCount && deck.Count > 0; i++)
         {
             hand.Add(deck[0]);
             deck.RemoveAt(0);
         }
-        Debug.Log("4.引き直し途中枚数：" + deck.Count);
-        Debug.Log("4.引き直し途中枚数：" + string.Join(", ", deck));
+        //Debug.Log("4.引き直し途中枚数：" + deck.Count);
+        //Debug.Log("4.引き直し途中枚数：" + string.Join(", ", deck));
 
         // 🔁 一時的に退避したカードをデッキに戻してシャッフル
         deck.AddRange(tempReturnCards);
-        Debug.Log("5.引き直し直後枚数：" + deck.Count);
-        Debug.Log("5.引き直し直後枚数：" + string.Join(", ", deck));
+        //Debug.Log("5.引き直し直後枚数：" + deck.Count);
+        //Debug.Log("5.引き直し直後枚数：" + string.Join(", ", deck));
         Shuffle(deck);
 
 

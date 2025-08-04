@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,13 +6,24 @@ using UnityEngine.EventSystems;
 // フィールドにアタッチするクラス
 public class DropPlace : MonoBehaviour, IDropHandler
 {
+    [SerializeField] private BattleUI battleUI;
     public void OnDrop(PointerEventData eventData) // ドロップされた時に行う処理
     {
         CardMovement cardMove = eventData.pointerDrag.GetComponent<CardMovement>(); // ドラッグしてきた情報からCardMovementを取得
         if (cardMove != null) // もしカードがあれば、
         {
+            var beforeArea = cardMove.cardParent;
+            Debug.Log("移動前の場所：" + beforeArea.name.ToLower());
+            if (beforeArea.name.ToLower().Contains("playerdeck"))
+            {
+                battleUI.RemoveTopDeckMenuCard(beforeArea);
+            }
+
             // 移動処理
             cardMove.cardParent = this.transform;
+
+            var afterArea = cardMove.cardParent;
+            Debug.Log("移動後の場所：" + afterArea.name.ToLower());
 
             // 表裏を切り替える（カードに CardController がある前提）
             var cardCtrl = eventData.pointerDrag.GetComponent<CardController>();
