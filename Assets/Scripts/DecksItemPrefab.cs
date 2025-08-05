@@ -14,6 +14,7 @@ public class DecksItemPrefab : MonoBehaviour
     public Image colorIcon2;
 
     public Button deckPanel;
+    public Button displayStructureButton;
     public Button duplicateButton;
     public Button deleteButton;
 }

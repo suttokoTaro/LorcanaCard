@@ -10,6 +10,8 @@ public class BattleUI : MonoBehaviour
     [SerializeField] CardController cardPrefab;
     [SerializeField] DeckCardListInBattleUIPrefab deckCardPrefab;
     [SerializeField] Transform playerHandArea, enemyHandArea, playerDeckArea, enemyDeckArea, playerTrushArea, enemyTrushArea, deckMenuArea;
+    [SerializeField]
+    Transform playerFieldArea, enemyFieldArea, playerInkWellArea, enemyInkWellArea, playerItemArea, enemyItemArea, playerLoc1Field, playerLoc2Field, enemyLoc1Field, enemyLoc2Field;
     [SerializeField] Text playerLoaPointText, enemyLoaPointText;
     [SerializeField] Text playerDeckCountText, enemyDeckCountText, deckMenuCountText;
     [SerializeField] private GameObject confirmExitPanel;
@@ -434,6 +436,22 @@ public class BattleUI : MonoBehaviour
         refreshDeckMenuCardList(deckArea.name.ToLower());
     }
 
+    public void OnClickPlayer1ReadyButton()
+    {
+        foreach (Transform child in playerFieldArea) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+        foreach (Transform child in playerInkWellArea) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+        foreach (Transform child in playerItemArea) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+        foreach (Transform child in playerLoc1Field) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+        foreach (Transform child in playerLoc2Field) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+    }
+    public void OnClickPlayer2ReadyButton()
+    {
+        foreach (Transform child in enemyFieldArea) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+        foreach (Transform child in enemyInkWellArea) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+        foreach (Transform child in enemyItemArea) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+        foreach (Transform child in enemyLoc1Field) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+        foreach (Transform child in enemyLoc2Field) { child.localRotation = Quaternion.Euler(0f, 0f, 0f); }
+    }
 
     // public void MoveTopDeckCardToBottom(Transform deckArea)
     // {

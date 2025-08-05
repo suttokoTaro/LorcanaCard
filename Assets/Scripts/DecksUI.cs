@@ -15,7 +15,11 @@ public class DecksUI : MonoBehaviour
     [SerializeField] private Text decksCountText;
     [SerializeField] private Button sortButton; // ← ソートボタンをInspectorに設定
     public Transform deckContentParent;
+    public Transform deckStructureDisplayArea;
+    [SerializeField] private Canvas deckStructureDisplayCanvas;
+    [SerializeField] private Image deckStructureDeckIcon;
     public GameObject decksItemPrefab;
+    public GameObject cardItemPrefab;
     private DeckDataList currentDeckList;
     private bool isSortDescending = false; // 初期状態：昇順
     private IList<CardEntity> allCardEntities;
@@ -104,6 +108,12 @@ public class DecksUI : MonoBehaviour
                 SceneManager.LoadScene("DeckDetailScene");
             });
 
+            // 構築表示ボタンの設定（ボタン押下時にデッキ構築を表示する処理）
+            deckItem.displayStructureButton.onClick.AddListener(() =>
+            {
+                ShowDeckCanvas(deck);
+            });
+
             // 複製ボタンの設定（ボタン押下時にデッキを複製する処理）
             deckItem.duplicateButton.onClick.AddListener(() =>
             {
@@ -122,11 +132,78 @@ public class DecksUI : MonoBehaviour
             });
         }
     }
+
+    /** デッキ構築表示ボタン押下時処理：デッキ表示エリアをactiveにし、デッキ内のカードリストを表示する */
+    private void ShowDeckCanvas(DeckData deck)
+    {
+        if (deckStructureDisplayCanvas != null)
+        {
+            Debug.Log("ShowDeckCanvas: " + deck.deckName);
+
+            // まずカード一覧を完全に削除
+            foreach (Transform child in deckStructureDisplayArea)
+            {
+                Destroy(child.gameObject);
+            }
+
+            List<CardEntity> cardEntityList = new List<CardEntity>();
+            foreach (int cardId in deck.cardIDs)
+            {
+                var entity = Resources.Load<CardEntity>($"CardEntityList/Card_{cardId}");
+                if (entity != null)
+                    cardEntityList.Add(entity);
+            }
+
+            // ソート：色 → コスト → カードID 昇順
+            cardEntityList = cardEntityList
+                .OrderBy(c => c.cardType)
+                .ThenBy(c => c.cost)
+                .ThenBy(c => c.color)
+                .ThenBy(c => c.cardId)
+                .ToList();
+
+            // UI生成
+            foreach (CardEntity cardEntity in cardEntityList)
+            {
+                GameObject item = Instantiate(cardItemPrefab, deckStructureDisplayArea);
+
+                // 画像
+                var icon = item.transform.Find("Image")?.GetComponent<Image>();
+                if (icon != null) icon.sprite = cardEntity.icon;
+                Text countText = item.transform.Find("CountText")?.GetComponent<Text>();
+                Transform countTextPanel = item.transform.Find("CountTextPanel");
+                if (countText != null) countText.text = "";
+                if (countTextPanel != null) countTextPanel.gameObject.SetActive(false);
+
+
+            }
+            var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
+            deckStructureDeckIcon.sprite = defaultLeaderCard.backIcon;
+            var leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{deck.leaderCardId}");
+            if (leaderCard != null)
+            {
+                deckStructureDeckIcon.sprite = leaderCard.icon;
+            }
+
+            deckStructureDisplayCanvas.sortingOrder = 10;
+        }
+    }
+    public void HideDeckCanvas()
+    {
+        if (deckStructureDisplayCanvas != null)
+        {
+            deckStructureDisplayCanvas.sortingOrder = -10;
+        }
+    }
+
+    /** デッキ一覧ソートボタン押下時処理 */
     void OnSortButtonClicked()
     {
         isSortDescending = !isSortDescending; // トグルで昇順/降順を切り替え
         LoadAndDisplayDecks();                // 再読み込み（ソートして表示）
     }
+
+    /** デッキ新規作成ボタン押下時処理 */
     public void OnClickCreateDeckButton()
     {
         SelectedDeckData.selectedDeck = null;

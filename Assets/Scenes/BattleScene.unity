@@ -6428,7 +6428,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1526210893}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2012533714}
+        m_TargetAssemblyTypeName: BattleUI, Assembly-CSharp
+        m_MethodName: OnClickPlayer2ReadyButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1526210893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8796,7 +8808,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2004001714}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2012533714}
+        m_TargetAssemblyTypeName: BattleUI, Assembly-CSharp
+        m_MethodName: OnClickPlayer1ReadyButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2004001714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9040,6 +9064,16 @@ MonoBehaviour:
   playerTrushArea: {fileID: 468648115}
   enemyTrushArea: {fileID: 255050804}
   deckMenuArea: {fileID: 1499681989}
+  playerFieldArea: {fileID: 1555536353}
+  enemyFieldArea: {fileID: 1594134579}
+  playerInkWellArea: {fileID: 1154382029}
+  enemyInkWellArea: {fileID: 1537442015}
+  playerItemArea: {fileID: 1473050109}
+  enemyItemArea: {fileID: 1306885938}
+  playerLoc1Field: {fileID: 492542170}
+  playerLoc2Field: {fileID: 247354420}
+  enemyLoc1Field: {fileID: 1085181136}
+  enemyLoc2Field: {fileID: 591592900}
   playerLoaPointText: {fileID: 2118619273}
   enemyLoaPointText: {fileID: 813888817}
   playerDeckCountText: {fileID: 2010342403}

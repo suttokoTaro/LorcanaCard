@@ -18,7 +18,7 @@ public class DeckDetailUI : MonoBehaviour
     [SerializeField] private Button colorButton1, colorButton2, umberButton, amethystButton, emeraldButton, rubyButton, sapphireButton, steelButton, noColorButton;
     private int changedColorN;
     [SerializeField] private Canvas selectColorCanvas;
-    [SerializeField] private Text deckCountText, filteredCardCountText;
+    [SerializeField] private Text deckCountText, deckCountText2, filteredCardCountText;
     [SerializeField] private Canvas deckCardSelectCanvas;
     [SerializeField] private GameObject zoomCanvas;
     [SerializeField] private Image zoomImage;
@@ -158,6 +158,7 @@ public class DeckDetailUI : MonoBehaviour
         if (deckCountText != null)
         {
             deckCountText.text = $"{currentDeck.cardIDs.Count}枚";
+            deckCountText2.text = $"{currentDeck.cardIDs.Count}枚";
         }
 
         // デッキアイコンの設定

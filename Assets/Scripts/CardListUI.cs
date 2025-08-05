@@ -290,10 +290,11 @@ public class CardListUI : MonoBehaviour
         //filteredCardEntities.Sort((a, b) => a.cardId.CompareTo(b.cardId));
         // ソート：色 → コスト → カードID 昇順
         filteredCardEntities = filteredCardEntities
-            .OrderBy(c => (c.color ?? "").Trim().ToLower()) // 色
-            .ThenBy(c => c.cost)                            // コスト
-            .ThenBy(c => c.cardId)                          // カードID
-            .ToList();
+                .OrderBy(c => c.color)
+                .ThenBy(c => c.cardType)
+                .ThenBy(c => c.cost)
+                .ThenBy(c => c.cardId)
+                .ToList();
 
         // スワイプビューアに渡す
         swipeDetector.SetCardList(filteredCardEntities);
