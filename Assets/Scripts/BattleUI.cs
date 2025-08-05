@@ -234,7 +234,7 @@ public class BattleUI : MonoBehaviour
                 deckCard.handButton.onClick.AddListener(() => { OnClickHandButton(deckCard); });
                 deckCard.trushButton.onClick.AddListener(() => { OnClickTrushButton(deckCard); });
                 deckCard.bottomButton.onClick.AddListener(() => { OnClickBottomButton(deckCard); });
-                //deckCard.changeFrontAndBack();
+                deckCard.changeFrontAndBack();
             }
             deckMenuCountText.text = $"DECK({playerDeckArea.childCount})";
             UpdateDeckCountText();
@@ -255,7 +255,7 @@ public class BattleUI : MonoBehaviour
                 deckCard.handButton.onClick.AddListener(() => { OnClickHandButton(deckCard); });
                 deckCard.trushButton.onClick.AddListener(() => { OnClickTrushButton(deckCard); });
                 deckCard.bottomButton.onClick.AddListener(() => { OnClickBottomButton(deckCard); });
-                //deckCard.changeFrontAndBack();
+                deckCard.changeFrontAndBack();
             }
             deckMenuCountText.text = $"DECK({enemyDeckArea.childCount})";
             UpdateDeckCountText();
@@ -277,7 +277,8 @@ public class BattleUI : MonoBehaviour
             CardController cardCtrl = childTransform.GetComponent<CardController>();
             cardCtrl.view.ShowIcon(cardCtrl.model);
             childTransform.SetParent(playerHandArea);
-            refreshDeckMenuCardList(playerDeckArea.name.ToLower());
+            //refreshDeckMenuCardList(playerDeckArea.name.ToLower());
+            Destroy(deckMenuArea.GetChild(index).gameObject);
         }
         if (!deckCard.isPlayer1)
         {
@@ -287,7 +288,8 @@ public class BattleUI : MonoBehaviour
             CardController cardCtrl = childTransform.GetComponent<CardController>();
             cardCtrl.view.ShowIcon(cardCtrl.model);
             childTransform.SetParent(enemyHandArea);
-            refreshDeckMenuCardList(enemyDeckArea.name.ToLower());
+            //refreshDeckMenuCardList(enemyDeckArea.name.ToLower());
+            Destroy(deckMenuArea.GetChild(index).gameObject);
         }
     }
 
@@ -305,7 +307,8 @@ public class BattleUI : MonoBehaviour
             CardController cardCtrl = childTransform.GetComponent<CardController>();
             cardCtrl.view.ShowIcon(cardCtrl.model);
             childTransform.SetParent(playerTrushArea);
-            refreshDeckMenuCardList(playerDeckArea.name.ToLower());
+            //refreshDeckMenuCardList(playerDeckArea.name.ToLower());
+            Destroy(deckMenuArea.GetChild(index).gameObject);
         }
         if (!deckCard.isPlayer1)
         {
@@ -315,7 +318,8 @@ public class BattleUI : MonoBehaviour
             CardController cardCtrl = childTransform.GetComponent<CardController>();
             cardCtrl.view.ShowIcon(cardCtrl.model);
             childTransform.SetParent(enemyTrushArea);
-            refreshDeckMenuCardList(enemyDeckArea.name.ToLower());
+            //refreshDeckMenuCardList(enemyDeckArea.name.ToLower());
+            Destroy(deckMenuArea.GetChild(index).gameObject);
         }
     }
 
@@ -329,14 +333,16 @@ public class BattleUI : MonoBehaviour
             int reverseIndex = playerDeckArea.childCount - index;
             Transform childTransform = playerDeckArea.GetChild(reverseIndex - 1);
             childTransform.SetAsFirstSibling();
-            refreshDeckMenuCardList(playerDeckArea.name.ToLower());
+            //refreshDeckMenuCardList(playerDeckArea.name.ToLower());
+            deckMenuArea.GetChild(index).SetAsLastSibling();
         }
         if (!deckCard.isPlayer1)
         {
             int reverseIndex = enemyDeckArea.childCount - index;
             Transform childTransform = enemyDeckArea.GetChild(reverseIndex - 1);
             childTransform.SetAsFirstSibling();
-            refreshDeckMenuCardList(enemyDeckArea.name.ToLower());
+            //refreshDeckMenuCardList(enemyDeckArea.name.ToLower());
+            deckMenuArea.GetChild(index).SetAsLastSibling();
         }
     }
 
