@@ -98,18 +98,6 @@ public class CardController : MonoBehaviour, IPointerClickHandler, IDropHandler
             var afterArea = cardMove.cardParent;
             //Debug.Log("移動後の場所：" + afterArea.name.ToLower());
 
-            // 移動前がデッキエリアの場合
-            if (beforeArea.name.ToLower().Contains("playerdeck"))
-            {
-                //battleUI.RemoveTopDeckMenuCard(beforeArea);
-            }
-
-            // 移動後がデッキエリアの場合
-            if (afterArea.name.ToLower().Contains("playerdeck"))
-            {
-                //battleUI.CreatePlayerDeckMenuCard(model.cardId, afterArea.name.ToLower());
-            }
-
             // 表裏を切り替える（カードに CardController がある前提）
             var cardCtrl = eventData.pointerDrag.GetComponent<CardController>();
             if (cardCtrl != null)

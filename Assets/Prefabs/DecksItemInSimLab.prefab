@@ -834,6 +834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deckNameText: {fileID: 7145129720605157102}
   deckIcon: {fileID: 8097882193566358388}
+  deckIconBack: {fileID: 0}
   colorIcon1: {fileID: 8434857788197813293}
   colorIcon2: {fileID: 3902979191713698326}
   deckPanel: {fileID: 4499074134859505424}

@@ -10,14 +10,10 @@ public class DropPlace : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData) // ドロップされた時に行う処理
     {
         CardMovement cardMove = eventData.pointerDrag.GetComponent<CardMovement>(); // ドラッグしてきた情報からCardMovementを取得
-        if (cardMove != null) // もしカードがあれば、
+        if (cardMove != null)
         {
             var beforeArea = cardMove.cardParent;
             //Debug.Log("移動前の場所：" + beforeArea.name.ToLower());
-            if (beforeArea.name.ToLower().Contains("playerdeck"))
-            {
-                //battleUI.RemoveTopDeckMenuCard(beforeArea);
-            }
 
             // 移動処理
             cardMove.cardParent = this.transform;
@@ -48,12 +44,6 @@ public class DropPlace : MonoBehaviour, IDropHandler
                 float rotationZ = -90f;
                 cardCtrl.transform.localRotation = Quaternion.Euler(0f, 0f, rotationZ);
             }
-
-            // ドロップ後にデッキ枚数更新
-            // if (BattleUI.Instance != null)
-            // {
-            //     BattleUI.Instance.UpdateDeckCountText();
-            // }
             battleUI.UpdateDeckCountText();
         }
     }

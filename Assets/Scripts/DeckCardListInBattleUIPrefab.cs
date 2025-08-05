@@ -9,8 +9,7 @@ public class DeckCardListInBattleUIPrefab : MonoBehaviour
     public bool isPlayer1;
     public bool isFront;
     public CardEntity cardEntity;
-
-    public Button deckPanel;
+    public Button deckCardPanel;
     public Image imageIcon;
     public Button handButton;
     public Button trushButton;
