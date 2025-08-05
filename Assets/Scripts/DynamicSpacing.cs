@@ -8,13 +8,15 @@ public class DynamicSpacing : MonoBehaviour
     public Vector2 cellSize = new Vector2(200, 280);
     public float defaultSpacing = 10f;
     public float minSpacing = 5f;
+    public TextAnchor gridChildAlignment = TextAnchor.UpperLeft;
+    public int rowCount = 1;
 
     private GridLayoutGroup grid;
 
     void Start()
     {
         grid = GetComponent<GridLayoutGroup>();
-        grid.childAlignment = TextAnchor.UpperLeft; // 左寄せに設定
+        grid.childAlignment = gridChildAlignment; // 左寄せに設定
         UpdateSpacing();
     }
 
@@ -34,9 +36,14 @@ public class DynamicSpacing : MonoBehaviour
             return;
         }
 
-        float totalCellWidth = elementCount * cellSize.x;
+        int elementCalcValue = elementCount;
+        if (rowCount > 1)
+        {
+            elementCalcValue = (elementCount + 1) / rowCount;
+        }
+        float totalCellWidth = elementCalcValue * cellSize.x;
         float maxSpacing = (totalWidth - totalCellWidth) / (elementCount - 1);
-        float spacing = Mathf.Clamp(defaultSpacing, minSpacing, maxSpacing);
+        float spacing = Mathf.Clamp(defaultSpacing, minSpacing, maxSpacing) * rowCount;
 
         grid.cellSize = cellSize;
         grid.spacing = new Vector2(spacing, grid.spacing.y);
