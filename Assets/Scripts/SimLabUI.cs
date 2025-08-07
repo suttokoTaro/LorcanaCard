@@ -78,8 +78,8 @@ public class SimLabUI : MonoBehaviour
             deckItem.deckNameText.text = deck.deckName;
 
             // デッキアイコンの設定
-            var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
-            deckItem.deckIcon.sprite = defaultLeaderCard.backIcon;
+            var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_0000");
+            deckItem.deckIcon.sprite = defaultLeaderCard.icon;
             var leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{deck.leaderCardId}");
             if (leaderCard != null) { deckItem.deckIcon.sprite = leaderCard.icon; }
 
@@ -115,7 +115,7 @@ public class SimLabUI : MonoBehaviour
 
     void UpdateSelectedDecksDisplay()
     {
-        var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
+        var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_0000");
 
         /** Player1エリア */
         if (player1Deck != null)
@@ -125,7 +125,7 @@ public class SimLabUI : MonoBehaviour
             player1_DeckNameText.text = player1Deck.deckName;
 
             // デッキアイコンの設定
-            player1_DeckIcon.sprite = defaultLeaderCard.backIcon;
+            player1_DeckIcon.sprite = defaultLeaderCard.icon;
             var player1_leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{player1Deck.leaderCardId}");
             if (player1_leaderCard != null) { player1_DeckIcon.sprite = player1_leaderCard.icon; }
 
@@ -146,7 +146,7 @@ public class SimLabUI : MonoBehaviour
             player2_DeckNameText.text = player2Deck.deckName;
 
             // デッキアイコンの設定
-            player2_DeckIcon.sprite = defaultLeaderCard.backIcon;
+            player2_DeckIcon.sprite = defaultLeaderCard.icon;
             var player2_leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{player2Deck.leaderCardId}");
             if (player2_leaderCard != null) { player2_DeckIcon.sprite = player2_leaderCard.icon; }
 

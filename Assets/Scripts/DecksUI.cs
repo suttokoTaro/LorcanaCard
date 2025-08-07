@@ -85,9 +85,9 @@ public class DecksUI : MonoBehaviour
             deckItem.deckNameText.text = deck.deckName;
 
             // デッキアイコンの設定
-            var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
-            deckItem.deckIcon.sprite = defaultLeaderCard.backIcon;
-            deckItem.deckIconBack.sprite = defaultLeaderCard.backIcon;
+            var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_0000");
+            deckItem.deckIcon.sprite = defaultLeaderCard.icon;
+            deckItem.deckIconBack.sprite = defaultLeaderCard.icon;
             var leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{deck.leaderCardId}");
             if (leaderCard != null)
             {
@@ -177,8 +177,8 @@ public class DecksUI : MonoBehaviour
 
 
             }
-            var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
-            deckStructureDeckIcon.sprite = defaultLeaderCard.backIcon;
+            var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_0000");
+            deckStructureDeckIcon.sprite = defaultLeaderCard.icon;
             var leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{deck.leaderCardId}");
             if (leaderCard != null)
             {

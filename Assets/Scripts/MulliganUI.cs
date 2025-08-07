@@ -52,13 +52,13 @@ class MulliganManager : MonoBehaviour
         DisplayHand(playerHandArea, playerHand, "Player");
         DisplayHand(enemyHandArea, enemyHand, "Enemy");
 
-        var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
+        var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_0000");
 
-        player1BackIcon.sprite = defaultLeaderCard.backIcon;
+        player1BackIcon.sprite = defaultLeaderCard.icon;
         var player1_leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{DeckManager.Instance.selectedPlayer1DeckData.leaderCardId}");
         if (player1_leaderCard != null) { player1BackIcon.sprite = player1_leaderCard.icon; }
 
-        player2BackIcon.sprite = defaultLeaderCard.backIcon;
+        player2BackIcon.sprite = defaultLeaderCard.icon;
         var player2_leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{DeckManager.Instance.selectedPlayer2DeckData.leaderCardId}");
         if (player2_leaderCard != null) { player2BackIcon.sprite = player2_leaderCard.icon; }
 

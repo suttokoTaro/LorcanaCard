@@ -173,9 +173,9 @@ public class DeckDetailUI : MonoBehaviour
         }
 
         // デッキアイコンの設定
-        var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_1001");
+        var defaultLeaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_0000");
         //var defaultLeaderCard = await LoadCardEntityByIdAsync(1001);
-        deckIcon.sprite = defaultLeaderCard.backIcon;
+        deckIcon.sprite = defaultLeaderCard.icon;
         var leaderCard = Resources.Load<CardEntity>($"CardEntityList/Card_{currentDeck.leaderCardId}");
         //var leaderCard = await LoadCardEntityByIdAsync(currentDeck.leaderCardId);
         if (leaderCard != null)
