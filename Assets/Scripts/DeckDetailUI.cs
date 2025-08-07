@@ -148,7 +148,9 @@ public class DeckDetailUI : MonoBehaviour
             {
                 currentDeck.cardIDs.Remove(entity.cardId); // 1枚削除
                 RefreshDeckCardList();
-                RefreshCardListFiltered();
+
+                //RefreshCardListFiltered();
+                minus1CountTextInSelectCardArea(entity.cardId);
             });
 
             currentIndex = currentIndex + 1;
@@ -157,8 +159,8 @@ public class DeckDetailUI : MonoBehaviour
         // デッキ枚数表示値の更新
         if (deckCountText != null)
         {
-            deckCountText.text = $"{currentDeck.cardIDs.Count}枚";
-            deckCountText2.text = $"{currentDeck.cardIDs.Count}枚";
+            deckCountText.text = $"{currentDeck.cardIDs.Count}";
+            deckCountText2.text = $"{currentDeck.cardIDs.Count}";
         }
 
         // デッキアイコンの設定
@@ -281,6 +283,52 @@ public class DeckDetailUI : MonoBehaviour
     /// <summary>
     /// //////////////////////////////////////////////////////////////////////////////////////////////////
     /// </summary>
+    /// 
+
+    /** デッキエリアからカード削除時に、カード選択エリアの枚数表示から1枚マイナスする */
+    private void minus1CountTextInSelectCardArea(int targetCardId)
+    {
+        if (cardIdToIndex.TryGetValue(targetCardId, out int foundIndex))
+        {
+            //Debug.Log($"Card ID {targetCardId} has index {foundIndex}");
+            Transform cardItem = selectCardContent.GetChild(foundIndex);
+            // CountText を取得
+            Text countText = cardItem.Find("CountText")?.GetComponent<Text>();
+            Transform countTextPanel = cardItem.Find("CountTextPanel");
+            if (countText != null)
+            {
+                if (int.TryParse(countText.text, out int currentCount))
+                {
+                    int newCount = currentCount - 1;
+                    if (newCount > 0)
+                    {
+                        countText.text = newCount.ToString();
+                        if (countTextPanel != null) countTextPanel.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        countText.text = "";
+                        if (countTextPanel != null) countTextPanel.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("CountText is not a valid number");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("CountText not found in card item");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Card ID not found in index dictionary");
+        }
+    }
+
+    // cardId → currentIndex のマップ
+    private Dictionary<int, int> cardIdToIndex = new Dictionary<int, int>();
 
     /** カード表示エリアの更新 */
     private IEnumerator RefreshSelectCardList()
@@ -290,6 +338,8 @@ public class DeckDetailUI : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        cardIdToIndex.Clear();
+
         // デッキカラーに合致したカードリスト
         List<CardEntity> deckColorCardEntities = new List<CardEntity>();
         List<string> deckColors = new List<string>();
@@ -340,11 +390,14 @@ public class DeckDetailUI : MonoBehaviour
         }
 
         // 表示生成（フィルター条件に合致したカードリスト）
+
         int currentIndex = 0;
         int batchSize = 30;
         foreach (CardEntity cardEntity in filteredCardEntities)
         {
             int cardId = cardEntity.cardId;
+            // 紐づけを追加
+            cardIdToIndex[cardId] = currentIndex;
             GameObject item = Instantiate(cardItemPrefab, selectCardContent);
 
             // 画像表示
