@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 /** SimLab画面 */
 public class SimLabUI : MonoBehaviour
@@ -20,15 +22,29 @@ public class SimLabUI : MonoBehaviour
     private bool isSortDescending = false; // 初期状態：昇順
     private DeckData player1Deck;
     private DeckData player2Deck;
+    private IList<CardEntity> allCardEntities;
 
     /** Start */
-    void Start()
+    async void Start()
     {
         // デッキデータが存在しない場合、デフォルトデッキをロードする
         DeckStorage.EnsureDefaultDecksLoaded();
 
         LoadAndDisplayDecks();
         UpdateSelectedDecksDisplay();
+
+        // ラベルでCardEntityを非同期ロード
+        AsyncOperationHandle<IList<CardEntity>> handle = Addressables.LoadAssetsAsync<CardEntity>("CardEntityList", null);
+        allCardEntities = await handle.Task;
+
+        // CardEntityCacheがまだ存在しないなら生成
+        if (CardEntityCache.Instance == null)
+        {
+            GameObject go = new GameObject("CardEntityCache");
+            go.AddComponent<CardEntityCache>();
+        }
+        // キャッシュに保存
+        CardEntityCache.Instance.SetCardEntities(allCardEntities);
     }
 
     /** デッキリスト表示の更新 */
