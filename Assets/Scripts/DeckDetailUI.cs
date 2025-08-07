@@ -31,6 +31,7 @@ public class DeckDetailUI : MonoBehaviour
     private DeckData currentDeck;
     IList<CardEntity> allCardEntities;
     private Coroutine refreshCoroutine;
+    private bool editDeckFlag;
     async void Start()
     {
         // デッキリスト画面で選択したデッキ情報が取得できない場合エラーを返す
@@ -79,6 +80,9 @@ public class DeckDetailUI : MonoBehaviour
 
         // 各フィルターのToggleと押下時処理の紐づけ
         LinkedFilterToggles();
+
+        // デッキ編集フラグ
+        editDeckFlag = false;
     }
 
 
@@ -155,6 +159,7 @@ public class DeckDetailUI : MonoBehaviour
 
                 //RefreshCardListFiltered();
                 minus1CountTextInSelectCardArea(entity.cardId);
+                editDeckFlag = true;
             });
 
             currentIndex = currentIndex + 1;
@@ -192,6 +197,7 @@ public class DeckDetailUI : MonoBehaviour
             currentDeck.deckName = newName;
             //OnClickSaveButton();
             //Debug.Log($"デッキ名変更＆保存: {newName}");
+            editDeckFlag = true;
         }
     }
 
@@ -209,6 +215,7 @@ public class DeckDetailUI : MonoBehaviour
         if (changedColorN == 2) { currentDeck.color2 = color; }
         RefreshDeckCardList();
         RefreshCardListFiltered();
+        editDeckFlag = true;
         selectColorCanvas.sortingOrder = -10;
     }
 
@@ -217,33 +224,6 @@ public class DeckDetailUI : MonoBehaviour
     {
         //Debug.Log("hide");
         selectColorCanvas.sortingOrder = -10;
-    }
-
-    /** デッキ保存ボタン押下時の処理 */
-    public void OnClickSaveButton()
-    {
-        string updatedAt = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
-        currentDeck.updatedAt = updatedAt;
-        DeckDataList list = DeckStorage.LoadDecks();
-        int index = list.decks.FindIndex(d => d.deckId == currentDeck.deckId);
-        if (index >= 0)
-        {
-            list.decks[index] = currentDeck;
-        }
-        else
-        {
-            currentDeck.createdAt = updatedAt;
-            list.decks.Add(currentDeck);
-        }
-        DeckStorage.SaveDecks(list);
-        //Debug.Log("デッキ保存完了");
-        SceneManager.LoadScene("DecksScene");
-    }
-
-    /** 戻るボタン押下時の処理 */
-    public void OnClickBackButton()
-    {
-        SceneManager.LoadScene("DecksScene");
     }
 
     /** カード選択ボタン押下時の処理 */
@@ -269,14 +249,74 @@ public class DeckDetailUI : MonoBehaviour
     public void PlusDeckCard(int cardId)
     {
         currentDeck.cardIDs.Add(cardId);
+        editDeckFlag = true;
     }
     public void MinusDeckCard(int cardId)
     {
         currentDeck.cardIDs.Remove(cardId);
+        editDeckFlag = true;
     }
     public void SetDeckIcon(int cardId)
     {
         currentDeck.leaderCardId = cardId;
+        editDeckFlag = true;
+    }
+
+    /** デッキ保存ボタン押下時の処理 */
+    public void OnClickSaveButton()
+    {
+        string updatedAt = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+        currentDeck.updatedAt = updatedAt;
+        DeckDataList list = DeckStorage.LoadDecks();
+        int index = list.decks.FindIndex(d => d.deckId == currentDeck.deckId);
+        if (index >= 0)
+        {
+            list.decks[index] = currentDeck;
+        }
+        else
+        {
+            currentDeck.createdAt = updatedAt;
+            list.decks.Add(currentDeck);
+        }
+        DeckStorage.SaveDecks(list);
+        //Debug.Log("デッキ保存完了");
+        editDeckFlag = false;
+        SceneManager.LoadScene("DecksScene");
+    }
+
+    [SerializeField] private GameObject ConfirmBackUIPanel;
+
+    /** 戻るボタン押下時の処理 */
+    public void OnClickBackButton()
+    {
+        if (editDeckFlag)
+        {
+            if (ConfirmBackUIPanel != null) { ConfirmBackUIPanel.SetActive(true); }
+        }
+        else
+        {
+            SceneManager.LoadScene("DecksScene");
+        }
+    }
+
+    /** 戻る確認：保存を押下時処理 */
+    public void OnClickSaveAndBackUIButton()
+    {
+        if (ConfirmBackUIPanel != null) { ConfirmBackUIPanel.SetActive(false); }
+        OnClickSaveButton();
+    }
+
+    /** 戻る確認：保存しないを押下時処理 */
+    public void OnClickNoSaveAndBackUIButton()
+    {
+        if (ConfirmBackUIPanel != null) { ConfirmBackUIPanel.SetActive(false); }
+        SceneManager.LoadScene("DecksScene");
+    }
+
+    /** 戻る確認：キャンセルを押下時処理 */
+    public void OnClickCancelBackUIButton()
+    {
+        if (ConfirmBackUIPanel != null) { ConfirmBackUIPanel.SetActive(false); }
     }
 
     /** カードIDからcardEntity情報の取得（非同期） */
@@ -598,6 +638,7 @@ public class DeckDetailUI : MonoBehaviour
                     if (countText != null) countText.text = $"{count}";
                     if (countTextPanel != null) countTextPanel.gameObject.SetActive(true);
                 }
+                editDeckFlag = true;
             });
 
             Text index = item.transform.Find("Index")?.GetComponent<Text>();
