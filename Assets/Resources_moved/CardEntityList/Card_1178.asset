@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Card_1178
   m_EditorClassIdentifier: 
   cardId: 1178
-  setSeries: 1
+  setSeries: "01_\uFF34\uFF28\uFF25\u3000\uFF26\uFF29\uFF32\uFF33\uFF34\u3000\uFF23\uFF28\uFF21\uFF30\uFF34\uFF25\uFF32\u3000\u7269\u8A9E\u306E\u306F\u3058\u307E\u308A"
   idInSetSeries: 178
   icon: {fileID: 21300000, guid: 2c9425fc80504364d90b4e552c9cfbb3, type: 3}
   backIcon: {fileID: 21300000, guid: e8dcea18542b22d4ba643f75a3f83816, type: 3}
-  name: "\u30AC\u30F3\u30C9\u30A5"
+  name: "\u30AC\u30F3\u30C8\u30A5"
   versionName: "\u9280\u6CB3\u9023\u90A6\u5927\u5C09"
   color: 6_steel
   cost: 8
@@ -40,3 +40,5 @@ MonoBehaviour:
   singTogetherFlag: 0
   supportFlag: 0
   wardFlag: 0
+  effectText: "\u902E\u6355\u3059\u308B\uFF01 \u30B3\u30B9\u30C8\uFF12\u4EE5\u4E0B\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306F\u3042\u306A\u305F\u306E\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306B\u30C1\u30E3\u30EC\u30F3\u30B8\u3067\u304D\u306A\u3044\u3002"
+  flavorText: "\u300C\u306E\u3093\u3073\u308A\u3068\u65C5\u3092\u697D\u3057\u3081\u2026\u9003\u3052\u3088\u3046\u306A\u3069\u3068\u601D\u3046\u306A\uFF01\u300D"

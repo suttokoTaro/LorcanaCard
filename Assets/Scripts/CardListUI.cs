@@ -266,7 +266,9 @@ public class CardListUI : MonoBehaviour
             bool matchesName = string.IsNullOrEmpty(searchText) ||
                                (cardEntity.name != null && cardEntity.name.ToLower().Contains(searchText)) ||
                                (cardEntity.versionName != null && cardEntity.versionName.ToLower().Contains(searchText)) ||
-                               (cardEntity.classification != null && cardEntity.classification.ToLower().Contains(searchText));
+                               (cardEntity.classification != null && cardEntity.classification.ToLower().Contains(searchText)) ||
+                               (cardEntity.effectText != null && cardEntity.effectText.ToLower().Contains(searchText)) ||
+                               (cardEntity.flavorText != null && cardEntity.flavorText.ToLower().Contains(searchText));
 
             // 各フィルターに内容と合致している場合は表示対象とする
             if (matchesCardType && matchesColor && matchesCost && matchesExtraFilter && matchesStrength && matchesWillpower && matchesLoreValue &&
